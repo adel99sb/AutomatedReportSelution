@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomatedReportAPI", "AutomatedReportAPI\AutomatedReportAPI.csproj", "{718FFF77-2045-4DAA-A23B-B875AA3447D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedReportDashboard", "AutomatedReportDashboard\AutomatedReportDashboard.csproj", "{FFB240A8-C606-4FD8-8FB3-486F401AA35C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{718FFF77-2045-4DAA-A23B-B875AA3447D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{718FFF77-2045-4DAA-A23B-B875AA3447D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{718FFF77-2045-4DAA-A23B-B875AA3447D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{718FFF77-2045-4DAA-A23B-B875AA3447D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB240A8-C606-4FD8-8FB3-486F401AA35C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFB240A8-C606-4FD8-8FB3-486F401AA35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFB240A8-C606-4FD8-8FB3-486F401AA35C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FFB240A8-C606-4FD8-8FB3-486F401AA35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFB240A8-C606-4FD8-8FB3-486F401AA35C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB240A8-C606-4FD8-8FB3-486F401AA35C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {384A9255-1BD4-4427-92A1-A31D16749CF9}
+	EndGlobalSection
+EndGlobal

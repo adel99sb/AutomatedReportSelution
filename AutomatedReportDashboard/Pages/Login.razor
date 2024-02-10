@@ -1,0 +1,12 @@
+﻿@page "/"
+
+@inject NavigationManager mgr
+
+<h3>login</h3>
+<button @onclick="SubmetLogin" > Login </button>
+@code {
+    private void SubmetLogin()
+    {
+        mgr.NavigateTo("/home");
+    }
+}
