@@ -24,6 +24,12 @@ namespace AutomatedReportAPI.AppData.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            // Remove cascade delete convention for all relationships
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;                
+            }
+            // Data Seeds
             modelBuilder.Entity<Certificate>().HasData(
                 new Certificate()
                 {
