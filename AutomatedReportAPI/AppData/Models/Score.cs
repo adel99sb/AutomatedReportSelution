@@ -1,0 +1,16 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AutomatedReportAPI.AppData.Models
+{
+    public class Score
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        [Required]
+        public double Value { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Description { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public Student Student { get; set; }
+    }
+}

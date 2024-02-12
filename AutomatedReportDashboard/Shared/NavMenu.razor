@@ -1,4 +1,4 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@*<div class="top-row ps-3 navbar navbar-dark">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="">AutomatedReportDashboard</a>
 		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -37,3 +37,61 @@
 		collapseNavMenu = !collapseNavMenu;
 	}
 }
+*@
+@*@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyTgyAh6D60ZWi1Mw6NMIJmWsa4lGWNU5C" crossorigin="anonymous">
+    <title>Navbar</title>
+</head>
+<body>
+*@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <NavLink class="navbar-brand" href="#">Navbar</NavLink>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="#">Home</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="#">Link</NavLink>
+                </li>
+                <li class="nav-item dropdown">
+                    <NavLink class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </NavLink>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <NavLink class="dropdown-item" href="#">Action</NavLink>
+                        <NavLink class="dropdown-item" href="#">Another action</NavLink>
+                        <div class="dropdown-divider"></div>
+                        <NavLink class="dropdown-item" href="#">Something else here</NavLink>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</NavLink>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+@*
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js" integrity="sha384-bA4zv5Q8dF+h2VhOM+TVLW6iF1h3v3bIbb6fBMkKt/EJUZBe3/JTXt8A2L3n6IYI" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyTgyAh6D60ZWi1Mw6NMIJmWsa4lGWNU5C" crossorigin="anonymous"></script>*@
+@*
+</body>
+</html>*@
