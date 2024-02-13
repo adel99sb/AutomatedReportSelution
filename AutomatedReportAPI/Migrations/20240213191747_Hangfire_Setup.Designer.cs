@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutomatedReportAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240212192337_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240213191747_Hangfire_Setup")]
+    partial class Hangfire_Setup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,37 +45,37 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("aed717cf-eff1-4f8c-b6af-7095dab1bf8b"),
+                            Id = new Guid("6d40112e-362b-4849-a5f8-1e142af0f6ac"),
                             Name = "الحصة الأولى",
                             Time = 0
                         },
                         new
                         {
-                            Id = new Guid("9cb0221c-b386-4795-b4a9-c80b777ad9a0"),
+                            Id = new Guid("7dee2ec1-9d02-43e5-87de-d7e5970c1706"),
                             Name = "الحصة الثانية",
                             Time = 1
                         },
                         new
                         {
-                            Id = new Guid("8ea5b6cb-26fd-4c76-8fe5-9952779b4e66"),
+                            Id = new Guid("d693b808-db65-4595-a4cc-dfc8d71fb077"),
                             Name = "الحصة الثالثة",
                             Time = 2
                         },
                         new
                         {
-                            Id = new Guid("09eab6cf-fccc-4a32-9485-b711286d4181"),
+                            Id = new Guid("c0016ae4-180b-498a-bd4a-84cfeaea1b76"),
                             Name = "الحصة الرابعة",
                             Time = 3
                         },
                         new
                         {
-                            Id = new Guid("8ca2e97f-a24d-4d1f-ba61-a68032e2a933"),
+                            Id = new Guid("6612001e-5eb7-4add-bd7f-04337882d2ff"),
                             Name = "الحصة الخامسة",
                             Time = 4
                         },
                         new
                         {
-                            Id = new Guid("fe3d734e-9325-4a4b-a786-904f14ebac8d"),
+                            Id = new Guid("549bd3fd-79a7-476b-9cc7-11f8f1ee7c7d"),
                             Name = "الحصة السادسة",
                             Time = 5
                         });
@@ -152,17 +152,17 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3a6d666c-b63b-4cb4-8305-5513aa2606ae"),
+                            Id = new Guid("2e4ef6ad-f496-42f3-9e35-906824ce7715"),
                             Name = "الشهادة الإعدادية"
                         },
                         new
                         {
-                            Id = new Guid("2692443d-96a2-4313-8a4d-da64c17f8967"),
+                            Id = new Guid("f2ea5c52-2c85-48ec-ab4e-5f4b5fd01597"),
                             Name = "الشهادة الثانوية - علمي"
                         },
                         new
                         {
-                            Id = new Guid("d1b96993-8923-4025-bc12-4864354b1676"),
+                            Id = new Guid("0d3429f0-91c6-436d-8449-783c1232fbb0"),
                             Name = "الشهادة الثانوية - أدبي"
                         });
                 });
@@ -446,13 +446,13 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("747a417f-f3f4-48c8-b7f6-202ace0f04d8"),
+                            Id = new Guid("398ed3d2-8adf-4b34-bb12-e647cd804b9a"),
                             Password = "AaBbCc@112233",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("11ccab5a-c461-4615-81fc-4c022e6f95bd"),
+                            Id = new Guid("b18084d6-1833-48b7-89bc-09b8b9fa6770"),
                             Password = "Aa@112233",
                             Type = 0
                         });

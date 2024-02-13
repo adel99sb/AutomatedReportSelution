@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AutomatedReportAPI.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InintialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -306,9 +306,9 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("2692443d-96a2-4313-8a4d-da64c17f8967"), "الشهادة الثانوية - علمي" },
-                    { new Guid("3a6d666c-b63b-4cb4-8305-5513aa2606ae"), "الشهادة الإعدادية" },
-                    { new Guid("d1b96993-8923-4025-bc12-4864354b1676"), "الشهادة الثانوية - أدبي" }
+                    { new Guid("4ae732e6-30c1-4fce-87dc-3d8944d8af69"), "الشهادة الثانوية - أدبي" },
+                    { new Guid("56d54a41-9368-4d96-a3f2-545bd553a7a3"), "الشهادة الإعدادية" },
+                    { new Guid("6d815e3f-e0d5-4ef9-b576-e74aad719570"), "الشهادة الثانوية - علمي" }
                 });
 
             migrationBuilder.InsertData(
@@ -316,12 +316,12 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "Name", "Time" },
                 values: new object[,]
                 {
-                    { new Guid("09eab6cf-fccc-4a32-9485-b711286d4181"), "الحصة الرابعة", 3 },
-                    { new Guid("8ca2e97f-a24d-4d1f-ba61-a68032e2a933"), "الحصة الخامسة", 4 },
-                    { new Guid("8ea5b6cb-26fd-4c76-8fe5-9952779b4e66"), "الحصة الثالثة", 2 },
-                    { new Guid("9cb0221c-b386-4795-b4a9-c80b777ad9a0"), "الحصة الثانية", 1 },
-                    { new Guid("aed717cf-eff1-4f8c-b6af-7095dab1bf8b"), "الحصة الأولى", 0 },
-                    { new Guid("fe3d734e-9325-4a4b-a786-904f14ebac8d"), "الحصة السادسة", 5 }
+                    { new Guid("0a4db11a-3b0f-4ec6-b558-d14b7e93f244"), "الحصة الخامسة", 4 },
+                    { new Guid("42629396-6a6f-4c0b-86d4-cdebf1c65aa9"), "الحصة الأولى", 0 },
+                    { new Guid("493b6595-4fab-4178-84f7-e5bd6796e26b"), "الحصة السادسة", 5 },
+                    { new Guid("5bb4ac05-cceb-4c31-84b0-bf70e5c8ad4a"), "الحصة الثالثة", 2 },
+                    { new Guid("6f7c85f3-5154-4761-ba04-78639de1d3fa"), "الحصة الرابعة", 3 },
+                    { new Guid("8fb8c54a-1deb-4fef-bf8b-5734affc3c08"), "الحصة الثانية", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -329,8 +329,8 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "Password", "Type" },
                 values: new object[,]
                 {
-                    { new Guid("11ccab5a-c461-4615-81fc-4c022e6f95bd"), "Aa@112233", 0 },
-                    { new Guid("747a417f-f3f4-48c8-b7f6-202ace0f04d8"), "AaBbCc@112233", 0 }
+                    { new Guid("94fbe68a-74a1-4444-a5be-fe85cfe8d999"), "AaBbCc@112233", 0 },
+                    { new Guid("bf28626c-a92a-44c7-b9e8-238c736c3bca"), "Aa@112233", 0 }
                 });
 
             migrationBuilder.CreateIndex(

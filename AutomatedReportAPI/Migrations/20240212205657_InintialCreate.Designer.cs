@@ -4,6 +4,7 @@ using AutomatedReportAPI.AppData.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutomatedReportAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240212205657_InintialCreate")]
+    partial class InintialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,37 +45,37 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6d40112e-362b-4849-a5f8-1e142af0f6ac"),
+                            Id = new Guid("42629396-6a6f-4c0b-86d4-cdebf1c65aa9"),
                             Name = "الحصة الأولى",
                             Time = 0
                         },
                         new
                         {
-                            Id = new Guid("7dee2ec1-9d02-43e5-87de-d7e5970c1706"),
+                            Id = new Guid("8fb8c54a-1deb-4fef-bf8b-5734affc3c08"),
                             Name = "الحصة الثانية",
                             Time = 1
                         },
                         new
                         {
-                            Id = new Guid("d693b808-db65-4595-a4cc-dfc8d71fb077"),
+                            Id = new Guid("5bb4ac05-cceb-4c31-84b0-bf70e5c8ad4a"),
                             Name = "الحصة الثالثة",
                             Time = 2
                         },
                         new
                         {
-                            Id = new Guid("c0016ae4-180b-498a-bd4a-84cfeaea1b76"),
+                            Id = new Guid("6f7c85f3-5154-4761-ba04-78639de1d3fa"),
                             Name = "الحصة الرابعة",
                             Time = 3
                         },
                         new
                         {
-                            Id = new Guid("6612001e-5eb7-4add-bd7f-04337882d2ff"),
+                            Id = new Guid("0a4db11a-3b0f-4ec6-b558-d14b7e93f244"),
                             Name = "الحصة الخامسة",
                             Time = 4
                         },
                         new
                         {
-                            Id = new Guid("549bd3fd-79a7-476b-9cc7-11f8f1ee7c7d"),
+                            Id = new Guid("493b6595-4fab-4178-84f7-e5bd6796e26b"),
                             Name = "الحصة السادسة",
                             Time = 5
                         });
@@ -150,17 +152,17 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2e4ef6ad-f496-42f3-9e35-906824ce7715"),
+                            Id = new Guid("56d54a41-9368-4d96-a3f2-545bd553a7a3"),
                             Name = "الشهادة الإعدادية"
                         },
                         new
                         {
-                            Id = new Guid("f2ea5c52-2c85-48ec-ab4e-5f4b5fd01597"),
+                            Id = new Guid("6d815e3f-e0d5-4ef9-b576-e74aad719570"),
                             Name = "الشهادة الثانوية - علمي"
                         },
                         new
                         {
-                            Id = new Guid("0d3429f0-91c6-436d-8449-783c1232fbb0"),
+                            Id = new Guid("4ae732e6-30c1-4fce-87dc-3d8944d8af69"),
                             Name = "الشهادة الثانوية - أدبي"
                         });
                 });
@@ -444,13 +446,13 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("398ed3d2-8adf-4b34-bb12-e647cd804b9a"),
+                            Id = new Guid("94fbe68a-74a1-4444-a5be-fe85cfe8d999"),
                             Password = "AaBbCc@112233",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("b18084d6-1833-48b7-89bc-09b8b9fa6770"),
+                            Id = new Guid("bf28626c-a92a-44c7-b9e8-238c736c3bca"),
                             Password = "Aa@112233",
                             Type = 0
                         });

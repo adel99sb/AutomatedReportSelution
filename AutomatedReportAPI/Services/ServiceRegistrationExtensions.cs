@@ -1,5 +1,6 @@
 ﻿using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Infrastructure.Repositories;
+using AutomatedReportAPI.Services.BackgroundJobs;
 
 namespace AutomatedReportAPI.Services
 {
@@ -21,7 +22,9 @@ namespace AutomatedReportAPI.Services
                 .AddScoped<ITeacherRepository, TeacherRepository>()
                 .AddScoped<ITestRepository, TestRepository>()
                 .AddScoped<ITest_MarkRepository, Test_MarkRepository>()
-                .AddScoped<IUserRepository, UserRepository>();
+                .AddScoped<IUserRepository, UserRepository>()
+                // To Remove later
+                .AddScoped<IBackgourndJobService,BackgourndJobService>();
         }
     }
 }
