@@ -1,4 +1,5 @@
 ﻿using AutomatedReport_Core.DTO_s.AdminDashboard.Responces;
+using AutomatedReport_DTOs;
 using AutomatedReport_DTOs.AdminDashboard.Requstes;
 using AutomatedReportAPI.Infrastructure.Contracts;
 using Microsoft.AspNetCore.Mvc;
@@ -67,7 +68,8 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
         public async Task<IActionResult> EditeUserPassword([FromQuery] EditeUserPasswordRequste requste)
         {
             var user = await userRepository.GetById(requste.Id);
-            EditeUserPasswordResponse response = new EditeUserPasswordResponse();
+            GeneralResponse response = new GeneralResponse(null);
+            
             if (user != null)
             {
                 user.Password = requste.NewPassword;
