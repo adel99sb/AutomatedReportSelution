@@ -10,6 +10,6 @@ namespace AutomatedReportAPI.AppData.Models
         [StringLength(50)]
         public string Name { get; set; }
         [Required]
-        public ClassTimes Time { get; set; }
+        public string Time { get; set; }
     }
 }

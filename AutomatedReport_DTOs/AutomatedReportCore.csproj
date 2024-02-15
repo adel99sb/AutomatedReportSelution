@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DTO%27s\AdvertismentPage\Requstes\" />
+    <Folder Include="DTO%27s\AdvertismentPage\Responces\" />
+    <Folder Include="DTO%27s\ClientApp\Requstes\" />
+    <Folder Include="DTO%27s\ClientApp\Responces\" />
+  </ItemGroup>
+
+</Project>

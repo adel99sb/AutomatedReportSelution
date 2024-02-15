@@ -22,6 +22,6 @@ namespace AutomatedReportAPI.Enums
         [Display(Name = "مدير")]
         Manager = 0,
         [Display(Name = "مشرف")]
-        Assistante = 0,
+        Assistante = 1,
     }
 }

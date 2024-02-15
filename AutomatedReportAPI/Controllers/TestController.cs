@@ -1,4 +1,5 @@
-﻿using AutomatedReportAPI.AppData.Models;
+﻿using AutomatedReport_Core;
+using AutomatedReportAPI.AppData.Models;
 using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.BackgroundJobs;
@@ -32,19 +33,20 @@ namespace AutomatedReportAPI.Controllers
         {            
             var result = classRepository.GetAll();
             List<string> classes = new List<string>();
-            foreach (var c in result.OrderBy(v => ((int)v.Time)))
-            {
-                classes.Add($"{c.Name} من {c.Time.GetDisplayName()}");
-            }
-            var res = new Responce()
-            {
-                Message = "messages Sent Succesfully",
-                StatusCode = Ok().StatusCode,
-                ResultJson = classes
-            };
-            var date = new DateTime(1999,9,9);
-            await backgourndJobService.SendBirthDayMessage("done bithcssssss",date);
-            return Ok(res);
+            //foreach (var c in result.OrderBy(v => ((int)v.Time)))
+            //{
+            //    classes.Add($"{c.Name} من {c.Time.GetDisplayName()}");
+            //}
+            //var res = new Responce()
+            //{
+            //    Message = "messages Sent Succesfully",
+            //    StatusCode = Ok().StatusCode,
+            //    ResultJson = classes
+            //};
+            //var date = new DateTime(1999,9,9);
+            //await backgourndJobService.SendBirthDayMessage("done bithcssssss",date);
+            //return Ok(res);
+            return Ok();
         }
         [HttpPost("SendMessage")]
         public async Task<IActionResult> SendMessage(string message,_Class _Class)
@@ -61,20 +63,15 @@ namespace AutomatedReportAPI.Controllers
             if (!ModelState.IsValid)
             {               
                 return BadRequest(ModelState.GetErrors());
-            }            
-            var res = new Responce()
-            {
-                Message = "messages Sent Succesfully",
-                StatusCode = Ok().StatusCode,
-                ResultJson = reciptents
-            };
-            return Ok(res);
+            }
+            //var res = new Responce()
+            //{
+            //    Message = "messages Sent Succesfully",
+            //    StatusCode = Ok().StatusCode,
+            //    ResultJson = reciptents
+            //};
+            //return Ok(res);
+            return Ok();
         }
-    }
-    public class Responce
-    {
-        public string Message { get; set; }
-        public int StatusCode { get; set; }
-        public object ResultJson { get; set; }
-    }
+    }    
 }

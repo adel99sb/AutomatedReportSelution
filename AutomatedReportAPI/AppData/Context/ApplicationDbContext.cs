@@ -1,4 +1,5 @@
-﻿using AutomatedReportAPI.AppData.Models;
+﻿using AutomatedReport_Core;
+using AutomatedReportAPI.AppData.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutomatedReportAPI.AppData.Context
@@ -47,42 +48,42 @@ namespace AutomatedReportAPI.AppData.Context
                 new _Class()
                 {
                     Name = "الحصة الأولى",
-                    Time = Enums.ClassTimes.First
+                    Time = Enums.ClassTimes.First.GetDisplayName()
                 },
                 new _Class()
                 {
                     Name = "الحصة الثانية",
-                    Time = Enums.ClassTimes.Second
+                    Time = Enums.ClassTimes.Second.GetDisplayName()
                 },
                 new _Class()
                 {
                     Name = "الحصة الثالثة",
-                    Time = Enums.ClassTimes.Therid
+                    Time = Enums.ClassTimes.Therid.GetDisplayName()
                 },
                 new _Class()
                 {
                     Name = "الحصة الرابعة",
-                    Time = Enums.ClassTimes.Fourth
+                    Time = Enums.ClassTimes.Fourth.GetDisplayName()
                 },
                 new _Class()
                 {
                     Name = "الحصة الخامسة",
-                    Time = Enums.ClassTimes.Fiveth
+                    Time = Enums.ClassTimes.Fiveth.GetDisplayName()
                 },
                 new _Class()
                 {
                     Name = "الحصة السادسة",
-                    Time = Enums.ClassTimes.Sixeth
+                    Time = Enums.ClassTimes.Sixeth.GetDisplayName()
                 });
             modelBuilder.Entity<User>().HasData(
                 new User()
                 {
-                    Type = Enums.UserTypes.Manager,
+                    Type = Enums.UserTypes.Manager.GetDisplayName(),
                     Password = "AaBbCc@112233"
                 },
                 new User()
                 {
-                    Type = Enums.UserTypes.Assistante,
+                    Type = Enums.UserTypes.Assistante.GetDisplayName(),
                     Password = "Aa@112233"
                 });
         }

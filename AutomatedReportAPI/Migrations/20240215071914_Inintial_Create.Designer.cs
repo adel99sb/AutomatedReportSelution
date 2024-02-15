@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutomatedReportAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240213191747_Hangfire_Setup")]
-    partial class Hangfire_Setup
+    [Migration("20240215071914_Inintial_Create")]
+    partial class Inintial_Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,8 +35,9 @@ namespace AutomatedReportAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Time")
-                        .HasColumnType("int");
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -45,39 +46,39 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6d40112e-362b-4849-a5f8-1e142af0f6ac"),
+                            Id = new Guid("4e4cea85-3c53-4a9a-9584-663e34ad52e8"),
                             Name = "الحصة الأولى",
-                            Time = 0
+                            Time = "08:30 => 10:00"
                         },
                         new
                         {
-                            Id = new Guid("7dee2ec1-9d02-43e5-87de-d7e5970c1706"),
+                            Id = new Guid("55cee830-4ed4-453d-bf53-dee198b56c21"),
                             Name = "الحصة الثانية",
-                            Time = 1
+                            Time = "10:00 => 11:30"
                         },
                         new
                         {
-                            Id = new Guid("d693b808-db65-4595-a4cc-dfc8d71fb077"),
+                            Id = new Guid("ff8abaf0-7cc5-4377-983a-36c1d3e40188"),
                             Name = "الحصة الثالثة",
-                            Time = 2
+                            Time = "11:30 => 01:00"
                         },
                         new
                         {
-                            Id = new Guid("c0016ae4-180b-498a-bd4a-84cfeaea1b76"),
+                            Id = new Guid("25e08aa0-6433-4bd4-8fde-b30355639d4f"),
                             Name = "الحصة الرابعة",
-                            Time = 3
+                            Time = "01:00 => 02:30"
                         },
                         new
                         {
-                            Id = new Guid("6612001e-5eb7-4add-bd7f-04337882d2ff"),
+                            Id = new Guid("9b40e8da-91b2-49b4-9467-7ada0dcd521f"),
                             Name = "الحصة الخامسة",
-                            Time = 4
+                            Time = "02:30 => 04:00"
                         },
                         new
                         {
-                            Id = new Guid("549bd3fd-79a7-476b-9cc7-11f8f1ee7c7d"),
+                            Id = new Guid("3a819c8c-de42-4d4d-b88d-6993a1369750"),
                             Name = "الحصة السادسة",
-                            Time = 5
+                            Time = "04:00 => 05:30"
                         });
                 });
 
@@ -152,17 +153,17 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2e4ef6ad-f496-42f3-9e35-906824ce7715"),
+                            Id = new Guid("650a10d4-2bdb-40de-8320-e180d6ca8e03"),
                             Name = "الشهادة الإعدادية"
                         },
                         new
                         {
-                            Id = new Guid("f2ea5c52-2c85-48ec-ab4e-5f4b5fd01597"),
+                            Id = new Guid("b8f6cc84-798d-487c-85d6-b44b4de9642d"),
                             Name = "الشهادة الثانوية - علمي"
                         },
                         new
                         {
-                            Id = new Guid("0d3429f0-91c6-436d-8449-783c1232fbb0"),
+                            Id = new Guid("be9d467b-7cab-435d-bdc6-5a3aa8f2477f"),
                             Name = "الشهادة الثانوية - أدبي"
                         });
                 });
@@ -435,9 +436,10 @@ namespace AutomatedReportAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Type")
+                    b.Property<string>("Type")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -446,15 +448,15 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("398ed3d2-8adf-4b34-bb12-e647cd804b9a"),
+                            Id = new Guid("eeb2d66a-03d5-49bf-bf78-a5497f3527a6"),
                             Password = "AaBbCc@112233",
-                            Type = 0
+                            Type = "مدير"
                         },
                         new
                         {
-                            Id = new Guid("b18084d6-1833-48b7-89bc-09b8b9fa6770"),
+                            Id = new Guid("6405cf26-97ff-4968-8275-5dc32e2c37e4"),
                             Password = "Aa@112233",
-                            Type = 0
+                            Type = "مشرف"
                         });
                 });
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AutomatedReportAPI.Migrations
 {
-    public partial class InintialCreate : Migration
+    public partial class Inintial_Create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,7 @@ namespace AutomatedReportAPI.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Time = table.Column<int>(type: "int", nullable: false)
+                    Time = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +52,7 @@ namespace AutomatedReportAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Type = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -306,9 +306,9 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("4ae732e6-30c1-4fce-87dc-3d8944d8af69"), "الشهادة الثانوية - أدبي" },
-                    { new Guid("56d54a41-9368-4d96-a3f2-545bd553a7a3"), "الشهادة الإعدادية" },
-                    { new Guid("6d815e3f-e0d5-4ef9-b576-e74aad719570"), "الشهادة الثانوية - علمي" }
+                    { new Guid("650a10d4-2bdb-40de-8320-e180d6ca8e03"), "الشهادة الإعدادية" },
+                    { new Guid("b8f6cc84-798d-487c-85d6-b44b4de9642d"), "الشهادة الثانوية - علمي" },
+                    { new Guid("be9d467b-7cab-435d-bdc6-5a3aa8f2477f"), "الشهادة الثانوية - أدبي" }
                 });
 
             migrationBuilder.InsertData(
@@ -316,12 +316,12 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "Name", "Time" },
                 values: new object[,]
                 {
-                    { new Guid("0a4db11a-3b0f-4ec6-b558-d14b7e93f244"), "الحصة الخامسة", 4 },
-                    { new Guid("42629396-6a6f-4c0b-86d4-cdebf1c65aa9"), "الحصة الأولى", 0 },
-                    { new Guid("493b6595-4fab-4178-84f7-e5bd6796e26b"), "الحصة السادسة", 5 },
-                    { new Guid("5bb4ac05-cceb-4c31-84b0-bf70e5c8ad4a"), "الحصة الثالثة", 2 },
-                    { new Guid("6f7c85f3-5154-4761-ba04-78639de1d3fa"), "الحصة الرابعة", 3 },
-                    { new Guid("8fb8c54a-1deb-4fef-bf8b-5734affc3c08"), "الحصة الثانية", 1 }
+                    { new Guid("25e08aa0-6433-4bd4-8fde-b30355639d4f"), "الحصة الرابعة", "01:00 => 02:30" },
+                    { new Guid("3a819c8c-de42-4d4d-b88d-6993a1369750"), "الحصة السادسة", "04:00 => 05:30" },
+                    { new Guid("4e4cea85-3c53-4a9a-9584-663e34ad52e8"), "الحصة الأولى", "08:30 => 10:00" },
+                    { new Guid("55cee830-4ed4-453d-bf53-dee198b56c21"), "الحصة الثانية", "10:00 => 11:30" },
+                    { new Guid("9b40e8da-91b2-49b4-9467-7ada0dcd521f"), "الحصة الخامسة", "02:30 => 04:00" },
+                    { new Guid("ff8abaf0-7cc5-4377-983a-36c1d3e40188"), "الحصة الثالثة", "11:30 => 01:00" }
                 });
 
             migrationBuilder.InsertData(
@@ -329,8 +329,8 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "Password", "Type" },
                 values: new object[,]
                 {
-                    { new Guid("94fbe68a-74a1-4444-a5be-fe85cfe8d999"), "AaBbCc@112233", 0 },
-                    { new Guid("bf28626c-a92a-44c7-b9e8-238c736c3bca"), "Aa@112233", 0 }
+                    { new Guid("6405cf26-97ff-4968-8275-5dc32e2c37e4"), "Aa@112233", "مشرف" },
+                    { new Guid("eeb2d66a-03d5-49bf-bf78-a5497f3527a6"), "AaBbCc@112233", "مدير" }
                 });
 
             migrationBuilder.CreateIndex(

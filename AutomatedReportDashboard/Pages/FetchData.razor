@@ -8,13 +8,14 @@
 
 <p>This component demonstrates fetching data from a service.</p>
 
-@if (forecasts == null)
+@if (res == null)
 {
 	<p><em>Loading...</em></p>
 }
 else
 {
-	<table class="table">
+	<div>@res</div>
+	@*<table class="table">
 		<thead>
 			<tr>
 				<th>Date</th>
@@ -34,14 +35,14 @@ else
 				</tr>
 			}
 		</tbody>
-	</table>
+	</table>*@
 }
 
 @code {
-	private WeatherForecast[] forecasts;
+	private object res;
 
 	protected override async Task OnInitializedAsync()
 	{
-		forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+		res = await ForecastService.GetForecastAsync(DateTime.Now);
 	}
 }

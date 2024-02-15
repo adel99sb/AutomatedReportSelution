@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomatedReportAPI", "Autom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomatedReportDashboard", "AutomatedReportDashboard\AutomatedReportDashboard.csproj", "{FFB240A8-C606-4FD8-8FB3-486F401AA35C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedReportCore", "AutomatedReport_DTOs\AutomatedReportCore.csproj", "{2A611256-665E-4ABF-BA4D-DA4CE3061397}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{FFB240A8-C606-4FD8-8FB3-486F401AA35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFB240A8-C606-4FD8-8FB3-486F401AA35C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFB240A8-C606-4FD8-8FB3-486F401AA35C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2A611256-665E-4ABF-BA4D-DA4CE3061397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A611256-665E-4ABF-BA4D-DA4CE3061397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A611256-665E-4ABF-BA4D-DA4CE3061397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A611256-665E-4ABF-BA4D-DA4CE3061397}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
