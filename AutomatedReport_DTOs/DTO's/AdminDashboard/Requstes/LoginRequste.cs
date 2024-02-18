@@ -1,5 +1,4 @@
 ﻿using AutomatedReport_Core;
-using AutomatedReportAPI.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

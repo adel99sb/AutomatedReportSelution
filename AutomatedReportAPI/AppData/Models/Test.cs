@@ -9,6 +9,8 @@ namespace AutomatedReportAPI.AppData.Models
         public string Description { get; set; }
         [Required]
         public DateTime DateTime { get; set; }
+        [Required]
+        public double TotalMark { get; set; }
         public Subject Subject { get; set; }
         public Division Division { get; set; }
     }

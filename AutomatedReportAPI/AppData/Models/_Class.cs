@@ -1,5 +1,4 @@
-﻿using AutomatedReportAPI.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AutomatedReportAPI.AppData.Models
 {
@@ -10,6 +9,8 @@ namespace AutomatedReportAPI.AppData.Models
         [StringLength(50)]
         public string Name { get; set; }
         [Required]
-        public string Time { get; set; }
+        public string From_Time { get; set; }
+        [Required]
+        public string To_Time { get; set; }
     }
 }

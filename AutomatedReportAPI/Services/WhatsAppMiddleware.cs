@@ -4,7 +4,6 @@
     {
         private readonly RequestDelegate _next;
         private readonly WhatsAppService _whatsAppService;
-        //private bool _hasRun = false;
 
         public WhatsAppMiddleware(RequestDelegate next, WhatsAppService whatsAppService)
         {

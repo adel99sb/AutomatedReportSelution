@@ -1,5 +1,4 @@
-﻿using AutomatedReportAPI.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AutomatedReportAPI.AppData.Models
 {

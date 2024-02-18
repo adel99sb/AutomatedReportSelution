@@ -4,12 +4,13 @@ using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.BackgroundJobs;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AutomatedReportAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [ApiExplorerSettings(GroupName = "v1")]
+    [ApiExplorerSettings(GroupName = "v2")]
     public class TestController : ControllerBase
     {
         //private readonly WhatsAppService whatsAppService;        
@@ -24,53 +25,41 @@ namespace AutomatedReportAPI.Controllers
             IBackgourndJobService backgourndJobService)
         {
             _logger = logger;
-            //this.whatsAppService = whatsAppService;
+           // this.whatsAppService = whatsAppService;
             this.classRepository = classRepository;
             this.backgourndJobService = backgourndJobService;
         }
-        [HttpGet("GetClasses")]
-        public async Task<IActionResult> GetAllClasses()
+        [HttpGet("Set_BirthDay")]
+        public async Task<IActionResult> Set_BirthDay()
         {            
             var result = classRepository.GetAll();
             List<string> classes = new List<string>();
-            //foreach (var c in result.OrderBy(v => ((int)v.Time)))
-            //{
-            //    classes.Add($"{c.Name} من {c.Time.GetDisplayName()}");
-            //}
-            //var res = new Responce()
-            //{
-            //    Message = "messages Sent Succesfully",
-            //    StatusCode = Ok().StatusCode,
-            //    ResultJson = classes
-            //};
-            //var date = new DateTime(1999,9,9);
-            //await backgourndJobService.SendBirthDayMessage("done bithcssssss",date);
-            //return Ok(res);
+            var date = new DateTime(1999, 9, 9);
+            await backgourndJobService.SendBirthDayMessage("done bithcssssss", date);
             return Ok();
         }
         [HttpPost("SendMessage")]
-        public async Task<IActionResult> SendMessage(string message,_Class _Class)
+        public async Task<IActionResult> SendMessage([FromQuery][Required]string Message)
         {
             var reciptents = new List<string>
             {
-                "+963 992 679 607",
+                //"+963 998 711 158",
+                //"+963 998 711 158",
                 "+963 992 679 607",
                 "+963 992 679 607"
             };
-            //var res = await whatsAppService.SendMessageToList(reciptents, message);
-            //Console.WriteLine(res);
-            //return Ok(res);
-            if (!ModelState.IsValid)
-            {               
-                return BadRequest(ModelState.GetErrors());
-            }
-            //var res = new Responce()
+            //try
             //{
-            //    Message = "messages Sent Succesfully",
-            //    StatusCode = Ok().StatusCode,
-            //    ResultJson = reciptents
-            //};
-            //return Ok(res);
+            //    var res = whatsAppService.SendMessageToList(reciptents, Message);
+            //    if (res.IsCompleted)
+            //        return Ok(res.Result);
+            //    else
+            //        return BadRequest(res.Result);
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}            
             return Ok();
         }
     }    

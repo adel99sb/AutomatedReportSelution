@@ -14,19 +14,19 @@ namespace AutomatedReportAPI.Services
             EdgeDriver = new EdgeDriver();
             EdgeDriver.Navigate().GoToUrl("https://web.whatsapp.com/");
             isReady = false;
+            Console.WriteLine("Please scan the QR code and log in to WhatsApp Web.");
         }
         public bool isReadyToRun()
         {
-            Console.WriteLine("Please scan the QR code and log in to WhatsApp Web.");
             try
             {
                 SearchInput = EdgeDriver.FindElement(By.CssSelector("div[contenteditable='true']"));
-                Console.WriteLine("Search input Find !!");
+                Console.WriteLine("WhatsApp Service Is Ready !!");
                 isReady = true;
             }
             catch (Exception)
             {
-                Console.WriteLine("not ready yet !!");
+                Console.WriteLine("WhatsApp Service Is Not Ready yet !!");
                 isReady = false;
             }
             return isReady;
@@ -50,8 +50,8 @@ namespace AutomatedReportAPI.Services
                         if (recipients.Count - FiledTimes == 0)
                             return $"{recipients.Count} Messages Sent Succesfully";
                         else
-                            return $"{recipients.Count - FiledTimes} Sent and {FiledTimes}" +
-                                $"has filed";
+                            return $"{recipients.Count - FiledTimes} Messages Sent and {FiledTimes}" +
+                                $" has filed";
                     }
                     catch (Exception ex)
                     {

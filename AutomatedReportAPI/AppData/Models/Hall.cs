@@ -2,13 +2,10 @@
 
 namespace AutomatedReportAPI.AppData.Models
 {
-    public class Teacher
+    public class Hall
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         [Required]
-        [StringLength(50)]
-        public string Full_Name { get; set; }        
-        [StringLength(16)]
-        public string? Phone { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -28,12 +28,16 @@ namespace AutomatedReportAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("From_Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Time")
+                    b.Property<string>("To_Time")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -44,39 +48,45 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4e4cea85-3c53-4a9a-9584-663e34ad52e8"),
+                            Id = new Guid("54480f6f-9b8b-4e12-a921-6c27ecdfa8aa"),
+                            From_Time = "08:30",
                             Name = "الحصة الأولى",
-                            Time = "08:30 => 10:00"
+                            To_Time = "10:00"
                         },
                         new
                         {
-                            Id = new Guid("55cee830-4ed4-453d-bf53-dee198b56c21"),
+                            Id = new Guid("8a13e7e0-8ae8-4f58-881c-5d988acb1869"),
+                            From_Time = "10:00",
                             Name = "الحصة الثانية",
-                            Time = "10:00 => 11:30"
+                            To_Time = "11:30"
                         },
                         new
                         {
-                            Id = new Guid("ff8abaf0-7cc5-4377-983a-36c1d3e40188"),
+                            Id = new Guid("d1dcb2c0-7e64-45f1-b9ba-7d9673237215"),
+                            From_Time = "11:30",
                             Name = "الحصة الثالثة",
-                            Time = "11:30 => 01:00"
+                            To_Time = "01:00"
                         },
                         new
                         {
-                            Id = new Guid("25e08aa0-6433-4bd4-8fde-b30355639d4f"),
+                            Id = new Guid("7e3a5dd4-df51-4982-9446-0345df038d44"),
+                            From_Time = "01:00",
                             Name = "الحصة الرابعة",
-                            Time = "01:00 => 02:30"
+                            To_Time = "02:30"
                         },
                         new
                         {
-                            Id = new Guid("9b40e8da-91b2-49b4-9467-7ada0dcd521f"),
+                            Id = new Guid("547498e8-664d-49cf-9ad0-c3b21f03b297"),
+                            From_Time = "02:30",
                             Name = "الحصة الخامسة",
-                            Time = "02:30 => 04:00"
+                            To_Time = "03:00"
                         },
                         new
                         {
-                            Id = new Guid("3a819c8c-de42-4d4d-b88d-6993a1369750"),
+                            Id = new Guid("100eaf83-d59b-4be2-bbf3-60d6f8424f23"),
+                            From_Time = "03:00",
                             Name = "الحصة السادسة",
-                            Time = "04:00 => 05:30"
+                            To_Time = "04:30"
                         });
                 });
 
@@ -107,8 +117,8 @@ namespace AutomatedReportAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid>("DailySessions_RecordId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Enter_Time")
                         .IsRequired()
@@ -121,14 +131,11 @@ namespace AutomatedReportAPI.Migrations
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("sessionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("DailySessions_RecordId");
 
-                    b.HasIndex("sessionId");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Attendances");
                 });
@@ -151,19 +158,42 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("650a10d4-2bdb-40de-8320-e180d6ca8e03"),
+                            Id = new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"),
                             Name = "الشهادة الإعدادية"
                         },
                         new
                         {
-                            Id = new Guid("b8f6cc84-798d-487c-85d6-b44b4de9642d"),
-                            Name = "الشهادة الثانوية - علمي"
+                            Id = new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"),
+                            Name = "الشهادة الثانوية - أدبي"
                         },
                         new
                         {
-                            Id = new Guid("be9d467b-7cab-435d-bdc6-5a3aa8f2477f"),
-                            Name = "الشهادة الثانوية - أدبي"
+                            Id = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "الشهادة الثانوية - علمي"
                         });
+                });
+
+            modelBuilder.Entity("AutomatedReportAPI.AppData.Models.DailySessions_Record", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Sessions_RecordId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Subject_Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Sessions_RecordId");
+
+                    b.ToTable("DailySessions_Records");
                 });
 
             modelBuilder.Entity("AutomatedReportAPI.AppData.Models.Division", b =>
@@ -185,6 +215,21 @@ namespace AutomatedReportAPI.Migrations
                     b.HasIndex("CertificateId");
 
                     b.ToTable("Divisions");
+                });
+
+            modelBuilder.Entity("AutomatedReportAPI.AppData.Models.Hall", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hall");
                 });
 
             modelBuilder.Entity("AutomatedReportAPI.AppData.Models.Payment", b =>
@@ -249,6 +294,9 @@ namespace AutomatedReportAPI.Migrations
                     b.Property<Guid>("DivisionId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("HallId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("uniqueidentifier");
 
@@ -261,6 +309,8 @@ namespace AutomatedReportAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DivisionId");
+
+                    b.HasIndex("HallId");
 
                     b.HasIndex("SubjectId");
 
@@ -344,6 +394,158 @@ namespace AutomatedReportAPI.Migrations
                     b.HasIndex("CertificateId");
 
                     b.ToTable("Subjects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("de18a1b8-b55a-49a5-9dff-29274d33d5e0"),
+                            CertificateId = new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"),
+                            Name = "رياضيات"
+                        },
+                        new
+                        {
+                            Id = new Guid("2fc418cd-e827-468d-855d-67db6e805dfd"),
+                            CertificateId = new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"),
+                            Name = "فيزياء و كيمياء"
+                        },
+                        new
+                        {
+                            Id = new Guid("ab66d2cd-3029-4e26-b884-aae60d62208d"),
+                            CertificateId = new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"),
+                            Name = "علوم"
+                        },
+                        new
+                        {
+                            Id = new Guid("18287ed1-6d11-4ecc-9d6e-6a23873f0e27"),
+                            CertificateId = new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"),
+                            Name = "لغة انكليزية"
+                        },
+                        new
+                        {
+                            Id = new Guid("e6a7af08-985a-42d3-a361-931e055f8ba8"),
+                            CertificateId = new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"),
+                            Name = "لغة فرنسية"
+                        },
+                        new
+                        {
+                            Id = new Guid("9e45f555-64fa-497c-90b3-bb6a89b1fcc9"),
+                            CertificateId = new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"),
+                            Name = "لغة عربية"
+                        },
+                        new
+                        {
+                            Id = new Guid("bf242ba9-2b78-45c6-8292-df52829a616e"),
+                            CertificateId = new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"),
+                            Name = "اجتماعيات"
+                        },
+                        new
+                        {
+                            Id = new Guid("b061b6a6-2fb8-4d24-bce4-07a5b9539850"),
+                            CertificateId = new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"),
+                            Name = "ديانة"
+                        },
+                        new
+                        {
+                            Id = new Guid("e809e402-4e3e-4a72-a108-8660f8f94e74"),
+                            CertificateId = new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"),
+                            Name = "جغرافيا"
+                        },
+                        new
+                        {
+                            Id = new Guid("04c0ef73-cef7-4b85-a5a8-0d5480c29488"),
+                            CertificateId = new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"),
+                            Name = "لغة عربية"
+                        },
+                        new
+                        {
+                            Id = new Guid("725910ba-fcd6-44b0-8d59-da1e188a2cd3"),
+                            CertificateId = new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"),
+                            Name = "لغة فرنسية"
+                        },
+                        new
+                        {
+                            Id = new Guid("c763d7dc-d47e-4bc2-b335-75c3b58b5f5e"),
+                            CertificateId = new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"),
+                            Name = "وطنية"
+                        },
+                        new
+                        {
+                            Id = new Guid("a968c0cd-c8d0-4a80-b04f-4391cc54c331"),
+                            CertificateId = new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"),
+                            Name = "فلسفة"
+                        },
+                        new
+                        {
+                            Id = new Guid("4859812d-9f19-4f69-9c3b-edb13bcf57b5"),
+                            CertificateId = new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"),
+                            Name = "لغة انكليزية"
+                        },
+                        new
+                        {
+                            Id = new Guid("9636e080-8c92-4f03-84ac-0d45d11f5184"),
+                            CertificateId = new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"),
+                            Name = "ديانة"
+                        },
+                        new
+                        {
+                            Id = new Guid("a92d8aa1-c783-4a05-8066-7c0d40553e49"),
+                            CertificateId = new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"),
+                            Name = "تاريخ"
+                        },
+                        new
+                        {
+                            Id = new Guid("26a68f1c-8192-42c4-acff-88eb5f876741"),
+                            CertificateId = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "فيزياء"
+                        },
+                        new
+                        {
+                            Id = new Guid("925432df-b41f-4aec-8b82-a17742b43a87"),
+                            CertificateId = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "لغة عربية"
+                        },
+                        new
+                        {
+                            Id = new Guid("7af3288b-35d2-49fb-8c1f-eab7bb77d75f"),
+                            CertificateId = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "لغة فرنسية"
+                        },
+                        new
+                        {
+                            Id = new Guid("919165e1-49aa-41f6-adf2-5271a4b6b639"),
+                            CertificateId = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "وطنية"
+                        },
+                        new
+                        {
+                            Id = new Guid("425cf91c-887d-4f4e-9b90-0a490d77b3a6"),
+                            CertificateId = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "رياضيات"
+                        },
+                        new
+                        {
+                            Id = new Guid("e97949c3-1073-49e8-acc7-9ffc8e188410"),
+                            CertificateId = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "لغة انكليزية"
+                        },
+                        new
+                        {
+                            Id = new Guid("1e17efcb-d6c0-4dab-afc3-b02e761c7d55"),
+                            CertificateId = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "ديانة"
+                        },
+                        new
+                        {
+                            Id = new Guid("e42b56cd-36c9-43eb-8cd8-fae8d6c0f954"),
+                            CertificateId = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "علم أحياء"
+                        },
+                        new
+                        {
+                            Id = new Guid("622de670-66c7-4637-888c-eabd2afa2d10"),
+                            CertificateId = new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"),
+                            Name = "كيمياء"
+                        });
                 });
 
             modelBuilder.Entity("AutomatedReportAPI.AppData.Models.Teacher", b =>
@@ -361,12 +563,7 @@ namespace AutomatedReportAPI.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
-                    b.Property<Guid>("SubjectId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
 
                     b.ToTable("Teachers");
                 });
@@ -389,6 +586,9 @@ namespace AutomatedReportAPI.Migrations
 
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("TotalMark")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -446,13 +646,13 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("eeb2d66a-03d5-49bf-bf78-a5497f3527a6"),
+                            Id = new Guid("90047aef-e518-4c7d-9097-c21e2335743f"),
                             Password = "AaBbCc@112233",
                             Type = "مدير"
                         },
                         new
                         {
-                            Id = new Guid("6405cf26-97ff-4968-8275-5dc32e2c37e4"),
+                            Id = new Guid("a2aef319-f5b5-473b-8219-66a10f49b229"),
                             Password = "Aa@112233",
                             Type = "مشرف"
                         });
@@ -460,21 +660,32 @@ namespace AutomatedReportAPI.Migrations
 
             modelBuilder.Entity("AutomatedReportAPI.AppData.Models.Attendance", b =>
                 {
+                    b.HasOne("AutomatedReportAPI.AppData.Models.DailySessions_Record", "DailySessions_Record")
+                        .WithMany()
+                        .HasForeignKey("DailySessions_RecordId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("AutomatedReportAPI.AppData.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("AutomatedReportAPI.AppData.Models.Sessions_Record", "session")
+                    b.Navigation("DailySessions_Record");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("AutomatedReportAPI.AppData.Models.DailySessions_Record", b =>
+                {
+                    b.HasOne("AutomatedReportAPI.AppData.Models.Sessions_Record", "Sessions_Record")
                         .WithMany()
-                        .HasForeignKey("sessionId")
+                        .HasForeignKey("Sessions_RecordId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Student");
-
-                    b.Navigation("session");
+                    b.Navigation("Sessions_Record");
                 });
 
             modelBuilder.Entity("AutomatedReportAPI.AppData.Models.Division", b =>
@@ -518,6 +729,12 @@ namespace AutomatedReportAPI.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("AutomatedReportAPI.AppData.Models.Hall", "Hall")
+                        .WithMany()
+                        .HasForeignKey("HallId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("AutomatedReportAPI.AppData.Models.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
@@ -531,6 +748,8 @@ namespace AutomatedReportAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Division");
+
+                    b.Navigation("Hall");
 
                     b.Navigation("Subject");
 
@@ -557,17 +776,6 @@ namespace AutomatedReportAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Certificate");
-                });
-
-            modelBuilder.Entity("AutomatedReportAPI.AppData.Models.Teacher", b =>
-                {
-                    b.HasOne("AutomatedReportAPI.AppData.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("AutomatedReportAPI.AppData.Models.Test", b =>

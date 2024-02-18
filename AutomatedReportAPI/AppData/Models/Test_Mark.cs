@@ -6,7 +6,7 @@ namespace AutomatedReportAPI.AppData.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         [Required]
-        [Range(0,3000)]
+        [Range(0,5000)]
         public double Mark { get; set; }
         public Test Test { get; set; }
         public Student Student { get; set; }
