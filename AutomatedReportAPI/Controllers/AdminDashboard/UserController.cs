@@ -1,87 +1,63 @@
-﻿using AutomatedReport_Core.DTO_s.AdminDashboard.Responces;
-using AutomatedReport_DTOs;
+﻿using AutomatedReport_DTOs;
 using AutomatedReport_DTOs.AdminDashboard.Requstes;
-using AutomatedReportAPI.Infrastructure.Contracts;
+using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.ComponentModel.DataAnnotations;
 
 namespace AutomatedReportAPI.Controllers.AdminDashboard
 {
     [ApiController]
     [Route("api/[controller]")]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class UserController : ControllerBase
+    public class UserController : ControllerBase , IUserService<IActionResult>
     {
-        private readonly IUserRepository userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly IUserService<IGeneralResponse> userService;
+        public UserController(IUserService<IGeneralResponse> userService)
         {
-            this.userRepository = userRepository;
+            this.userService = userService;
         }
         [HttpGet("Login")]
-        public async Task<IActionResult> Login([FromQuery] LoginRequste requste)
+        public async Task<IActionResult> Login([Required][FromQuery] LoginRequste request)
         {
-            var users = userRepository.GetAll();
-            var userDto = new UserDto();
-            LoginResponse response;
-
-            foreach (var user in users)
+            try
             {
-                if (user.Type == requste.UserType && user.Password == requste.Password)
-                {
-                    userDto.Id = user.Id;
-                    userDto.Type = user.Type;
-                    response = new LoginResponse(userDto);
-                    response.Message = "Login Succesfully";
-                    return Ok(response);
-                }
-                else
-                {
-                    response = new LoginResponse(null);
-                    response.Message = "Check The User Name Or Passwrod Then Try Again !!";
-                    return BadRequest(response);
-                }
+                var Result = await userService.Login(request);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
             }
-            return BadRequest();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }            
         }
         [HttpGet("GetUsers")]
         public async Task<IActionResult> GetUsers()
         {
-            var users = userRepository.GetAll();
-            var usersDto = new List<UsersDto>();
-            GetUsersResponse response;
-
-            foreach (var user in users)
+            try
             {
-                usersDto.Add(new UsersDto()
-                {
-                    Id = user.Id,
-                    Type = user.Type,
-                    Password = user.Password
-                });                                                  
+                var Result = await userService.GetUsers();
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
             }
-            response = new GetUsersResponse(usersDto);
-            response.Message = "Get Users Succesfully";
-            return Ok(response);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("EditeUserPassword")]
-        public async Task<IActionResult> EditeUserPassword([FromQuery] EditeUserPasswordRequste requste)
+        public async Task<IActionResult> EditeUserPassword([Required][FromQuery] EditeUserPasswordRequste request)
         {
-            var user = await userRepository.GetById(requste.Id);
-            GeneralResponse response = new GeneralResponse(null);
-            
-            if (user != null)
+            try
             {
-                user.Password = requste.NewPassword;
-                await userRepository.Update(user);
-                response.Message = "User Password Edited Succesfully";
-                return Ok(response);
+                var Result = await userService.EditeUserPassword(request);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
             }
-            else
+            catch (Exception ex)
             {
-                response.Message = "User Not Found !!";
-                return BadRequest(response);
+                return BadRequest(ex.Message);
             }
-        }
+        }        
     }
 }

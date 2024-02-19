@@ -1,4 +1,4 @@
-﻿namespace AutomatedReportAPI.Services
+﻿namespace AutomatedReportAPI.Services.WhatsAppSetting
 {
     public class WhatsAppMiddleware
     {

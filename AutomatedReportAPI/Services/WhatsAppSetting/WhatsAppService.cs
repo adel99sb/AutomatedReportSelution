@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
 
-namespace AutomatedReportAPI.Services
+namespace AutomatedReportAPI.Services.WhatsAppSetting
 {
     public class WhatsAppService
     {

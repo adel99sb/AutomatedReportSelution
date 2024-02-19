@@ -1,19 +1,22 @@
-﻿using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReport_DTOs;
+using AutomatedReportAPI.Controllers.AdminDashboard;
+using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Infrastructure.Repositories;
 using AutomatedReportAPI.Services.BackgroundJobs;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportAPI.Services.EntityServices.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AutomatedReportAPI.Services
 {
     public static class ServiceRegistrationExtensions
     {
-        public static IServiceCollection AddMyRepositories(this IServiceCollection services)
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             return services
                 .AddScoped<IAdvertisementRepository, AdvertisementRepository>()
                 .AddScoped<IAttendanceRepository, AttendanceRepository>()
-                .AddScoped<ICertificateRepository, CertificateRepository>()
                 .AddScoped<IClassRepository, ClassRepository>()
-                .AddScoped<IDivisionRepository, DivisionRepository>()
                 .AddScoped<IPaymentRepository, PaymentRepository>()
                 .AddScoped<IScoreRepository, ScoreRepository>()
                 .AddScoped<ISessions_RecordRepository, Sessions_RecordRepository>()
@@ -22,9 +25,26 @@ namespace AutomatedReportAPI.Services
                 .AddScoped<ITeacherRepository, TeacherRepository>()
                 .AddScoped<ITestRepository, TestRepository>()
                 .AddScoped<ITest_MarkRepository, Test_MarkRepository>()
+                .AddScoped<IDivisionRepository, DivisionRepository>()
+                .AddScoped<IHallRepository, HallRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
-                // To Remove later
-                .AddScoped<IBackgourndJobService,BackgourndJobService>();
+                .AddScoped<IDailySessions_RecordRepository, DailySessions_RecordRepository>()
+                .AddScoped<ICertificateRepository, CertificateRepository>();
         }
-    }
+        public static IServiceCollection AddBackgourndJob(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<IBackgourndJobService, BackgourndJobService>();
+        }
+        public static IServiceCollection AddServices(this IServiceCollection services)
+        {
+            return services
+                .AddScoped(typeof(IUserService<IGeneralResponse>), typeof(UserService))
+                .AddScoped(typeof(IUserService<IActionResult>), typeof(UserController))
+                .AddScoped(typeof(ICertificateService<IGeneralResponse>), typeof(CertificateService))
+                .AddScoped(typeof(ICertificateService<IActionResult>), typeof(CertificateController))
+                .AddScoped(typeof(IDivisionService<IGeneralResponse>), typeof(DivisionService))
+                .AddScoped(typeof(IDivisionService<IActionResult>), typeof(DivisionController));
+        }
+    } 
 }

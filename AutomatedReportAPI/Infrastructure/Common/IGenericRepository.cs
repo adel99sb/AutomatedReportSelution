@@ -1,4 +1,4 @@
-﻿namespace AutomatedReportAPI.Infrastructure.Contracts
+﻿namespace AutomatedReportAPI.Infrastructure.Common
 {
     public interface IGenericRepository<TEntity>
         where TEntity : class
@@ -11,6 +11,6 @@
 
         Task Update(TEntity entity);
 
-        Task Delete(Guid id);    
+        Task Delete(Guid id);
     }
 }

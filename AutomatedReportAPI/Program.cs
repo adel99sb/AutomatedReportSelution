@@ -46,7 +46,9 @@ builder.Services.AddSwaggerGen(options =>
 }).AddMvc();
 
 //builder.Services.AddSingleton<WhatsAppService>();
-builder.Services.AddMyRepositories();
+builder.Services.AddRepositories();
+builder.Services.AddBackgourndJob();
+builder.Services.AddServices();
 
 var app = builder.Build();
 //app.UseMiddleware<WhatsAppMiddleware>();

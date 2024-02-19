@@ -1,14 +1,9 @@
-﻿using AutomatedReport_Core.DTO_s.AdminDashboard.Responces;
-using AutomatedReport_DTOs;
+﻿using AutomatedReport_DTOs;
 using AutomatedReport_DTOs.AdminDashboard.Requstes;
-using AutomatedReportAPI.AppData.Models;
 using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services;
-using AutomatedReportCore.DTO_s.AdminDashboard.Models;
-using Microsoft.AspNetCore.Http;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace AutomatedReportAPI.Controllers.AdminDashboard
@@ -16,151 +11,96 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiController]
     [Route("api/[controller]")]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class DivisionController : ControllerBase
+    public class DivisionController : ControllerBase ,IDivisionService<IActionResult>
     {
-        private readonly IDivisionRepository divisionRepository;
-        private readonly ICertificateRepository certificateRepository;
-        public DivisionController(IDivisionRepository divisionRepository, ICertificateRepository certificateRepository)
+        private readonly IDivisionService<IGeneralResponse> divisionService;
+        public DivisionController(IDivisionService<IGeneralResponse> divisionService)
         {
-            this.divisionRepository = divisionRepository;
-            this.certificateRepository = certificateRepository;
+            this.divisionService = divisionService;            
         }
         [HttpPost("AddDivision")]
-        public async Task<IActionResult> AddDivision([FromBody] AddDivisionRequste requste)
+        public async Task<IActionResult> AddDivision([Required][FromBody] AddDivisionRequste requste)
         {
-            var certificate = await certificateRepository.GetById(requste.CertificateId);
-            GeneralResponse response = new GeneralResponse(null);
-
-            if (certificate != null)
+            try
             {
-                var NewDivision = new Division()
-                {
-                    Name = requste.Name,
-                    Certificate = certificate
-                };
-
-                await divisionRepository.Create(NewDivision);
-
-                response.Message = "Division Added Succesfully";
-                return Ok(response);
+                var Result = await divisionService.AddDivision(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
             }
-            else
+            catch (Exception ex)
             {
-                response.Message = "Certificate Not Found !!";
-                return BadRequest(response);
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("DeleteDivisione")]
+        public async Task<IActionResult> DeleteDivisione([Required][FromQuery] Guid id)
+        {
+            try
+            {
+                var Result = await divisionService.DeleteDivisione(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
         [HttpPut("EditeDivision")]
-        public async Task<IActionResult> EditeDivision([FromBody] EditeDivisionRequste requste)
+        public async Task<IActionResult> EditeDivision([Required][FromBody] EditeDivisionRequste requste)
         {
-            var certificate = await certificateRepository.GetById(requste.CertificateId);
-            var division = await divisionRepository.GetById(requste.Id);
-            GeneralResponse response = new GeneralResponse(null);
-
-            if (division != null)
+            try
             {
-                if (certificate != null)
-                {
-                    var NewDivision = new Division()
-                    {
-                        Id = requste.Id,
-                        Name = requste.Name,
-                        Certificate = certificate
-                    };
-
-                    await divisionRepository.Update(NewDivision);
-
-                    response.Message = "Division Edited Succesfully";
-                    return Ok(response);
-                }
-                else
-                {
-                    response.Message = "Certificate Not Found !!";
-                    return BadRequest(response);
-                }
+                var Result = await divisionService.EditeDivision(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
             }
-            else
+            catch (Exception ex)
             {
-                response.Message = "Division Not Found !!";
-                return BadRequest(response);
+                return BadRequest(ex.Message);
             }
         }
         [HttpGet("GetAllDivisiones")]
         public async Task<IActionResult> GetAllDivisiones()
         {
-            var Divisionses = divisionRepository.GetAll().Include(c => c.Certificate);
-            var DivisionsesDtos = new List<DivisionDto>();
-            GetAllDivisionesResponse response;
-
-            if (Divisionses.Count() != 0)
+            try
             {
-                foreach (var Division in Divisionses)
-                {
-                    DivisionsesDtos.Add(new DivisionDto()
-                    {
-                        Id = Division.Id,
-                        Name = Division.Name,
-                        CertificateName = Division.Certificate.Name
-                    });
-                }
-                response = new GetAllDivisionesResponse(DivisionsesDtos);
-                response.Message = "Get Divisiones Succesfully";
-                return Ok(response);
+                var Result = await divisionService.GetAllDivisiones();
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
             }
-            else
+            catch (Exception ex)
             {
-                response = new GetAllDivisionesResponse(null);
-                response.Message = "No Divisiones Found";
-                return BadRequest(response);
-            }
-        }
-        [HttpDelete("DeleteDivisione")]
-        public async Task<IActionResult> DeleteDivisione([FromQuery][Required] Guid Id)
-        {
-            var division = await divisionRepository.GetById(Id);
-            GeneralResponse response = new GeneralResponse(null);
-
-            if (division != null)
-            {
-                await divisionRepository.Delete(Id);
-
-                response.Message = "Division Deleted Succesfully";
-                return Ok(response);
-            }
-            else
-            {
-                response.Message = "Division Not Found !!";
-                return BadRequest(response);
+                return BadRequest(ex.Message);
             }
         }
         [HttpGet("GetDivisioneById")]
-        public async Task<IActionResult> GetDivisioneById([FromQuery][Required] Guid Id)
-        {            
-            var divisionDtos = new DivisionDto();
-            GetDivisioneByIdResponse response;
-
+        public async Task<IActionResult> GetDivisioneById([Required][FromQuery] Guid id)
+        {
             try
             {
-                var division = divisionRepository.GetAll().Where(d => d.Id == Id)
-                .Include(c => c.Certificate).First();
-                if (division != null)
-                {
-                    divisionDtos.Id = division.Id;
-                    divisionDtos.Name = division.Name;
-                    divisionDtos.CertificateName = division.Certificate.Name;
-
-                    response = new GetDivisioneByIdResponse(divisionDtos);
-                    response.Message = "Get Division Succesfully";
-                    return Ok(response);
-                }                
+                var Result = await divisionService.GetDivisioneById(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                response = new GetDivisioneByIdResponse(null);
-                response.Message = "No Division Found";
-                return BadRequest(response);
+                return BadRequest(ex.Message);
             }
-            return BadRequest();
+        }
+        [HttpGet("GetDivisionsByCertificateName")]
+        public async Task<IActionResult> GetDivisionsByCertificateName([Required][FromQuery] string certificateName)
+        {
+            try
+            {
+                var Result = await divisionService.GetDivisionsByCertificateName(certificateName);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

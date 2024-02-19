@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AutomatedReport_Core.DTO_s.AdminDashboard.Responces
 {
-    public class LoginResponse : GeneralResponse
+    public class LoginResponse : GeneralResponse,IGeneralResponse
     {
         public LoginResponse(UserDto user) : base(user) { }
     }

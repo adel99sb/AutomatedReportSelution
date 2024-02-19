@@ -1,8 +1,7 @@
-﻿using AutomatedReport_Core.DTO_s.AdminDashboard.Responces;
+﻿using AutomatedReport_DTOs;
 using AutomatedReportAPI.Infrastructure.Contracts;
-using AutomatedReportAPI.Infrastructure.Repositories;
-using AutomatedReportCore.DTO_s.AdminDashboard.Models;
-using Microsoft.AspNetCore.Http;
+using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutomatedReportAPI.Controllers.AdminDashboard
@@ -10,31 +9,26 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiController]
     [Route("api/[controller]")]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class CertificateController : ControllerBase
+    public class CertificateController : ControllerBase , ICertificateService<IActionResult>
     {
-        private readonly ICertificateRepository certificateRepository;
-        public CertificateController(ICertificateRepository certificateRepository)
+        private readonly ICertificateService<IGeneralResponse> certificateService;
+        public CertificateController(ICertificateService<IGeneralResponse> certificateService)
         {
-            this.certificateRepository = certificateRepository;
+            this.certificateService = certificateService;
         }
         [HttpGet("GetAllCertificates")]
         public async Task<IActionResult> GetAllCertificates()
         {
-            var Certificates = certificateRepository.GetAll();
-            var certificatesDto = new List<CertificateDto>();
-            GetAllCertificatesResponse response;
-
-            foreach (var certificate in Certificates)
+            try
             {
-                certificatesDto.Add(new CertificateDto()
-                {
-                    Id = certificate.Id,
-                    Name = certificate.Name
-                });
+                var Result = await certificateService.GetAllCertificates();
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
             }
-            response = new GetAllCertificatesResponse(certificatesDto);
-            response.Message = "Get Certificates Succesfully";
-            return Ok(response);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
