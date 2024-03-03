@@ -11,7 +11,7 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiController]
     [Route("api/[controller]")]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class DivisionController : ControllerBase ,IDivisionService<IActionResult>
+    public class DivisionController : ControllerBase, IDivisionService<IActionResult>
     {
         private readonly IDivisionService<IGeneralResponse> divisionService;
         public DivisionController(IDivisionService<IGeneralResponse> divisionService)
@@ -19,88 +19,34 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
             this.divisionService = divisionService;            
         }
         [HttpPost("AddDivision")]
-        public async Task<IActionResult> AddDivision([Required][FromBody] AddDivisionRequste requste)
+        public Task<IActionResult> AddDivision([Required,FromBody] AddDivisionRequste requste)
         {
-            try
-            {
-                var Result = await divisionService.AddDivision(requste);
-                var Response = Result.StatusCode.ToActionResult(Result);
-                return Response;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            throw new NotImplementedException();
         }
-        [HttpDelete("DeleteDivisione")]
-        public async Task<IActionResult> DeleteDivisione([Required][FromQuery] Guid id)
+        [HttpDelete("DeleteDivision")]
+        public Task<IActionResult> DeleteDivision([Required,FromQuery] Guid id)
         {
-            try
-            {
-                var Result = await divisionService.DeleteDivisione(id);
-                var Response = Result.StatusCode.ToActionResult(Result);
-                return Response;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            throw new NotImplementedException();
         }
         [HttpPut("EditeDivision")]
-        public async Task<IActionResult> EditeDivision([Required][FromBody] EditeDivisionRequste requste)
+        public Task<IActionResult> EditeDivision([Required, FromBody] EditeDivisionRequste requste)
         {
-            try
-            {
-                var Result = await divisionService.EditeDivision(requste);
-                var Response = Result.StatusCode.ToActionResult(Result);
-                return Response;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            throw new NotImplementedException();
         }
-        [HttpGet("GetAllDivisiones")]
-        public async Task<IActionResult> GetAllDivisiones()
+        [HttpGet("GetAllDivisions")]
+        public Task<IActionResult> GetAllDivisions([FromQuery]Guid? certificateId)
         {
-            try
-            {
-                var Result = await divisionService.GetAllDivisiones();
-                var Response = Result.StatusCode.ToActionResult(Result);
-                return Response;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            throw new NotImplementedException();
         }
-        [HttpGet("GetDivisioneById")]
-        public async Task<IActionResult> GetDivisioneById([Required][FromQuery] Guid id)
+        [HttpGet("GetAllDivisionsWithStudentsNomber")]
+        public Task<IActionResult> GetAllDivisionsWithStudentsNomber([Required,FromQuery]Guid certificateId)
         {
-            try
-            {
-                var Result = await divisionService.GetDivisioneById(id);
-                var Response = Result.StatusCode.ToActionResult(Result);
-                return Response;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            throw new NotImplementedException();
         }
-        [HttpGet("GetDivisionsByCertificateName")]
-        public async Task<IActionResult> GetDivisionsByCertificateName([Required][FromQuery] string certificateName)
+        [HttpGet("GetDivisionById")]
+        public Task<IActionResult> GetDivisionById([Required,FromQuery] Guid id)
         {
-            try
-            {
-                var Result = await divisionService.GetDivisionsByCertificateName(certificateName);
-                var Response = Result.StatusCode.ToActionResult(Result);
-                return Response;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            throw new NotImplementedException();
         }
     }
 }

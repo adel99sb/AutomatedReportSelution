@@ -1,11 +1,4 @@
-﻿using AutomatedReport_Core;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AutomatedReport_DTOs.AdminDashboard.Requstes
 {
@@ -14,7 +7,6 @@ namespace AutomatedReport_DTOs.AdminDashboard.Requstes
         [Required(ErrorMessage = "User Type Filed Is Required")]
         public string UserType { get; set; }
         [Required(ErrorMessage = "Password Filed Is Required")]
-        [PasswordPropertyText]
         public string Password { get; set; }
     }
 }

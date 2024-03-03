@@ -18,7 +18,7 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
             this.userService = userService;
         }
         [HttpGet("Login")]
-        public async Task<IActionResult> Login([Required][FromQuery] LoginRequste request)
+        public async Task<IActionResult> Login([Required,FromQuery] LoginRequste request)
         {
             try
             {
@@ -31,12 +31,12 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
                 return BadRequest(ex.Message);
             }            
         }
-        [HttpGet("GetUsers")]
-        public async Task<IActionResult> GetUsers()
+        [HttpGet("GetAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
         {
             try
             {
-                var Result = await userService.GetUsers();
+                var Result = await userService.GetAllUsers();
                 var Response = Result.StatusCode.ToActionResult(Result);
                 return Response;
             }
@@ -46,7 +46,7 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
             }
         }
         [HttpPut("EditeUserPassword")]
-        public async Task<IActionResult> EditeUserPassword([Required][FromQuery] EditeUserPasswordRequste request)
+        public async Task<IActionResult> EditeUserPassword([Required,FromQuery] EditeUserPasswordRequste request)
         {
             try
             {

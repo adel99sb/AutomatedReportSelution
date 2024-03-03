@@ -46,20 +46,19 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             return response;
         }
 
-        public async Task<IGeneralResponse> GetUsers()
+        public async Task<IGeneralResponse> GetAllUsers()
         {
-            var usersDto = new List<UsersDto>();
+            var usersDto = new List<UserDto>();
             IGeneralResponse response;
             try
             {
                 var users = userRepository.GetAll();
                 foreach (var user in users)
                 {
-                    usersDto.Add(new UsersDto()
+                    usersDto.Add(new UserDto()
                     {
                         Id = user.Id,
-                        Type = user.Type,
-                        Password = user.Password
+                        Type = user.Type
                     });
                 }
                 if (usersDto.Count != 0)
