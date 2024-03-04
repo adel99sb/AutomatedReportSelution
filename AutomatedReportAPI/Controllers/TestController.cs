@@ -1,5 +1,4 @@
-﻿using AutomatedReport_Core;
-using AutomatedReportAPI.AppData.Models;
+﻿using AutomatedReportAPI.AppData.Models;
 using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.BackgroundJobs;

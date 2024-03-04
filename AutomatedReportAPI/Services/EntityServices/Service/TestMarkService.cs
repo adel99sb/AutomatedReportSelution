@@ -1,22 +1,22 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class TestMarkService : ITestMarkService<IGeneralResponse>
+    public class TestMarkService : ITestMarkService<GeneralResponse>
     {
-        public Task<IGeneralResponse> AddTestMarks(AddTestMarkRequste requste)
+        public Task<GeneralResponse> AddTestMarks(AddTestMarkRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllTestMarks(Guid testId)
+        public Task<GeneralResponse> GetAllTestMarks(Guid testId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> UpdateTestMarks(UpdateTestMarksRequste requste)
+        public Task<GeneralResponse> UpdateTestMarks(EditeTestMarksRequste requste)
         {
             throw new NotImplementedException();
         }

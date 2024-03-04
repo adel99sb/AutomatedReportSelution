@@ -1,37 +1,39 @@
-﻿using AutomatedReport_Core.DTO_s.AdminDashboard.Responces;
-using AutomatedReport_DTOs;
-using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Models;
 using AutomatedReportCore.Enums;
+using AutomatedReportCore.Responces;
+using AutomatedReportCore.Responces.AdminDashboard;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class CertificateService : ICertificateService<IGeneralResponse>
+    public class CertificateService : ICertificateService<GeneralResponse>
     {
         private readonly ICertificateRepository certificateRepository;
         public CertificateService(ICertificateRepository certificateRepository)
         {
             this.certificateRepository = certificateRepository;
         }
-        public async Task<IGeneralResponse> GetAllCertificates()
+        public async Task<GeneralResponse> GetAllCertificates()
         {
-            var certificatesDto = new List<CertificateDto>();
-            IGeneralResponse response;
+            var certificatesDto = new List<asda>();
+            GeneralResponse response;
             try
             {
                 var Certificates = certificateRepository.GetAll();
                 foreach (var certificate in Certificates)
                 {
-                    certificatesDto.Add(new CertificateDto()
+                    certificatesDto.Add(new asda()
                     {
                         Id = certificate.Id,
-                        Name = certificate.Name
+                        Name = certificate.Name,
+                        Test = 5
                     });
                 }
                 if (certificatesDto.Count != 0)
                 {
-                    response = new GetAllCertificatesResponse(certificatesDto);
+                    var data = new GetAllCertificatesResponse(certificatesDto,true);
+
+                    response = new GeneralResponse(data);
                     response.StatusCode = Requests_Status.Ok;
                     response.Message = "Get Certificates Succesfully";
                 }

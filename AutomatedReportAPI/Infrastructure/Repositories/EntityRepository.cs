@@ -1,5 +1,4 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.AppData.Context;
+﻿using AutomatedReportAPI.AppData.Context;
 using AutomatedReportAPI.AppData.Models;
 using AutomatedReportAPI.Infrastructure.Common;
 using AutomatedReportAPI.Infrastructure.Contracts;

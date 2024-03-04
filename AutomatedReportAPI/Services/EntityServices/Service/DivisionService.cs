@@ -1,16 +1,14 @@
-﻿using AutomatedReport_Core.DTO_s.AdminDashboard.Responces;
-using AutomatedReport_DTOs;
-using AutomatedReport_DTOs.AdminDashboard.Requstes;
-using AutomatedReportAPI.AppData.Models;
+﻿using AutomatedReportAPI.AppData.Models;
 using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Models;
 using AutomatedReportCore.Enums;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class DivisionService : IDivisionService<IGeneralResponse>
+    public class DivisionService : IDivisionService<GeneralResponse>
     {
         private readonly IDivisionRepository divisionRepository;
         private readonly ICertificateRepository certificateRepository;
@@ -21,32 +19,32 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             this.certificateRepository = certificateRepository;
         }
 
-        public Task<IGeneralResponse> AddDivision(AddDivisionRequste requste)
+        public Task<GeneralResponse> AddDivision(AddDivisionRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> DeleteDivision(Guid id)
+        public Task<GeneralResponse> DeleteDivision(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> EditeDivision(EditeDivisionRequste requste)
+        public Task<GeneralResponse> EditeDivision(EditeDivisionRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllDivisions(Guid? certificateId)
+        public Task<GeneralResponse> GetAllDivisions(Guid? certificateId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllDivisionsWithStudentsNomber(Guid certificateId)
+        public Task<GeneralResponse> GetAllDivisionsWithStudentsNomber(Guid certificateId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetDivisionById(Guid id)
+        public Task<GeneralResponse> GetDivisionById(Guid id)
         {
             throw new NotImplementedException();
         }

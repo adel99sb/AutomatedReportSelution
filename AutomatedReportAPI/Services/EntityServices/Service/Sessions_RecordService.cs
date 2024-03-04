@@ -1,42 +1,42 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class Sessions_RecordService : ISessions_RecordService<IGeneralResponse>
+    public class Sessions_RecordService : ISessions_RecordService<GeneralResponse>
     {
-        public Task<IGeneralResponse> AddSession(AddSessionRequste requste)
+        public Task<GeneralResponse> AddSession(AddSessionRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> DeleteSession(Guid id)
+        public Task<GeneralResponse> DeleteSession(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> EditeSession(EditeSessionRequste requste)
+        public Task<GeneralResponse> EditeSession(EditeSessionRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllDays()
+        public Task<GeneralResponse> GetAllDays()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllSessions(Guid divisionId)
+        public Task<GeneralResponse> GetAllSessions(Guid divisionId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllSessionsByDay(GetAllSessionsByDayRequste requste)
+        public Task<GeneralResponse> GetAllSessionsByDay(GetAllSessionsByDayRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllSessionsGroupedByDays(Guid divisionId)
+        public Task<GeneralResponse> GetAllSessionsGroupedByDays(Guid divisionId)
         {
             throw new NotImplementedException();
         }

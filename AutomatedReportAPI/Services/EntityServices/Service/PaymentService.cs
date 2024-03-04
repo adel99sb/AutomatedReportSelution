@@ -1,17 +1,17 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class PaymentService : IPaymentService<IGeneralResponse>
+    public class PaymentService : IPaymentService<GeneralResponse>
     {
-        public Task<IGeneralResponse> AddPayment(AddPaymentRequste requste)
+        public Task<GeneralResponse> AddPayment(AddPaymentRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllPayments(Guid studentId)
+        public Task<GeneralResponse> GetAllPayments(Guid studentId)
         {
             throw new NotImplementedException();
         }

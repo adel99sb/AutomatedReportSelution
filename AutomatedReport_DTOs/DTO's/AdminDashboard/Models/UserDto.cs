@@ -1,8 +1,0 @@
-﻿namespace AutomatedReport_Core.DTO_s.AdminDashboard.Responces
-{
-    public class UserDto
-    {
-        public Guid Id { get; set; }
-        public string Type { get; set; }
-    }
-}

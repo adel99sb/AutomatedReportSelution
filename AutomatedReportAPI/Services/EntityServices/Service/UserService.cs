@@ -1,22 +1,22 @@
-﻿using AutomatedReport_Core.DTO_s.AdminDashboard.Responces;
-using AutomatedReport_DTOs;
-using AutomatedReport_DTOs.AdminDashboard.Requstes;
-using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
+using AutomatedReportCore.Responces.DTOs;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class UserService : IUserService<IGeneralResponse>
+    public class UserService : IUserService<GeneralResponse>
     {
         private readonly IUserRepository userRepository;
         public UserService(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
         }
-        public async Task<IGeneralResponse> EditeUserPassword(EditeUserPasswordRequste request)
+        public async Task<GeneralResponse> EditeUserPassword(EditeUserPasswordRequste request)
         {
-            IGeneralResponse response;
+            GeneralResponse response;
             try
             {
                 var user = await userRepository.GetById(request.Id);
@@ -46,10 +46,10 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             return response;
         }
 
-        public async Task<IGeneralResponse> GetAllUsers()
+        public async Task<GeneralResponse> GetAllUsers()
         {
             var usersDto = new List<UserDto>();
-            IGeneralResponse response;
+            GeneralResponse response;
             try
             {
                 var users = userRepository.GetAll();
@@ -63,7 +63,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 }
                 if (usersDto.Count != 0)
                 {
-                    response = new GetUsersResponse(usersDto);
+                    response = new GeneralResponse(usersDto);
                     response.StatusCode = Requests_Status.Ok;
                     response.Message = "Get Users Succesfully";
                 }
@@ -83,10 +83,10 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             return response;
         }
 
-        public async Task<IGeneralResponse> Login(LoginRequste request)
+        public async Task<GeneralResponse> Login(LoginRequste request)
         {
             var userDto = new UserDto();
-            IGeneralResponse response;
+            GeneralResponse response;
             try
             {
                 var users = userRepository.GetAll();
@@ -101,7 +101,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 }
                 if (userDto.Type != null)
                 {
-                    response = new LoginResponse(userDto);
+                    response = new GeneralResponse(userDto);
                     response.StatusCode = Requests_Status.Ok;
                     response.Message = "Login Successfully";
                 }

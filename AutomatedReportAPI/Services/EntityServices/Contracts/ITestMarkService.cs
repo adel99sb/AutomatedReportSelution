@@ -1,4 +1,4 @@
-﻿using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+﻿using AutomatedReportCore.Requstes.AdminDashboard;
 
 namespace AutomatedReportAPI.Services.EntityServices.Contracts
 {
@@ -6,6 +6,6 @@ namespace AutomatedReportAPI.Services.EntityServices.Contracts
     {
         Task<T> AddTestMarks(AddTestMarkRequste requste);
         Task<T> GetAllTestMarks(Guid testId);
-        Task<T> UpdateTestMarks(UpdateTestMarksRequste requste);
+        Task<T> UpdateTestMarks(EditeTestMarksRequste requste);
     }
 }

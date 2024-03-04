@@ -1,32 +1,32 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class TeacherService : ITeacherService<IGeneralResponse>
+    public class TeacherService : ITeacherService<GeneralResponse>
     {
-        public Task<IGeneralResponse> AddTeacher(AddTeacherRequste requste)
+        public Task<GeneralResponse> AddTeacher(AddTeacherRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> DeleteTeacher(Guid id)
+        public Task<GeneralResponse> DeleteTeacher(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> EditeTeacher(EditeTeacherRequste requste)
+        public Task<GeneralResponse> EditeTeacher(EditeTeacherRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllTeachers()
+        public Task<GeneralResponse> GetAllTeachers()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetTeacherById(Guid id)
+        public Task<GeneralResponse> GetTeacherById(Guid id)
         {
             throw new NotImplementedException();
         }

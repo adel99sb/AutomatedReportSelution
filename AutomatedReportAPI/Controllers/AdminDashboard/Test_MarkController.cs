@@ -1,5 +1,5 @@
 ﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+using AutomatedReportCore.Requstes.AdminDashboard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -22,7 +22,7 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
             throw new NotImplementedException();
         }
         [HttpPut("UpdateTestMarks")]
-        public Task<IActionResult> UpdateTestMarks([Required,FromBody] UpdateTestMarksRequste requste)
+        public Task<IActionResult> UpdateTestMarks([Required,FromBody] EditeTestMarksRequste requste)
         {
             throw new NotImplementedException();
         }

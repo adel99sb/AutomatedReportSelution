@@ -1,42 +1,42 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class StudentService : IStudentService<IGeneralResponse>
+    public class StudentService : IStudentService<GeneralResponse>
     {
-        public Task<IGeneralResponse> AddStudent(AddStudentRequste requste)
+        public Task<GeneralResponse> AddStudent(AddStudentRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> DeleteStudent(Guid id)
+        public Task<GeneralResponse> DeleteStudent(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> EditeStudent(EditeStudentRequste requste)
+        public Task<GeneralResponse> EditeStudent(EditeStudentRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllStudentsByDivisionId(Guid divisionId)
+        public Task<GeneralResponse> GetAllStudentsByDivisionId(Guid divisionId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllStudentsByTestId(Guid testId)
+        public Task<GeneralResponse> GetAllStudentsByTestId(Guid testId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllStudentsWithDivision()
+        public Task<GeneralResponse> GetAllStudentsWithDivision()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetStudentById(Guid id)
+        public Task<GeneralResponse> GetStudentById(Guid id)
         {
             throw new NotImplementedException();
         }

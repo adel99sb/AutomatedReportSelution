@@ -1,4 +1,4 @@
-﻿using AutomatedReport_DTOs.AdminDashboard.Requstes;
+﻿using AutomatedReportCore.Requstes.AdminDashboard;
 
 namespace AutomatedReportAPI.Services.EntityServices.Contracts
 {

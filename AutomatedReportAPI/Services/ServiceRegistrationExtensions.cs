@@ -1,10 +1,10 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Controllers.AdminDashboard;
+﻿using AutomatedReportAPI.Controllers.AdminDashboard;
 using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Infrastructure.Repositories;
 using AutomatedReportAPI.Services.BackgroundJobs;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportAPI.Services.EntityServices.Service;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutomatedReportAPI.Services
@@ -39,46 +39,46 @@ namespace AutomatedReportAPI.Services
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             return services
-                .AddScoped(typeof(IUserService<IGeneralResponse>), typeof(UserService))
+                .AddScoped(typeof(IUserService<GeneralResponse>), typeof(UserService))
                 .AddScoped(typeof(IUserService<IActionResult>), typeof(UserController))
 
-                .AddScoped(typeof(ICertificateService<IGeneralResponse>), typeof(CertificateService))
+                .AddScoped(typeof(ICertificateService<GeneralResponse>), typeof(CertificateService))
                 .AddScoped(typeof(ICertificateService<IActionResult>), typeof(CertificateController))
 
-                .AddScoped(typeof(ISubjectService<IGeneralResponse>), typeof(SubjectService))
+                .AddScoped(typeof(ISubjectService<GeneralResponse>), typeof(SubjectService))
                 .AddScoped(typeof(ISubjectService<IActionResult>), typeof(SubjectController))
 
-                .AddScoped(typeof(IDivisionService<IGeneralResponse>), typeof(DivisionService))
+                .AddScoped(typeof(IDivisionService<GeneralResponse>), typeof(DivisionService))
                 .AddScoped(typeof(IDivisionService<IActionResult>), typeof(DivisionController))
 
-                .AddScoped(typeof(IClassService<IGeneralResponse>), typeof(ClassService))
+                .AddScoped(typeof(IClassService<GeneralResponse>), typeof(ClassService))
                 .AddScoped(typeof(IClassService<IActionResult>), typeof(ClassController))
 
-                .AddScoped(typeof(IAttendanceService<IGeneralResponse>), typeof(AttendanceService))
+                .AddScoped(typeof(IAttendanceService<GeneralResponse>), typeof(AttendanceService))
                 .AddScoped(typeof(IAttendanceService<IActionResult>), typeof(AttendanceController))
 
-                .AddScoped(typeof(IDailySessionsService<IGeneralResponse>), typeof(DailySessionsService))
+                .AddScoped(typeof(IDailySessionsService<GeneralResponse>), typeof(DailySessionsService))
                 .AddScoped(typeof(IDailySessionsService<IActionResult>), typeof(DailySessionsController))
 
-                .AddScoped(typeof(IHallService<IGeneralResponse>), typeof(HallService))
+                .AddScoped(typeof(IHallService<GeneralResponse>), typeof(HallService))
                 .AddScoped(typeof(IHallService<IActionResult>), typeof(HallController))
 
-                .AddScoped(typeof(IPaymentService<IGeneralResponse>), typeof(PaymentService))
+                .AddScoped(typeof(IPaymentService<GeneralResponse>), typeof(PaymentService))
                 .AddScoped(typeof(IPaymentService<IActionResult>), typeof(PaymentController))
 
-                .AddScoped(typeof(ISessions_RecordService<IGeneralResponse>), typeof(Sessions_RecordService))
+                .AddScoped(typeof(ISessions_RecordService<GeneralResponse>), typeof(Sessions_RecordService))
                 .AddScoped(typeof(ISessions_RecordService<IActionResult>), typeof(Sessions_RecordController))
 
-                .AddScoped(typeof(IStudentService<IGeneralResponse>), typeof(StudentService))
+                .AddScoped(typeof(IStudentService<GeneralResponse>), typeof(StudentService))
                 .AddScoped(typeof(IStudentService<IActionResult>), typeof(StudentController))
 
-                .AddScoped(typeof(ITeacherService<IGeneralResponse>), typeof(TeacherService))
+                .AddScoped(typeof(ITeacherService<GeneralResponse>), typeof(TeacherService))
                 .AddScoped(typeof(ITeacherService<IActionResult>), typeof(TeacherController))
 
-                .AddScoped(typeof(ITestService<IGeneralResponse>), typeof(TestService))
+                .AddScoped(typeof(ITestService<GeneralResponse>), typeof(TestService))
                 .AddScoped(typeof(ITestService<IActionResult>), typeof(TestController))
 
-                .AddScoped(typeof(ITestMarkService<IGeneralResponse>), typeof(TestMarkService))
+                .AddScoped(typeof(ITestMarkService<GeneralResponse>), typeof(TestMarkService))
                 .AddScoped(typeof(ITestMarkService<IActionResult>), typeof(Test_MarkController));
         }
     } 

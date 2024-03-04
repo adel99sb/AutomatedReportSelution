@@ -1,32 +1,32 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class HallService : IHallService<IGeneralResponse>
+    public class HallService : IHallService<GeneralResponse>
     {
-        public Task<IGeneralResponse> AddHall(AddHallRequste requste)
+        public Task<GeneralResponse> AddHall(AddHallRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> DeleteHall(Guid id)
+        public Task<GeneralResponse> DeleteHall(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> EditeHall(EditeHallRequste requste)
+        public Task<GeneralResponse> EditeHall(EditeHallRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllHalls()
+        public Task<GeneralResponse> GetAllHalls()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetHallById(Guid id)
+        public Task<GeneralResponse> GetHallById(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -1,22 +1,22 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class DailySessionsService : IDailySessionsService<IGeneralResponse>
+    public class DailySessionsService : IDailySessionsService<GeneralResponse>
     {
-        public Task<IGeneralResponse> AddDailySessions(AddDailySessionsRequste requste)
+        public Task<GeneralResponse> AddDailySessions(AddDailySessionsRequste requste)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllDailySessions(Guid divissionId)
+        public Task<GeneralResponse> GetAllDailySessions(Guid divissionId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IGeneralResponse> GetAllDailySessionsByDate(GetAllDailySessionsByDateRequste requste)
+        public Task<GeneralResponse> GetAllDailySessionsByDate(GetAllDailySessionsByDateRequste requste)
         {
             throw new NotImplementedException();
         }

@@ -1,8 +1,8 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportAPI.Services.EntityServices.Service;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -14,8 +14,8 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class SubjectController : ControllerBase, ISubjectService<IActionResult>
     {
-        private readonly ISubjectService<IGeneralResponse> subjectService;
-        public SubjectController(ISubjectService<IGeneralResponse> subjectService)
+        private readonly ISubjectService<GeneralResponse> subjectService;
+        public SubjectController(ISubjectService<GeneralResponse> subjectService)
         {
             this.subjectService = subjectService;
         }

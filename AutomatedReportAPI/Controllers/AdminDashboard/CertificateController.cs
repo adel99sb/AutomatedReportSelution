@@ -1,7 +1,7 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutomatedReportAPI.Controllers.AdminDashboard
@@ -11,8 +11,8 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class CertificateController : ControllerBase , ICertificateService<IActionResult>
     {
-        private readonly ICertificateService<IGeneralResponse> certificateService;
-        public CertificateController(ICertificateService<IGeneralResponse> certificateService)
+        private readonly ICertificateService<GeneralResponse> certificateService;
+        public CertificateController(ICertificateService<GeneralResponse> certificateService)
         {
             this.certificateService = certificateService;
         }

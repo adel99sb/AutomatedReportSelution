@@ -1,12 +1,12 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.DTO_s.AdminDashboard.Requstes;
+﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class AttendanceService : IAttendanceService<IGeneralResponse>
+    public class AttendanceService : IAttendanceService<GeneralResponse>
     {
-        public Task<IGeneralResponse> AddAttendance(AddAttendanceRequste requste)
+        public Task<GeneralResponse> AddAttendance(AddAttendanceRequste requste)
         {
             throw new NotImplementedException();
         }

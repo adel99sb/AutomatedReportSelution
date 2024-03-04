@@ -1,7 +1,7 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReport_DTOs.AdminDashboard.Requstes;
-using AutomatedReportAPI.Services;
+﻿using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,8 +12,8 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class UserController : ControllerBase , IUserService<IActionResult>
     {
-        private readonly IUserService<IGeneralResponse> userService;
-        public UserController(IUserService<IGeneralResponse> userService)
+        private readonly IUserService<GeneralResponse> userService;
+        public UserController(IUserService<GeneralResponse> userService)
         {
             this.userService = userService;
         }

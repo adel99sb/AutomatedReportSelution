@@ -1,8 +1,8 @@
-﻿using AutomatedReport_DTOs;
-using AutomatedReport_DTOs.AdminDashboard.Requstes;
-using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Requstes.AdminDashboard;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,8 +13,8 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class DivisionController : ControllerBase, IDivisionService<IActionResult>
     {
-        private readonly IDivisionService<IGeneralResponse> divisionService;
-        public DivisionController(IDivisionService<IGeneralResponse> divisionService)
+        private readonly IDivisionService<GeneralResponse> divisionService;
+        public DivisionController(IDivisionService<GeneralResponse> divisionService)
         {
             this.divisionService = divisionService;            
         }
