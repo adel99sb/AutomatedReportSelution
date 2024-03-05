@@ -7,14 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Requstes\AdvertismentPage\Requstes\" />
-    <Folder Include="Requstes\AdvertismentPage\Responces\" />
-    <Folder Include="Requstes\ClientApp\Requstes\" />
-    <Folder Include="Requstes\ClientApp\Responces\" />
-    <Folder Include="Responces\AdvertismentPage\Requstes\" />
-    <Folder Include="Responces\AdvertismentPage\Responces\" />
-    <Folder Include="Responces\ClientApp\Requstes\" />
-    <Folder Include="Responces\ClientApp\Responces\" />
+    <Folder Include="Requstes\AdvertismentPage\" />
+    <Folder Include="Requstes\ClientApp\" />
+    <Folder Include="Responces\AdvertismentPage\" />
+    <Folder Include="Responces\ClientApp\" />
   </ItemGroup>
 
 </Project>

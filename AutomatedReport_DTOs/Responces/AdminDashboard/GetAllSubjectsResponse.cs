@@ -2,8 +2,8 @@
 
 namespace AutomatedReportCore.Responces.AdminDashboard
 {
-    public class GetAllSubjectsResponse : GeneralResponse
+    public class GetAllSubjectsResponse
     {
-        public GetAllSubjectsResponse(List<SubjectDto> subjects) : base(subjects) { }
+        public List<SubjectDto> subjects { get; set; } = new();
     }
 }

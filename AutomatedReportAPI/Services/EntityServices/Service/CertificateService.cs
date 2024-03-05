@@ -3,6 +3,7 @@ using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Responces;
 using AutomatedReportCore.Responces.AdminDashboard;
+using AutomatedReportCore.Responces.DTOs;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
@@ -15,25 +16,22 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
         }
         public async Task<GeneralResponse> GetAllCertificates()
         {
-            var certificatesDto = new List<asda>();
+            var Data = new GetAllCertificatesResponse();            
             GeneralResponse response;
             try
             {
                 var Certificates = certificateRepository.GetAll();
                 foreach (var certificate in Certificates)
                 {
-                    certificatesDto.Add(new asda()
+                    Data.Certificates.Add(new CertificateDto()
                     {
                         Id = certificate.Id,
-                        Name = certificate.Name,
-                        Test = 5
+                        Name = certificate.Name
                     });
                 }
-                if (certificatesDto.Count != 0)
+                if (Data.Certificates.Count != 0)
                 {
-                    var data = new GetAllCertificatesResponse(certificatesDto,true);
-
-                    response = new GeneralResponse(data);
+                    response = new GeneralResponse(Data);
                     response.StatusCode = Requests_Status.Ok;
                     response.Message = "Get Certificates Succesfully";
                 }

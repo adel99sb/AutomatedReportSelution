@@ -2,8 +2,8 @@
 
 namespace AutomatedReportCore.Responces.AdminDashboard
 {
-    public class GetDivisioneByIdResponse : GeneralResponse
+    public class GetDivisioneByIdResponse
     {
-        public GetDivisioneByIdResponse(DivisionDto division) : base(division) { }
+        public DivisionDto division { get; set; }
     }
 }

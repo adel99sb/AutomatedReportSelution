@@ -3,6 +3,7 @@ using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
 using AutomatedReportCore.Responces;
+using AutomatedReportCore.Responces.AdminDashboard;
 using AutomatedReportCore.Responces.DTOs;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
@@ -48,22 +49,22 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 
         public async Task<GeneralResponse> GetAllUsers()
         {
-            var usersDto = new List<UserDto>();
+            var Data = new GetAllUsersResponse();
             GeneralResponse response;
             try
             {
                 var users = userRepository.GetAll();
                 foreach (var user in users)
                 {
-                    usersDto.Add(new UserDto()
+                    Data.users.Add(new UserDto()
                     {
                         Id = user.Id,
                         Type = user.Type
                     });
                 }
-                if (usersDto.Count != 0)
+                if (Data.users.Count != 0)
                 {
-                    response = new GeneralResponse(usersDto);
+                    response = new GeneralResponse(Data);
                     response.StatusCode = Requests_Status.Ok;
                     response.Message = "Get Users Succesfully";
                 }
@@ -85,7 +86,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 
         public async Task<GeneralResponse> Login(LoginRequste request)
         {
-            var userDto = new UserDto();
+            var Data = new LoginResponse();
             GeneralResponse response;
             try
             {
@@ -94,14 +95,14 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 {
                     if (user.Type == request.UserType && user.Password == request.Password)
                     {
-                        userDto.Id = user.Id;
-                        userDto.Type = user.Type;
+                        Data.user.Id = user.Id;
+                        Data.user.Type = user.Type;
                         break; // Exit the loop once a matching user is found
                     }
                 }
-                if (userDto.Type != null)
+                if (Data.user.Type != null)
                 {
-                    response = new GeneralResponse(userDto);
+                    response = new GeneralResponse(Data);
                     response.StatusCode = Requests_Status.Ok;
                     response.Message = "Login Successfully";
                 }
