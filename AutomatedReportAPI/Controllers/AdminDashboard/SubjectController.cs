@@ -1,9 +1,5 @@
-﻿using AutomatedReportAPI.Infrastructure.Contracts;
-using AutomatedReportAPI.Services;
-using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportAPI.Services.EntityServices.Service;
+﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Responces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

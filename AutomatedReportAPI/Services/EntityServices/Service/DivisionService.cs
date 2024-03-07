@@ -1,5 +1,5 @@
 ﻿using AutomatedReportAPI.AppData.Models;
-using AutomatedReportAPI.Infrastructure.Contracts;
+using AutomatedReportAPI.Infrastructure;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
@@ -12,12 +12,12 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 {
     public class DivisionService : IDivisionService<GeneralResponse>
     {
-        private readonly IDivisionRepository divisionRepository;
-        private readonly ICertificateRepository certificateRepository;
-        private readonly IStudentRepository studentRepository;
-        public DivisionService(IDivisionRepository divisionRepository,
-            ICertificateRepository certificateRepository,
-            IStudentRepository studentRepository)
+        private readonly IUnitOfWork<Division> divisionRepository;
+        private readonly IUnitOfWork<Certificate> certificateRepository;
+        private readonly IUnitOfWork<Student> studentRepository;
+        public DivisionService(IUnitOfWork<Division> divisionRepository,
+            IUnitOfWork<Certificate> certificateRepository,
+            IUnitOfWork<Student> studentRepository)
         {
             this.divisionRepository = divisionRepository;
             this.certificateRepository = certificateRepository;

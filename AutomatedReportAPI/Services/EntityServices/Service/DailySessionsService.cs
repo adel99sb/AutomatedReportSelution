@@ -1,19 +1,16 @@
-﻿using AutomatedReportAPI.Infrastructure.Contracts;
-using AutomatedReportAPI.AppData.Models;
+﻿using AutomatedReportAPI.AppData.Models;
+using AutomatedReportAPI.Infrastructure;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
 using AutomatedReportCore.Responces;
-using AutomatedReportCore.Responces.AdminDashboard;
-using AutomatedReportCore.Responces.DTOs;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
     public class DailySessionsService : IDailySessionsService<GeneralResponse>
     {
-        private readonly IDailySessions_RecordRepository dailySessions_RecordRepository;
+        private readonly IUnitOfWork<DailySessions_Record> dailySessions_RecordRepository;
         //private readonly ISessions_RecordRepository sessions_RecordRepository;
-        public DailySessionsService(IDailySessions_RecordRepository dailySessions_RecordRepository//,
+        public DailySessionsService(IUnitOfWork<DailySessions_Record> dailySessions_RecordRepository//,
            /* ISessions_RecordRepository sessions_RecordRepository*/)
         {
             this.dailySessions_RecordRepository = dailySessions_RecordRepository;

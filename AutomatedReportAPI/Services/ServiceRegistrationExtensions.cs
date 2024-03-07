@@ -1,8 +1,6 @@
 ﻿using AutomatedReportAPI.AppData.Models;
 using AutomatedReportAPI.Controllers.AdminDashboard;
-using AutomatedReportAPI.Infrastructure.Common;
-using AutomatedReportAPI.Infrastructure.Contracts;
-using AutomatedReportAPI.Infrastructure.Repositories;
+using AutomatedReportAPI.Infrastructure;
 using AutomatedReportAPI.Services.BackgroundJobs;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportAPI.Services.EntityServices.Service;
@@ -16,23 +14,22 @@ namespace AutomatedReportAPI.Services
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             return services
-                .AddScoped<IAdvertisementRepository, AdvertisementRepository>()
-                .AddScoped<IAttendanceRepository, AttendanceRepository>()
-                .AddScoped<IClassRepository, ClassRepository>()
-                .AddScoped<IPaymentRepository, PaymentRepository>()
-                .AddScoped<IScoreRepository, ScoreRepository>()
-                //.AddScoped<ISessions_RecordRepository, Sessions_RecordRepository>()
-                .AddScoped<IStudentRepository, StudentRepository>()
-                .AddScoped<ISubjectRepository, SubjectRepository>()
-                .AddScoped<ITeacherRepository, TeacherRepository>()
-                .AddScoped<ITestRepository, TestRepository>()
-                .AddScoped<ITest_MarkRepository, Test_MarkRepository>()
-                .AddScoped<IDivisionRepository, DivisionRepository>()
-                .AddScoped<IHallRepository, HallRepository>()
-                .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<IDailySessions_RecordRepository, DailySessions_RecordRepository>()
-                .AddScoped<ICertificateRepository, CertificateRepository>()
-            .AddScoped(typeof(IGenericRepository<Sessions_Record>), typeof(GenericRepository<Sessions_Record>));
+            .AddScoped(typeof(IUnitOfWork<Advertisement>), typeof(UnitOfWork<Advertisement>))
+            .AddScoped(typeof(IUnitOfWork<Attendance>), typeof(UnitOfWork<Attendance>))
+            .AddScoped(typeof(IUnitOfWork<_Class>), typeof(UnitOfWork<_Class>))
+            .AddScoped(typeof(IUnitOfWork<Payment>), typeof(UnitOfWork<Payment>))
+            .AddScoped(typeof(IUnitOfWork<Score>), typeof(UnitOfWork<Score>))
+            .AddScoped(typeof(IUnitOfWork<Sessions_Record>), typeof(UnitOfWork<Sessions_Record>))
+            .AddScoped(typeof(IUnitOfWork<Student>), typeof(UnitOfWork<Student>))
+            .AddScoped(typeof(IUnitOfWork<Subject>), typeof(UnitOfWork<Subject>))
+            .AddScoped(typeof(IUnitOfWork<Teacher>), typeof(UnitOfWork<Teacher>))
+            .AddScoped(typeof(IUnitOfWork<Test>), typeof(UnitOfWork<Test>))
+            .AddScoped(typeof(IUnitOfWork<Test_Mark>), typeof(UnitOfWork<Test_Mark>))
+            .AddScoped(typeof(IUnitOfWork<Division>), typeof(UnitOfWork<Division>))
+            .AddScoped(typeof(IUnitOfWork<Hall>), typeof(UnitOfWork<Hall>))
+            .AddScoped(typeof(IUnitOfWork<User>), typeof(UnitOfWork<User>))
+            .AddScoped(typeof(IUnitOfWork<DailySessions_Record>), typeof(UnitOfWork<DailySessions_Record>))
+            .AddScoped(typeof(IUnitOfWork<Certificate>), typeof(UnitOfWork<Certificate>));
         }
         public static IServiceCollection AddBackgourndJob(this IServiceCollection services)
         {
@@ -84,5 +81,5 @@ namespace AutomatedReportAPI.Services
                 .AddScoped(typeof(ITestMarkService<GeneralResponse>), typeof(TestMarkService))
                 .AddScoped(typeof(ITestMarkService<IActionResult>), typeof(Test_MarkController));
         }
-    } 
+    }
 }

@@ -1,6 +1,5 @@
 ﻿using AutomatedReportAPI.AppData.Models;
-using AutomatedReportAPI.Infrastructure.Contracts;
-using AutomatedReportAPI.Infrastructure.Repositories;
+using AutomatedReportAPI.Infrastructure;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
@@ -12,8 +11,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 {
     public class ClassService : IClassService<GeneralResponse>
     {
-        private readonly IClassRepository classRepository;
-        public ClassService(IClassRepository classRepository)
+        private readonly IUnitOfWork<_Class> classRepository;
+        public ClassService(IUnitOfWork<_Class> classRepository)
         {
             this.classRepository = classRepository;
         }

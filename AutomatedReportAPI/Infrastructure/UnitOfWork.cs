@@ -1,14 +1,14 @@
 ﻿using AutomatedReportAPI.AppData.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace AutomatedReportAPI.Infrastructure.Common
+namespace AutomatedReportAPI.Infrastructure
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity>
+    public class UnitOfWork<TEntity> : IUnitOfWork<TEntity>
     where TEntity : class
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public GenericRepository(ApplicationDbContext dbContext)
+        public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

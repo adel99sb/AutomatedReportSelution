@@ -1,8 +1,5 @@
-﻿using AutomatedReportAPI.AppData.Models;
-using AutomatedReportAPI.Infrastructure.Contracts;
-using AutomatedReportAPI.Services;
+﻿using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportAPI.Services.EntityServices.Service;
 using AutomatedReportCore.Requstes.AdminDashboard;
 using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;

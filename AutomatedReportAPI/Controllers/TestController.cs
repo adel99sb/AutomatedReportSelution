@@ -1,7 +1,4 @@
-﻿using AutomatedReportAPI.AppData.Models;
-using AutomatedReportAPI.Infrastructure.Contracts;
-using AutomatedReportAPI.Services;
-using AutomatedReportAPI.Services.BackgroundJobs;
+﻿using AutomatedReportAPI.Services.BackgroundJobs;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

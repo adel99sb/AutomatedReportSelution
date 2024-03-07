@@ -1,6 +1,5 @@
 ﻿using AutomatedReportAPI.AppData.Models;
-using AutomatedReportAPI.Infrastructure.Common;
-using AutomatedReportAPI.Infrastructure.Contracts;
+using AutomatedReportAPI.Infrastructure;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
@@ -11,8 +10,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 {
     public class AttendanceService : IAttendanceService<GeneralResponse>
     {
-        private readonly IAttendanceRepository attendanceRepository;
-        public AttendanceService(IAttendanceRepository attendanceRepository)
+        private readonly IUnitOfWork<Attendance> attendanceRepository;
+        public AttendanceService(IUnitOfWork<Attendance> attendanceRepository)
         {
             this.attendanceRepository = attendanceRepository;              
         }

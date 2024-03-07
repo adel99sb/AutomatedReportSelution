@@ -1,6 +1,5 @@
 ﻿using AutomatedReportAPI.AppData.Models;
-using AutomatedReportAPI.Infrastructure.Common;
-using AutomatedReportAPI.Infrastructure.Contracts;
+using AutomatedReportAPI.Infrastructure;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
@@ -13,10 +12,10 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 {
     public class Sessions_RecordService : ISessions_RecordService<GeneralResponse>
     {
-        private readonly IGenericRepository<Sessions_Record> sessions_RecordRepository;
-        public Sessions_RecordService(IGenericRepository<Sessions_Record> sessions_RecordRepository)
+        private readonly IUnitOfWork<Sessions_Record> sessions_RecordRepository;
+        public Sessions_RecordService(IUnitOfWork<Sessions_Record> sessions_RecordRepository)
         {
-            this.sessions_RecordRepository = sessions_RecordRepository;
+           this.sessions_RecordRepository = sessions_RecordRepository;
         }
 
         public Task<GeneralResponse> AddSession(AddSessionRequste requste)

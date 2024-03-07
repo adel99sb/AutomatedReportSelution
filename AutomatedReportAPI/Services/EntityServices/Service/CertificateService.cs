@@ -1,4 +1,5 @@
-﻿using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReportAPI.AppData.Models;
+using AutomatedReportAPI.Infrastructure;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Responces;
@@ -9,8 +10,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 {
     public class CertificateService : ICertificateService<GeneralResponse>
     {
-        private readonly ICertificateRepository certificateRepository;
-        public CertificateService(ICertificateRepository certificateRepository)
+        private readonly IUnitOfWork<Certificate> certificateRepository;
+        public CertificateService(IUnitOfWork<Certificate> certificateRepository)
         {
             this.certificateRepository = certificateRepository;
         }

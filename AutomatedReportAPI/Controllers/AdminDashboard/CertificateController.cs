@@ -1,5 +1,4 @@
-﻿using AutomatedReportAPI.Infrastructure.Contracts;
-using AutomatedReportAPI.Services;
+﻿using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;

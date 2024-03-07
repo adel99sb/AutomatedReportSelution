@@ -1,6 +1,6 @@
-﻿namespace AutomatedReportAPI.Infrastructure.Common
+﻿namespace AutomatedReportAPI.Infrastructure
 {
-    public interface IGenericRepository<TEntity>
+    public interface IUnitOfWork<TEntity>
         where TEntity : class
     {
         IQueryable<TEntity> GetAll();

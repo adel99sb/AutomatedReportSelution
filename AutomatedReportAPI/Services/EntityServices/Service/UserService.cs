@@ -1,4 +1,5 @@
-﻿using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReportAPI.AppData.Models;
+using AutomatedReportAPI.Infrastructure;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
@@ -10,8 +11,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 {
     public class UserService : IUserService<GeneralResponse>
     {
-        private readonly IUserRepository userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IUnitOfWork<User> userRepository;
+        public UserService(IUnitOfWork<User> userRepository)
         {
             this.userRepository = userRepository;
         }
