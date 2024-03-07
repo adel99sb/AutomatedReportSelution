@@ -1,4 +1,6 @@
-﻿using AutomatedReportAPI.Controllers.AdminDashboard;
+﻿using AutomatedReportAPI.AppData.Models;
+using AutomatedReportAPI.Controllers.AdminDashboard;
+using AutomatedReportAPI.Infrastructure.Common;
 using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Infrastructure.Repositories;
 using AutomatedReportAPI.Services.BackgroundJobs;
@@ -19,7 +21,7 @@ namespace AutomatedReportAPI.Services
                 .AddScoped<IClassRepository, ClassRepository>()
                 .AddScoped<IPaymentRepository, PaymentRepository>()
                 .AddScoped<IScoreRepository, ScoreRepository>()
-                .AddScoped<ISessions_RecordRepository, Sessions_RecordRepository>()
+                //.AddScoped<ISessions_RecordRepository, Sessions_RecordRepository>()
                 .AddScoped<IStudentRepository, StudentRepository>()
                 .AddScoped<ISubjectRepository, SubjectRepository>()
                 .AddScoped<ITeacherRepository, TeacherRepository>()
@@ -29,7 +31,8 @@ namespace AutomatedReportAPI.Services
                 .AddScoped<IHallRepository, HallRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IDailySessions_RecordRepository, DailySessions_RecordRepository>()
-                .AddScoped<ICertificateRepository, CertificateRepository>();
+                .AddScoped<ICertificateRepository, CertificateRepository>()
+            .AddScoped(typeof(IGenericRepository<Sessions_Record>), typeof(GenericRepository<Sessions_Record>));
         }
         public static IServiceCollection AddBackgourndJob(this IServiceCollection services)
         {

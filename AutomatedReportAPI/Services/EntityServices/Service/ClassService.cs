@@ -1,34 +1,181 @@
-﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+﻿using AutomatedReportAPI.AppData.Models;
+using AutomatedReportAPI.Infrastructure.Contracts;
+using AutomatedReportAPI.Infrastructure.Repositories;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
 using AutomatedReportCore.Responces;
+using AutomatedReportCore.Responces.AdminDashboard;
+using AutomatedReportCore.Responces.DTOs;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
     public class ClassService : IClassService<GeneralResponse>
     {
-        public Task<GeneralResponse> AddClass(AddClassRequste requste)
+        private readonly IClassRepository classRepository;
+        public ClassService(IClassRepository classRepository)
         {
-            throw new NotImplementedException();
+            this.classRepository = classRepository;
         }
 
-        public Task<GeneralResponse> DeleteClass(Guid id)
+        public async Task<GeneralResponse> AddClass(AddClassRequste requste)
         {
-            throw new NotImplementedException();
+            GeneralResponse response;
+            try
+            {
+                await classRepository.Create(new _Class()
+                {
+                    Name = requste.Name,
+                    From_Time = requste.From_Time,
+                    To_Time = requste.To_Time
+                });
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.Accepted;
+                response.Message = "Class Added Succesfully";
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<GeneralResponse> EditeClass(EditeClassRequste requste)
+        public async Task<GeneralResponse> DeleteClass(Guid id)
         {
-            throw new NotImplementedException();
+            GeneralResponse response;
+            try
+            {
+                await classRepository.Delete(id);
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.Accepted;
+                response.Message = "Class Deleted Succesfully";
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<GeneralResponse> GetAllClasses()
+        public async Task<GeneralResponse> EditeClass(EditeClassRequste requste)
         {
-            throw new NotImplementedException();
+            GeneralResponse response;
+            try
+            {
+                var _class = await classRepository.GetById(requste.Id);
+                if (_class is not null)
+                {
+                    await classRepository.Update(new _Class()
+                    {
+                        Id = requste.Id,
+                        Name = requste.Name,
+                        From_Time = requste.From_Time,
+                        To_Time = requste.To_Time                        
+                    });
+
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.Accepted;
+                    response.Message = "Class Updated Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "Class Not Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<GeneralResponse> GetClassById(Guid id)
+        public async Task<GeneralResponse> GetAllClasses()
         {
-            throw new NotImplementedException();
+            var Data = new GetAllClassesResponse();
+            GeneralResponse response;
+            try
+            {
+                var Classes = classRepository.GetAll();                
+                if (Classes.Count() != 0)
+                {
+                    foreach (var item in Classes)
+                    {
+                        Data.classes.Add(new ClassDto()
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            From_Time = item.From_Time,
+                            To_Time = item.To_Time
+                        });
+                    }
+                    response = new GeneralResponse(Data);
+                    response.StatusCode = Requests_Status.Ok;
+                    response.Message = "Get Classes Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "No Classes Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<GeneralResponse> GetClassById(Guid id)
+        {
+            var Data = new GetClassByIdResponse();
+            GeneralResponse response;
+            try
+            {
+                var _class = await classRepository.GetById(id);
+                if (_class is not null)
+                {
+                    Data.Class = new ClassDto()
+                    {
+                        Id = _class.Id,
+                        Name = _class.Name,
+                        From_Time = _class.From_Time,
+                        To_Time = _class.To_Time
+                    };
+                    response = new GeneralResponse(Data);
+                    response.StatusCode = Requests_Status.Ok;
+                    response.Message = "Get Class Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "No Class Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
     }
 }

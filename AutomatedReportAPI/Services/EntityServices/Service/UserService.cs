@@ -21,7 +21,6 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             try
             {
                 var user = await userRepository.GetById(request.Id);
-
                 if (user != null)
                 {
                     user.Password = request.NewPassword;
@@ -41,7 +40,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             catch (Exception ex)
             {
                 response = new GeneralResponse(null);
-                response.StatusCode = Requests_Status.InternalServerError;
+                response.StatusCode = Requests_Status.BadRequest;
                 response.Message = ex.Message;
             }
             return response;
@@ -78,7 +77,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             catch (Exception ex)
             {
                 response = new GeneralResponse(null);
-                response.StatusCode = Requests_Status.InternalServerError;
+                response.StatusCode = Requests_Status.BadRequest;
                 response.Message = ex.Message;
             }
             return response;
@@ -116,7 +115,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             catch (Exception ex)
             {
                 response = new GeneralResponse(null);
-                response.StatusCode = Requests_Status.InternalServerError;
+                response.StatusCode = Requests_Status.BadRequest;
                 response.Message = ex.Message;
             }
             return response;

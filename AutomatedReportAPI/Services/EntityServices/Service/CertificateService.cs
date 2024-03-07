@@ -23,13 +23,13 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 var Certificates = certificateRepository.GetAll();
                 foreach (var certificate in Certificates)
                 {
-                    Data.Certificates.Add(new CertificateDto()
+                    Data.certificates.Add(new CertificateDto()
                     {
                         Id = certificate.Id,
                         Name = certificate.Name
                     });
                 }
-                if (Data.Certificates.Count != 0)
+                if (Data.certificates.Count != 0)
                 {
                     response = new GeneralResponse(Data);
                     response.StatusCode = Requests_Status.Ok;
@@ -45,7 +45,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             catch (Exception ex)
             {
                 response = new GeneralResponse(null);
-                response.StatusCode = Requests_Status.InternalServerError;
+                response.StatusCode = Requests_Status.BadRequest;
                 response.Message = ex.Message;
             }
             return response;

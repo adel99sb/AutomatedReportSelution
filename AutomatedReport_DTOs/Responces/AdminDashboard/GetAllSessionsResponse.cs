@@ -4,6 +4,6 @@ namespace AutomatedReportCore.Responces.AdminDashboard
 {
     public class GetAllSessionsResponse
     {
-        public List<SessionDto> Sessions { get; set; } = new();
+        public List<SessionDto> sessions { get; set; } = new();
     }
 }

@@ -43,29 +43,3 @@ namespace AutomatedReportAPI.Infrastructure.Common
         }
     }
 }
-////var ?? = new ??();
-//IGeneralResponse response;
-//try
-//{
-//    //var ?? = this.??();
-//    //Logic
-//    //if (?? != null)
-//    {
-//        //response = new ??(??);
-//        //response.StatusCode = Requests_Status.??;
-//        //response.Message = "?? Successfully";
-//    }
-//    else
-//    {
-//        response = new GeneralResponse(null);
-//        //response.StatusCode = Requests_Status.??;
-//        //response.Message = "??";
-//    }
-//}
-//catch (Exception ex)
-//{
-//    response = new GeneralResponse(null);
-//    response.StatusCode = Requests_Status.InternalServerError;
-//    response.Message = ex.Message;
-//}
-//return response;

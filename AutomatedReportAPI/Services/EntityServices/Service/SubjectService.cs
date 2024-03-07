@@ -1,10 +1,6 @@
 ﻿using AutomatedReportAPI.Infrastructure.Contracts;
-using AutomatedReportAPI.Infrastructure.Repositories;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportCore.Enums;
 using AutomatedReportCore.Responces;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {

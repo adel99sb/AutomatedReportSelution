@@ -4,6 +4,8 @@ using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
 using AutomatedReportCore.Responces;
+using AutomatedReportCore.Responces.AdminDashboard;
+using AutomatedReportCore.Responces.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
@@ -12,41 +14,243 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
     {
         private readonly IDivisionRepository divisionRepository;
         private readonly ICertificateRepository certificateRepository;
+        private readonly IStudentRepository studentRepository;
         public DivisionService(IDivisionRepository divisionRepository,
-            ICertificateRepository certificateRepository)
+            ICertificateRepository certificateRepository,
+            IStudentRepository studentRepository)
         {
             this.divisionRepository = divisionRepository;
             this.certificateRepository = certificateRepository;
+            this.studentRepository = studentRepository;
         }
 
-        public Task<GeneralResponse> AddDivision(AddDivisionRequste requste)
+        public async Task<GeneralResponse> AddDivision(AddDivisionRequste requste)
         {
-            throw new NotImplementedException();
+            GeneralResponse response;
+            try
+            {
+                var certificate = await certificateRepository.GetById(requste.CertificateId);
+                if (certificate is not null)
+                {
+                    await divisionRepository.Create(new Division()
+                    {
+                        Name = requste.Name,
+                        Certificate = certificate
+                    });
+
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.Accepted;
+                    response.Message = "Division Added Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "Certificate Not Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<GeneralResponse> DeleteDivision(Guid id)
+        public async Task<GeneralResponse> DeleteDivision(Guid id)
         {
-            throw new NotImplementedException();
+            GeneralResponse response;
+            try
+            {
+                await divisionRepository.Delete(id);
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.Accepted;
+                response.Message = "Division Deleted Succesfully";
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<GeneralResponse> EditeDivision(EditeDivisionRequste requste)
+        public async Task<GeneralResponse> EditeDivision(EditeDivisionRequste requste)
         {
-            throw new NotImplementedException();
+            GeneralResponse response;
+            try
+            {
+                var division = await divisionRepository.GetById(requste.Id);
+                var certificate = await certificateRepository.GetById(requste.CertificateId);
+                if (division is not null)
+                {
+                    if (certificate is not null)
+                    {
+                        await divisionRepository.Update(new Division()
+                        {
+                            Id = requste.Id,
+                            Name = requste.Name,
+                            Certificate = certificate
+                        });
+
+                        response = new GeneralResponse(null);
+                        response.StatusCode = Requests_Status.Accepted;
+                        response.Message = "Division Updated Succesfully";
+                    }
+                    else
+                    {
+                        response = new GeneralResponse(null);
+                        response.StatusCode = Requests_Status.NotFound;
+                        response.Message = "Certificate Not Found !!";
+                    }
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "Division Not Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<GeneralResponse> GetAllDivisions(Guid? certificateId)
+        public async Task<GeneralResponse> GetAllDivisions(Guid? certificateId)
         {
-            throw new NotImplementedException();
+            var Data = new GetAllDivisionsResponse();
+            GeneralResponse response;
+            try
+            {
+                var divisions = divisionRepository.GetAll();
+                if (certificateId.HasValue)
+                {
+                    divisions = divisions
+                        .Where(c => c.Certificate.Id == certificateId);
+                }
+                divisions = divisions.Include(c => c.Certificate);
+                if (divisions.Count() != 0)
+                {
+                    foreach (var item in divisions)
+                    {
+                        Data.divisions.Add(new DivisionDto()
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            CertificateName = item.Certificate.Name
+                        });
+                    }
+                    response = new GeneralResponse(Data);
+                    response.StatusCode = Requests_Status.Ok;
+                    response.Message = "Get Divisions Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "No Divisions Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<GeneralResponse> GetAllDivisionsWithStudentsNomber(Guid certificateId)
+        public async Task<GeneralResponse> GetAllDivisionsWithStudentsNomber(Guid certificateId)
         {
-            throw new NotImplementedException();
+            var Data = new GetAllDivisionsWithStudentsNomberResponse();
+            GeneralResponse response;
+            try
+            {
+                var divisions = divisionRepository.GetAll()
+                        .Where(c => c.Certificate.Id == certificateId);
+                var students = studentRepository.GetAll().ToList();
+                if (divisions.Count() != 0)
+                {
+                    int studentNomber;
+                    foreach (var item in divisions)
+                    {
+                        studentNomber = students
+                            .Where(d => d.Division.Id == item.Id).Count();
+                        Data.divisions.Add(new DivisionsWithStudentsNomberDto()
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            StudentsNomber = studentNomber
+                        });
+                    }
+                    response = new GeneralResponse(Data);
+                    response.StatusCode = Requests_Status.Ok;
+                    response.Message = "Get Divisions Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "No Divisions Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<GeneralResponse> GetDivisionById(Guid id)
+        public async Task<GeneralResponse> GetDivisionById(Guid id)
         {
-            throw new NotImplementedException();
+            var Data = new GetDivisioneByIdResponse();
+            GeneralResponse response;
+            try
+            {
+                var division = divisionRepository.GetAll()
+                    .Where(d => d.Id == id)
+                    .Include(c => c.Certificate)
+                    .FirstOrDefault();
+                if (division is not null)
+                {
+                    Data.division = new DivisionDto()
+                    {
+                        Id = division.Id,
+                        Name = division.Name,
+                        CertificateName = division.Certificate.Name
+                    };
+                    response = new GeneralResponse(Data);
+                    response.StatusCode = Requests_Status.Ok;
+                    response.Message = "Get Division Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "No Division Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
     }
 }

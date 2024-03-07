@@ -2,8 +2,8 @@
 
 namespace AutomatedReportCore.Responces.AdminDashboard
 {
-    public class GetAllDaysResponse
+    public class GetTeacherByIdResponse
     {
-        public List<DayDto> days { get; set; } = new();
+        public TeacherDto teacher { get; set; }
     }
 }

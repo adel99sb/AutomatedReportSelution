@@ -5,6 +5,6 @@ namespace AutomatedReportCore.Responces.AdminDashboard
 {
     public class GetAllCertificatesResponse
     {
-        public List<CertificateDto> Certificates { get; set; } = new();
+        public List<CertificateDto> certificates { get; set; } = new();
     }
 }

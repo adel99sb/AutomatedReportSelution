@@ -12,7 +12,6 @@ namespace AutomatedReportCore.Enums
         Unauthorized = HttpStatusCode.Unauthorized, // (401)
         NotFound = HttpStatusCode.NotFound, // (404)
         // Unexpected Requests
-        InternalServerError = HttpStatusCode.InternalServerError, // (500)
         NotImplemented = HttpStatusCode.NotImplemented // (501)
     }
 }

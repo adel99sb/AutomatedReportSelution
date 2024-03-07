@@ -1,8 +1,8 @@
 ﻿namespace AutomatedReportCore.Responces.DTOs
 {
-    public class SubjectDto
+    public class HallDto
     {
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         public string Name { get; set; }
     }
 }

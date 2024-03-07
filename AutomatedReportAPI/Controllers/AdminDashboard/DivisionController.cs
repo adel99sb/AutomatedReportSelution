@@ -1,6 +1,8 @@
-﻿using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReportAPI.AppData.Models;
+using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
+using AutomatedReportAPI.Services.EntityServices.Service;
 using AutomatedReportCore.Requstes.AdminDashboard;
 using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
@@ -34,19 +36,46 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
             throw new NotImplementedException();
         }
         [HttpGet("GetAllDivisions")]
-        public Task<IActionResult> GetAllDivisions([FromQuery]Guid? certificateId)
+        public async Task<IActionResult> GetAllDivisions([FromQuery]Guid? certificateId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await divisionService.GetAllDivisions(certificateId);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllDivisionsWithStudentsNomber")]
-        public Task<IActionResult> GetAllDivisionsWithStudentsNomber([Required,FromQuery]Guid certificateId)
+        public async Task<IActionResult> GetAllDivisionsWithStudentsNomber([Required,FromQuery]Guid certificateId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await divisionService.GetAllDivisionsWithStudentsNomber(certificateId);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetDivisionById")]
-        public Task<IActionResult> GetDivisionById([Required,FromQuery] Guid id)
+        public async Task<IActionResult> GetDivisionById([Required,FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await divisionService.GetDivisionById(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using AutomatedReportAPI.Infrastructure.Contracts;
+﻿using AutomatedReportAPI.AppData.Models;
+using AutomatedReportAPI.Infrastructure.Common;
+using AutomatedReportAPI.Infrastructure.Contracts;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Requstes.AdminDashboard;
@@ -11,8 +13,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 {
     public class Sessions_RecordService : ISessions_RecordService<GeneralResponse>
     {
-        private readonly ISessions_RecordRepository sessions_RecordRepository;
-        public Sessions_RecordService(ISessions_RecordRepository sessions_RecordRepository)
+        private readonly IGenericRepository<Sessions_Record> sessions_RecordRepository;
+        public Sessions_RecordService(IGenericRepository<Sessions_Record> sessions_RecordRepository)
         {
             this.sessions_RecordRepository = sessions_RecordRepository;
         }
@@ -40,7 +42,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 for (int i = 0; i < 7; i++)
                 {
-                    data.Days.Add(new DayDto()
+                    data.days.Add(new DayDto()
                     {
                         Id = i,
                         Day = ((DayOfWeek)i).ToString()
@@ -53,7 +55,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             catch (Exception ex)
             {
                 response = new GeneralResponse(data);
-                response.StatusCode = Requests_Status.InternalServerError;
+                response.StatusCode = Requests_Status.BadRequest;
                 response.Message = ex.Message;
             }
             return response;
@@ -101,7 +103,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                             Hall = session.Hall.Name
                         });
                     }                    
-                    data.DaySessions.Add(item.Key,Sessions);
+                    data.daySessions.Add(item.Key,Sessions);
                 }
                 response = new GeneralResponse(data);
                 response.StatusCode = Requests_Status.Ok;
@@ -110,7 +112,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             catch (Exception ex)
             {
                 response = new GeneralResponse(null);
-                response.StatusCode = Requests_Status.InternalServerError;
+                response.StatusCode = Requests_Status.BadRequest;
                 response.Message = ex.Message;
             }
             return response;
