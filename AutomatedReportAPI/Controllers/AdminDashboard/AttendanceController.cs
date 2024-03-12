@@ -1,6 +1,7 @@
-﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+﻿using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Requstes.AdminDashboard;
-using Microsoft.AspNetCore.Http;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,10 +12,25 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class AttendanceController : ControllerBase, IAttendanceService<IActionResult>
     {
-        [HttpPost("AddAttendance")]
-        public Task<IActionResult> AddAttendance([Required,FromBody] AddAttendanceRequste requste)
+        private readonly IAttendanceService<GeneralResponse> attendanceService;
+        public AttendanceController(IAttendanceService<GeneralResponse> attendanceService)
         {
-            throw new NotImplementedException();
+            this.attendanceService = attendanceService;
+        }
+
+        [HttpPost("AddAttendance")]
+        public async Task<IActionResult> AddAttendance([Required,FromBody] AddAttendanceRequste requste)
+        {
+            try
+            {
+                var Result = await attendanceService.AddAttendance(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

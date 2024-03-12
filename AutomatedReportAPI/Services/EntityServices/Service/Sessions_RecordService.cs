@@ -18,61 +18,229 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
            this.sessions_RecordRepository = sessions_RecordRepository;
         }
 
-        public Task<GeneralResponse> AddSession(AddSessionRequste requste)
+        public async Task<GeneralResponse> AddSession(AddSessionRequste requste)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<GeneralResponse> DeleteSession(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<GeneralResponse> EditeSession(EditeSessionRequste requste)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<GeneralResponse> GetAllDays()
-        {
-            GetAllDaysResponse data = new();
             GeneralResponse response;
             try
             {
-                for (int i = 0; i < 7; i++)
+                var Sessions = sessions_RecordRepository.GetAll()
+                    .Include(d => d.Division)
+                    .Include(h => h.Hall)
+                    .Include(s => s.Subject)
+                    .Include(c => c._Class)
+                    .ToList();
+                var divison = Sessions
+                    .Find(d => d.Division.Id == requste.DivisionId)?.Division;
+                var hall = Sessions
+                    .Find(h => h.Hall.Id == requste.HallId)?.Hall;
+                var subject = Sessions
+                    .Find(s => s.Subject.Id == requste.SubjectId)?.Subject;
+                var Class = Sessions
+                    .Find(c => c._Class.Id == requste._ClassId)?._Class;
+                await sessions_RecordRepository.Create(new Sessions_Record()
                 {
-                    data.days.Add(new DayDto()
-                    {
-                        Id = i,
-                        Day = ((DayOfWeek)i).ToString()
-                    });
-                }                
-                response = new GeneralResponse(data);
-                response.StatusCode = Requests_Status.Ok;
-                response.Message = "Sii";
+                    day = requste.day,
+                    Division = divison,
+                    _Class = Class,
+                    Hall = hall,
+                    Subject = subject
+                });
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.Accepted;
+                response.Message = "Sessions Added Succesfully";
             }
             catch (Exception ex)
             {
-                response = new GeneralResponse(data);
+                response = new GeneralResponse(null);
                 response.StatusCode = Requests_Status.BadRequest;
                 response.Message = ex.Message;
             }
             return response;
         }
 
-        public Task<GeneralResponse> GetAllSessions(Guid divisionId)
+        public async Task<GeneralResponse> DeleteSession(Guid id)
         {
-            throw new NotImplementedException();
+            GeneralResponse response;
+            try
+            {
+                await sessions_RecordRepository.Delete(id);
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.Accepted;
+                response.Message = "Sessions Deleted Succesfully";
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Task<GeneralResponse> GetAllSessionsByDay(GetAllSessionsByDayRequste requste)
+        public async Task<GeneralResponse> EditeSession(EditeSessionRequste requste)
         {
-            throw new NotImplementedException();
+            GeneralResponse response;
+            try
+            {
+                var Sessions = sessions_RecordRepository.GetAll()
+                    .Include(d => d.Division)
+                    .Include(h => h.Hall)
+                    .Include(s => s.Subject)
+                    .Include(c => c._Class)
+                    .ToList();
+                var divison = Sessions
+                    .Find(d => d.Division.Id == requste.DivisionId)?.Division;
+                var hall = Sessions
+                    .Find(h => h.Hall.Id == requste.HallId)?.Hall;
+                var subject = Sessions
+                    .Find(s => s.Subject.Id == requste.SubjectId)?.Subject;
+                var Class = Sessions
+                    .Find(c => c._Class.Id == requste._ClassId)?._Class;
+                await sessions_RecordRepository.Update(new Sessions_Record()
+                {
+                    Id = requste.Id,
+                    day = requste.day,
+                    Division = divison,
+                    _Class = Class,
+                    Hall = hall,
+                    Subject = subject
+                });
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.Accepted;
+                response.Message = "Sessions Updated Succesfully";
+            }
+            catch (Exception ex)
+            {
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<GeneralResponse> GetAllDays()
+        {
+            var Data = new GetAllDaysResponse();
+            GeneralResponse response;
+            try
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    Data.days.Add(new DayDto()
+                    {
+                        Id = i,
+                        Day = ((DayOfWeek)i).ToString()
+                    });
+                }                
+                response = new GeneralResponse(Data);
+                response.StatusCode = Requests_Status.Ok;
+                response.Message = "Get Days Succesfully";
+            }
+            catch (Exception ex)
+            {
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<GeneralResponse> GetAllSessions(Guid divisionId)
+        {
+            var Data = new GetAllSessionsResponse();
+            GeneralResponse response;
+            try
+            {
+                var Sessions = sessions_RecordRepository.GetAll()
+                    .Where(s => s.Division.Id == divisionId)
+                    .Include(c => c._Class)
+                    .Include(s => s.Subject)
+                    .Include(h => h.Hall)
+                    .ToList(); // Load data into memory
+                foreach (var item in Sessions)
+                {
+                    Data.sessions.Add(new SessionDto()
+                    {
+                        Id = item.Id,
+                        Day = item.day,
+                        Class = item._Class.Name,
+                        Hall = item.Hall.Name,
+                        Subject = item.Subject.Name
+                    });
+                }
+                if (Data.sessions.Count != 0)
+                {
+                    response = new GeneralResponse(Data);
+                    response.StatusCode = Requests_Status.Ok;
+                    response.Message = "Get Sessions Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "No Sessions Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<GeneralResponse> GetAllSessionsByDay(GetAllSessionsByDayRequste requste)
+        {
+            var Data = new GetAllSessionsByDayResponse();
+            GeneralResponse response;
+            try
+            {
+                var Sessions = sessions_RecordRepository.GetAll()
+                    .Where(s => s.Division.Id == requste.DivisionId
+                             && s.day == requste.Day)
+                    .Include(c => c._Class)
+                    .Include(s => s.Subject)
+                    .Include(h => h.Hall)
+                    .ToList(); // Load data into memory
+                foreach (var item in Sessions)
+                {
+                    Data.sessions.Add(new SessionDto()
+                    {
+                        Id = item.Id,
+                        Day = item.day,
+                        Class = item._Class.Name,
+                        Hall = item.Hall.Name,
+                        Subject = item.Subject.Name
+                    });
+                }
+                if (Data.sessions.Count != 0)
+                {
+                    response = new GeneralResponse(Data);
+                    response.StatusCode = Requests_Status.Ok;
+                    response.Message = "Get Sessions Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "No Sessions Found !!";
+                }
+            }
+            catch (Exception ex)
+            {
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
         public async Task<GeneralResponse> GetAllSessionsGroupedByDays(Guid divisionId)
         {
-            GetAllSessionsGroupedByDaysResponse data = new();
+            var Data = new GetAllSessionsGroupedByDaysResponse();
             List<GroupedSessionDto> Sessions;
             GeneralResponse response;
             try
@@ -83,7 +251,6 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     .Include(s => s.Subject)
                     .Include(h => h.Hall)
                     .ToList(); // Load data into memory
-
                 var daySessions = filteredSessions
                     .GroupBy(s => s.day)
                     .ToDictionary(g => g.Key, g => g.ToList());
@@ -102,11 +269,20 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                             Hall = session.Hall.Name
                         });
                     }                    
-                    data.daySessions.Add(item.Key,Sessions);
+                    Data.daySessions.Add(item.Key,Sessions);
                 }
-                response = new GeneralResponse(data);
-                response.StatusCode = Requests_Status.Ok;
-                response.Message = "Siii";
+                if (Data.daySessions.Count != 0)
+                {
+                    response = new GeneralResponse(Data);
+                    response.StatusCode = Requests_Status.Ok;
+                    response.Message = "Get Sessions Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "No Sessions Found !!";
+                }
             }
             catch (Exception ex)
             {

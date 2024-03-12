@@ -1,6 +1,7 @@
-﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+﻿using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Requstes.AdminDashboard;
-using Microsoft.AspNetCore.Http;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,20 +12,44 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class DailySessionsController : ControllerBase, IDailySessionsService<IActionResult>
     {
+        private readonly IDailySessionsService<GeneralResponse> dailySessionsService;
+        public DailySessionsController(IDailySessionsService<GeneralResponse> dailySessionsService)
+        {
+            this.dailySessionsService = dailySessionsService;
+        }
+
         [HttpPost("AddDailySessions")]
-        public Task<IActionResult> AddDailySessions([Required,FromBody] AddDailySessionsRequste requste)
+        public Task<IActionResult> AddDailySessions([Required, FromBody] AddDailySessionsRequste requste)
         {
             throw new NotImplementedException();
         }
         [HttpGet("GetAllDailySessions")]
-        public Task<IActionResult> GetAllDailySessions([Required,FromQuery] Guid divissionId)
+        public async Task<IActionResult> GetAllDailySessions([Required, FromQuery] Guid divissionId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await dailySessionsService.GetAllDailySessions(divissionId);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllDailySessionsByDate")]
-        public Task<IActionResult> GetAllDailySessionsByDate([Required,FromBody] GetAllDailySessionsByDateRequste requste)
+        public async Task<IActionResult> GetAllDailySessionsByDate([Required, FromQuery] GetAllDailySessionsByDateRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await dailySessionsService.GetAllDailySessionsByDate(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

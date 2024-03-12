@@ -1,4 +1,5 @@
-﻿using AutomatedReportAPI.Services;
+﻿using AutomatedReportAPI.AppData.Models;
+using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Requstes.AdminDashboard;
 using AutomatedReportCore.Responces;
@@ -18,14 +19,32 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
             this.divisionService = divisionService;            
         }
         [HttpPost("AddDivision")]
-        public Task<IActionResult> AddDivision([Required,FromBody] AddDivisionRequste requste)
+        public async Task<IActionResult> AddDivision([Required,FromBody] AddDivisionRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await divisionService.AddDivision(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete("DeleteDivision")]
-        public Task<IActionResult> DeleteDivision([Required,FromQuery] Guid id)
+        public async Task<IActionResult> DeleteDivision([Required,FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await divisionService.DeleteDivision(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("EditeDivision")]
         public Task<IActionResult> EditeDivision([Required, FromBody] EditeDivisionRequste requste)

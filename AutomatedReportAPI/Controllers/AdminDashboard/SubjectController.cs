@@ -1,4 +1,5 @@
-﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+﻿using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -16,9 +17,18 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
             this.subjectService = subjectService;
         }
         [HttpGet("GetAllSubjects")]
-        public Task<IActionResult> GetAllSubjects([Required, FromQuery] Guid divisionId)
+        public async Task<IActionResult> GetAllSubjects([Required, FromQuery] Guid divisionId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await subjectService.GetAllSubjects(divisionId);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

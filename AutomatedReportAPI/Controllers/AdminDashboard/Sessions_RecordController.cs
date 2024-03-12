@@ -1,10 +1,7 @@
-﻿using AutomatedReportAPI.AppData.Models;
-using AutomatedReportAPI.Services;
+﻿using AutomatedReportAPI.Services;
 using AutomatedReportAPI.Services.EntityServices.Contracts;
-using AutomatedReportAPI.Services.EntityServices.Service;
 using AutomatedReportCore.Requstes.AdminDashboard;
 using AutomatedReportCore.Responces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,19 +19,46 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
         }
 
         [HttpPost("AddSession")]
-        public Task<IActionResult> AddSession([Required,FromBody] AddSessionRequste requste)
+        public async Task<IActionResult> AddSession([Required,FromBody] AddSessionRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await sessionService.AddSession(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete("DeleteSession")]
-        public Task<IActionResult> DeleteSession([Required,FromQuery] Guid id)
+        public async Task<IActionResult> DeleteSession([Required,FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await sessionService.DeleteSession(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("EditeSession")]
-        public Task<IActionResult> EditeSession([Required,FromBody] EditeSessionRequste requste)
+        public async Task<IActionResult> EditeSession([Required,FromBody] EditeSessionRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await sessionService.EditeSession(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllDays")]
         public async Task<IActionResult> GetAllDays()
@@ -51,14 +75,32 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
             }
         }
         [HttpGet("GetAllSessions")]
-        public Task<IActionResult> GetAllSessions([Required,FromQuery] Guid divisionId)
+        public async Task<IActionResult> GetAllSessions([Required,FromQuery] Guid divisionId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await sessionService.GetAllSessions(divisionId);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllSessionsByDay")]
-        public Task<IActionResult> GetAllSessionsByDay([Required,FromQuery] GetAllSessionsByDayRequste requste)
+        public async Task<IActionResult> GetAllSessionsByDay([Required,FromQuery] GetAllSessionsByDayRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await sessionService.GetAllSessionsByDay(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllSessionsGroupedByDays")]
         public async Task<IActionResult> GetAllSessionsGroupedByDays([Required, FromQuery] Guid divisionId)

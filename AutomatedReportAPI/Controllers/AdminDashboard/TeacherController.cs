@@ -1,6 +1,7 @@
-﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+﻿using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Requstes.AdminDashboard;
-using Microsoft.AspNetCore.Http;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,30 +12,81 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class TeacherController : ControllerBase, ITeacherService<IActionResult>
     {
-        [HttpPost("AddTeacher")]
-        public Task<IActionResult> AddTeacher([Required,FromBody] AddTeacherRequste requste)
+        private readonly ITeacherService<GeneralResponse> teacherService;
+        public TeacherController(ITeacherService<GeneralResponse> teacherService)
         {
-            throw new NotImplementedException();
+            this.teacherService = teacherService;
+        }
+
+        [HttpPost("AddTeacher")]
+        public async Task<IActionResult> AddTeacher([Required,FromBody] AddTeacherRequste requste)
+        {
+            try
+            {
+                var Result = await teacherService.AddTeacher(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete("DeleteTeacher")]
-        public Task<IActionResult> DeleteTeacher([Required, FromQuery] Guid id)
+        public async Task<IActionResult> DeleteTeacher([Required, FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await teacherService.DeleteTeacher(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("EditeTeacher")]
-        public Task<IActionResult> EditeTeacher([Required,FromBody] EditeTeacherRequste requste)
+        public async Task<IActionResult> EditeTeacher([Required,FromBody] EditeTeacherRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await teacherService.EditeTeacher(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllTeachers")]
-        public Task<IActionResult> GetAllTeachers()
+        public async Task<IActionResult> GetAllTeachers()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await teacherService.GetAllTeachers();
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetTeacherById")]
-        public Task<IActionResult> GetTeacherById([Required,FromQuery] Guid id)
+        public async Task<IActionResult> GetTeacherById([Required,FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await teacherService.GetTeacherById(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

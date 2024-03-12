@@ -1,6 +1,7 @@
-﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+﻿using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Requstes.AdminDashboard;
-using Microsoft.AspNetCore.Http;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,35 +12,95 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class TestController : ControllerBase, ITestService<IActionResult>
     {
-        [HttpPost("AddTest")]
-        public Task<IActionResult> AddTest([Required,FromBody] AddTestRequste requste)
+        private readonly ITestService<GeneralResponse> testService;
+        public TestController(ITestService<GeneralResponse> testService)
         {
-            throw new NotImplementedException();
+            this.testService = testService;
+        }
+
+        [HttpPost("AddTest")]
+        public async Task<IActionResult> AddTest([Required,FromBody] AddTestRequste requste)
+        {
+            try
+            {
+                var Result = await testService.AddTest(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete("DeleteTest")]
-        public Task<IActionResult> DeleteTest([Required,FromQuery] Guid id)
+        public async Task<IActionResult> DeleteTest([Required,FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await testService.DeleteTest(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("EditeTest")]
-        public Task<IActionResult> EditeTest([Required,FromBody] EditeTestRequste requste)
+        public async Task<IActionResult> EditeTest([Required,FromBody] EditeTestRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await testService.EditeTest(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllTests")]
-        public Task<IActionResult> GetAllTests([Required,FromQuery] Guid divisionId)
+        public async Task<IActionResult> GetAllTests([Required,FromQuery] Guid divisionId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await testService.GetAllTests(divisionId);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetTestById")]
-        public Task<IActionResult> GetTestById([Required,FromQuery] Guid id)
+        public async Task<IActionResult> GetTestById([Required,FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await testService.GetTestById(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("MarkAsDone")]
-        public Task<IActionResult> MarkAsDone([Required, FromQuery] Guid id)
+        public async Task<IActionResult> MarkAsDone([Required, FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await testService.MarkAsDone(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

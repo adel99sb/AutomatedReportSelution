@@ -1,6 +1,7 @@
-﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+﻿using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Requstes.AdminDashboard;
-using Microsoft.AspNetCore.Http;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,15 +12,39 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class PaymentController : ControllerBase, IPaymentService<IActionResult>
     {
-        [HttpPost("AddPayment")]
-        public Task<IActionResult> AddPayment([Required,FromBody] AddPaymentRequste requste)
+        private readonly IPaymentService<GeneralResponse> paymentService;
+        public PaymentController(IPaymentService<GeneralResponse> paymentService)
         {
-            throw new NotImplementedException();
+            this.paymentService = paymentService;
+        }
+
+        [HttpPost("AddPayment")]
+        public async Task<IActionResult> AddPayment([Required,FromBody] AddPaymentRequste requste)
+        {
+            try
+            {
+                var Result = await paymentService.AddPayment(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllPayments")]
-        public Task<IActionResult> GetAllPayments([Required,FromQuery] Guid studentId)
+        public async Task<IActionResult> GetAllPayments([Required,FromQuery] Guid studentId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await paymentService.GetAllPayments(studentId);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

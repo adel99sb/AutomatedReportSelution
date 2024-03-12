@@ -1,6 +1,7 @@
-﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+﻿using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Requstes.AdminDashboard;
-using Microsoft.AspNetCore.Http;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,40 +12,109 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class StudentController : ControllerBase, IStudentService<IActionResult>
     {
-        [HttpPost("AddStudent")]
-        public Task<IActionResult> AddStudent([Required,FromBody] AddStudentRequste requste)
+        private readonly IStudentService<GeneralResponse> studentService;
+        public StudentController(IStudentService<GeneralResponse> studentService)
         {
-            throw new NotImplementedException();
+            this.studentService = studentService;
+        }
+
+        [HttpPost("AddStudent")]
+        public async Task<IActionResult> AddStudent([Required,FromBody] AddStudentRequste requste)
+        {
+            try
+            {
+                var Result = await studentService.AddStudent(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete("DeleteStudent")]
-        public Task<IActionResult> DeleteStudent([Required,FromQuery] Guid id)
+        public async Task<IActionResult> DeleteStudent([Required,FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await studentService.DeleteStudent(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("EditeStudent")]
-        public Task<IActionResult> EditeStudent([Required,FromBody] EditeStudentRequste requste)
+        public async Task<IActionResult> EditeStudent([Required,FromBody] EditeStudentRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await studentService.EditeStudent(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllStudentsByDivisionId")]
-        public Task<IActionResult> GetAllStudentsByDivisionId([Required,FromQuery] Guid divisionId)
+        public async Task<IActionResult> GetAllStudentsByDivisionId([Required,FromQuery] Guid divisionId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await studentService.GetAllStudentsByDivisionId(divisionId);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllStudentsByTestId")]
-        public Task<IActionResult> GetAllStudentsByTestId([Required,FromQuery] Guid testId)
+        public async Task<IActionResult> GetAllStudentsByTestId([Required,FromQuery] Guid testId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await studentService.GetAllStudentsByTestId(testId);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllStudentsWithDivision")]
-        public Task<IActionResult> GetAllStudentsWithDivision()
+        public async Task<IActionResult> GetAllStudentsWithDivision()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await studentService.GetAllStudentsWithDivision();
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetStudentById")]
-        public Task<IActionResult> GetStudentById([Required, FromQuery] Guid id)
+        public async Task<IActionResult> GetStudentById([Required, FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await studentService.GetStudentById(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

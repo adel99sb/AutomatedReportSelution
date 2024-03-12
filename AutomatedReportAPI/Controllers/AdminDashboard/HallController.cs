@@ -1,6 +1,7 @@
-﻿using AutomatedReportAPI.Services.EntityServices.Contracts;
+﻿using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Requstes.AdminDashboard;
-using Microsoft.AspNetCore.Http;
+using AutomatedReportCore.Responces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,30 +12,81 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
     [ApiExplorerSettings(GroupName = "v1")]
     public class HallController : ControllerBase, IHallService<IActionResult>
     {
-        [HttpPost("AddHall")]
-        public Task<IActionResult> AddHall([Required,FromBody] AddHallRequste requste)
+        private readonly IHallService<GeneralResponse> hallService;
+        public HallController(IHallService<GeneralResponse> hallService)
         {
-            throw new NotImplementedException();
+            this.hallService = hallService;
+        }
+
+        [HttpPost("AddHall")]
+        public async Task<IActionResult> AddHall([Required,FromBody] AddHallRequste requste)
+        {
+            try
+            {
+                var Result = await hallService.AddHall(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete("DeleteHall")]
-        public Task<IActionResult> DeleteHall([Required, FromQuery] Guid id)
+        public async Task<IActionResult> DeleteHall([Required, FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await hallService.DeleteHall(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("EditeHall")]
-        public Task<IActionResult> EditeHall([Required,FromBody] EditeHallRequste requste)
+        public async Task<IActionResult> EditeHall([Required,FromBody] EditeHallRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await hallService.EditeHall(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllHalls")]
-        public Task<IActionResult> GetAllHalls()
+        public async Task<IActionResult> GetAllHalls()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await hallService.GetAllHalls();
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetHallById")]
-        public Task<IActionResult> GetHallById([Required,FromQuery] Guid id)
+        public async Task<IActionResult> GetHallById([Required,FromQuery] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await hallService.GetHallById(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
