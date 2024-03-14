@@ -55,7 +55,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AutomatedReport_DTOs\AutomatedReportCore.csproj" />
+      <Reference Include="AutomatedReportCore">
+        <HintPath>..\AutomatedReport_DTOs\bin\Release\net6.0\AutomatedReportCore.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
