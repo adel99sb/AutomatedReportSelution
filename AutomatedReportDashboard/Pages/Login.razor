@@ -16,7 +16,7 @@
 
 
             <div class="form-floating">
-                <select @bind="UserType" class="form-select" id="studentClass" aria-label="Floating label select example">
+                <select @bind="UserId" class="form-select" id="studentClass" aria-label="Floating label select example">
                     <option selected disabled>اختر نوع المستخدم</option>
                     @foreach (var item in response.users)
                     {
@@ -50,12 +50,12 @@
 @code {
     private GetAllUsersResponse response = new GetAllUsersResponse();
     private GeneralResponse resulte;
-    private string UserType;
+    private string UserId;
     private string Password;
     private static bool ShowMessage;
     private async void UserLogin()
     {
-        resulte = await Data.Login(UserType, Password);
+        resulte = await Data.Login(UserId, Password);
         if(resulte.StatusCode == AutomatedReportCore.Enums.Requests_Status.Ok)
         {
             var userId = resulte.Data.ToObj<LoginResponse>().user.Id;
@@ -70,7 +70,6 @@
     }
     protected override async Task OnInitializedAsync()
     {        
-        mgr.NavigateTo("/Home");
         var res = await Data.GetAllUsers();
         response = res.Data.ToObj<GetAllUsersResponse>();        
     }

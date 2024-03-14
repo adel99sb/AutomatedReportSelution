@@ -5,6 +5,7 @@ namespace AutomatedReportDashboard.Data
     public static class Helper
     {
         public static Guid UserId { get; set; } /*= new Guid("10f3562f-1a07-4dab-a16b-8b64855df56d");*/
+        public static Guid CertificateId { get; set; }
         public static T ToObj<T>(this object data)
         {
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };

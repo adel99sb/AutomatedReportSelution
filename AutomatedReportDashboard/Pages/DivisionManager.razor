@@ -1,6 +1,7 @@
 ﻿@page "/DivisionManager"
 @layout IM_Layout
 
+@inject DataService Data 
 <h3>DivisionManager</h3>
 <div class="sectoin-mangement">
     <div class="container">
@@ -24,23 +25,47 @@
                     <div class="section-title">
                         <h4>عرض الشعب حسب</h4>
                     </div>
-                    <div class="show-daily-task">
-                        <a class="" href="/ShowDivision">
-                            <img src="../assets/Img/school.png" />
-                            طلاب التاسع
-                        </a>
+                    @if (response.certificates.Count > 0)
+                    {
+                        <div class="show-daily-task">
+                            <a class="" href="/ShowDivision" @onclick=SetCertificate0Id>
+                                <img src="../assets/Img/school.png" />
+                                @response.certificates.ElementAt(0).Name
+                            </a>
 
-                        <a class="" href="/ShowDivision">
-                            <img src="../assets/Img/tools.png" />
-                            طلاب البكلوريا علمي
-                        </a>
-                        <a class="" href="/ShowDivision">
-                            <img src="../assets/Img/literary.png" />
-                            طلاب البكلوريا أدبي
-                        </a>
-                    </div>
+                            <a class="" href="/ShowDivision" @onclick=SetCertificate1Id>
+                                <img src="../assets/Img/tools.png" />
+                                @response.certificates.ElementAt(1).Name                                
+                            </a>
+                            <a class="" href="/ShowDivision" @onclick=SetCertificate2Id>
+                                <img src="../assets/Img/literary.png" />
+                                @response.certificates.ElementAt(2).Name
+                            </a>
+                        </div>
+                    }                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+@code
+{
+    private GetAllCertificatesResponse response = new GetAllCertificatesResponse();
+    private async void SetCertificate0Id()
+    {
+        Helper.CertificateId = response.certificates.ElementAt(0).Id;
+    }
+    private async void SetCertificate1Id()
+    {
+        Helper.CertificateId = response.certificates.ElementAt(1).Id;
+    }
+    private async void SetCertificate2Id()
+    {
+        Helper.CertificateId = response.certificates.ElementAt(2).Id;
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Data.GetAllCertificates();
+        response = result.Data.ToObj<GetAllCertificatesResponse>();
+    }
+}
