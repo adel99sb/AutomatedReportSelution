@@ -1,0 +1,68 @@
+﻿@page "/ClassManager"
+@layout IM_Layout
+
+<h3>ClassManager</h3>
+<div class="appointment-mangement">
+    <div class="container">
+        <div class="add-new-appointment">
+
+            <div class="btn-action">
+                <a href="/AddClass">
+                    <img src="../assets/Img/add.png" alt="">
+                    <span>
+                        اضافة موعد جديدة
+                    </span>
+                </a>
+            </div>
+
+        </div>
+        <div class="show-appointment-mangement">
+            <div class="hall-title">
+                <h4>عرض المواعيد : </h4>
+            </div>
+            <div class="show-data-appointment table-responsive">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col">اسم</th>
+                            <th scope="col">وقت البداية</th>
+                            <th scope="col">وقت الانتهاء</th>
+                            <th scope="col">العمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                test
+                            </td>
+                            <td>
+                                10:00
+                            </td>
+                            <td>
+                                12:30
+                            </td>
+                            <td class="btn-action-list">
+                                <div class="btn-action">
+                                    <a href="/EditeClass">
+                                        <img src="../assets/Img/edit.png" alt="">
+                                        <span>
+                                            تعديل
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="btn-action">
+                                    <a href="showSection.html">
+                                        <img src="../assets/Img/delete.png" alt="">
+                                        <span>
+                                            حذف
+                                        </span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

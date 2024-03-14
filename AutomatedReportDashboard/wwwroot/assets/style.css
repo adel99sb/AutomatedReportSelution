@@ -1,0 +1,423 @@
+@import url("https://fonts.googleapis.com/css2?family=Tajawal&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sora&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Tajawal", sans-serif1 !important;
+}
+
+nav,
+main {
+    margin: 20px;
+    margin-top: 43px;
+}
+/*Navnar*/
+/*___________________________________________________________________________*/
+.navbar-light .navbar-nav .nav-link:active {
+    color: #000;
+    background-color: beige;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+nav {
+    border-radius: 10px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    font-size: 18px;
+    color: #172e56;
+}
+
+    .navbar-light .navbar-nav .nav-link:hover {
+        color: #264c8e;
+        background-color: #e9ecef;
+        border-radius: 10px;
+    }
+
+.navbar-brand img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+}
+
+.form-floating > label {
+    position: absolute;
+    top: 0;
+    left: auto;
+    right: 0 !important;
+    height: 100%;
+    padding: 1rem 0.75rem;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.add-data-student,
+.statistices,
+.add-data-teacher,
+.add-data-program,
+.add-data-marks,
+.add-data-payments {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+    .add-data-teacher .row,
+    .add-data-student .row,
+    .add-data-program .row,
+    .add-data-marks .row,
+    .add-data-payments .row {
+        margin-bottom: 20px;
+    }
+
+.form-control:focus {
+    border-color: #fff;
+}
+
+.form-select:focus {
+    border-color: #fff;
+}
+
+.statistic-card {
+    display: flex;
+    webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    padding: 18px;
+    border-radius: 10px;
+}
+
+    .statistic-card .statistic-icon {
+        padding-left: 20px;
+    }
+
+        .statistic-card .statistic-icon img {
+            color: #172e56;
+            width: 80px;
+        }
+
+    .statistic-card .statistic-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+.statistices .row .col-md-3 {
+    padding-bottom: 20px;
+}
+
+input[type="date"] {
+    font-size: 20px;
+}
+
+.sunRise-login {
+    padding: 15px;
+    margin: auto;
+    margin-top: 150px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+}
+
+.sunRise-login-logo {
+    text-align: center;
+    position: relative;
+    top: -50px;
+}
+
+    .sunRise-login-logo img {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+    }
+
+.box {
+    width: 500px;
+}
+
+.form-floating {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #172e56;
+    border-color: #172e56;
+    color: #fff;
+}
+
+    .btn-primary:hover {
+        background-color: #264c8e;
+    }
+
+.show-student-mangement,
+.show-section-mangement,
+.show-hall-mangement,
+.show-data-section,
+.show-teacher-mangement,
+.show-appointment-mangement,
+.show-exam-mangement,
+.show-payment-mangement,
+.show-daily-task-mangement,
+.show-daily-task-section-data-mangement,
+.show-data-marks-mangement,
+.show-data-attendees-mangement {
+    padding: 25px;
+    margin-top: 70px;
+    border-radius: 10px;
+    webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+}
+
+.sectoin-mangement,
+.hall-mangement,
+.teacher-mangement,
+.appointment-mangement,
+.exam-mangement,
+.student-mangement,
+.payment-mangement,
+.daily-task-mangement,
+.daily-task-section-data-mangement,
+.marks-data-mangment,
+.show-data-attendees {
+    padding: 20px;
+}
+
+.show-section,
+.show-daily-task {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+    .show-section a {
+        padding: 20px;
+    }
+
+.section-title,
+.hall-title {
+    margin-bottom: 30px;
+}
+
+.add-data-section,
+.add-data-hall,
+.add-data-teacher,
+.add-data-appointment,
+.add-data-exam,
+.add-data-student,
+.add-data-payment {
+    border-radius: 10px;
+    margin: 30px;
+    padding: 20px;
+    webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+}
+
+    .action-btn button,
+    .action-btn a {
+        margin-left: 10px;
+    }
+
+.student-filter {
+}
+
+.statistices .row .col-md-4 {
+    padding-bottom: 20px;
+}
+
+.show-daily-task a {
+    transition: transform 0.5s;
+    color: #000;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+    .show-daily-task a:hover {
+        transform: scale(1.1);
+    }
+
+.show-daily-task img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+}
+
+.show-daily-task-section img {
+    margin-right: 5px;
+    width: 40px;
+    height: 34px;
+    margin-bottom: 15px;
+}
+
+.show-daily-task-section a {
+    display: flex;
+    margin-bottom: 20px;
+    transition: transform 0.5s;
+    color: #000;
+    text-decoration: none;
+}
+
+.show-daily-task-section-data-add {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+    .show-daily-task-section-data-add a {
+        webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+        font-size: 20px;
+        color: #000;
+        text-decoration: none;
+        padding: 8px;
+        border-radius: 5px;
+    }
+
+    .show-daily-task-section-data-add img {
+        width: 30px;
+        height: 30px;
+    }
+
+.daily-task-section-data-action {
+    margin: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+    .daily-task-section-data-action a {
+        color: #000;
+        text-decoration: none;
+    }
+
+    .daily-task-section-data-action img {
+        width: 40px;
+        height: 40px;
+    }
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    margin: auto;
+    height: 100vh;
+}
+
+.date-card {
+    border-radius: 10px;
+    padding: 10px;
+    webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+}
+
+.btn-action-list {
+    display: flex;
+    flex-direction: row;
+}
+
+    .btn-action-list .btn-action {
+        margin-right: 10px;
+    }
+
+.btn-action,
+.action-btn-list {
+    padding: 10px;
+    max-width: max-content;
+    border-radius: 5px;
+    webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    padding-right: 5px;
+}
+
+    .btn-action a,
+    .btn-action-list a {
+        text-decoration: none;
+        color: #000;
+    }
+
+.btn-action-list img {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-action img {
+    width: 30px;
+    height: 30px;
+}
+
+.show-daily-task-section-data-mangement {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+    .show-daily-task-section-data-mangement
+    .show-daily-task-section-data
+    .form-floating {
+        margin-right: 6px;
+        width: 160px;
+    }
+
+    .show-daily-task-section-data-mangement .show-daily-task-section-data .col-8 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+.form-check .form-check-input {
+    float: right;
+    margin-right: 1.5em;
+}
+
+.data-list {
+    display: flex;
+}
+
+    .data-list span {
+        display: flex;
+        align-items: center;
+        margin-top: -7px;
+        font-size: 15px;
+        color: #172e56;
+    }
+
+.show-marks-content {
+    margin-top: 45px;
+}
+
+.data-list-content {
+    display: flex;
+}
+
+    .data-list-content span {
+        display: flex;
+        align-items: center;
+        margin-top: -7px;
+        font-size: 20px;
+    }
+
+.show-marks-content .col-4 {
+    display: flex;
+    align-items: center;
+}

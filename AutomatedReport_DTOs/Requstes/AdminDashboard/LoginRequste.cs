@@ -5,7 +5,7 @@ namespace AutomatedReportCore.Requstes.AdminDashboard
     public class LoginRequste
     {
         [Required(ErrorMessage = "User Type Filed Is Required")]
-        public string UserType { get; set; }
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "Password Filed Is Required")]
         public string Password { get; set; }
     }

@@ -4,6 +4,6 @@ namespace AutomatedReportCore.Responces.AdminDashboard
 {
     public class LoginResponse
     {
-        public UserDto user { get; set; }
+        public UserDto user { get; set; } = new();
     }
 }

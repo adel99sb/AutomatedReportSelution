@@ -93,7 +93,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 var users = userRepository.GetAll();
                 foreach (var user in users)
                 {
-                    if (user.Type == request.UserType && user.Password == request.Password)
+                    if (user.Id == request.Id && user.Password == request.Password)
                     {
                         Data.user.Id = user.Id;
                         Data.user.Type = user.Type;

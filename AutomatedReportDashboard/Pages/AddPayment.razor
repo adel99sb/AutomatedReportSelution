@@ -1,0 +1,32 @@
+﻿@page "/AddPayment"
+
+<h3>AddPayment</h3>
+<div class="add-data-payment">
+    <div class="payment">
+        <h4> اضافة دفعة :</h4>
+        <br />
+    </div>
+    <div class="row g-2">
+        <div class="col-md">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="payment" placeholder="">
+                <label for="studentName" class="text-center">قيمة الدفعة</label>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="paymentDesc" placeholder="">
+                <label for="studentName" class="text-center">الوصف</label>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating">
+                <input type="datetime-local" class="form-control" id="paymentDate" placeholder="">
+                <label for="studentName" class="text-center">التاريخ</label>
+            </div>
+        </div>
+    </div>
+    <div class="btn-action">
+        <button type="button" class="btn btn-primary">حفظ</button>
+    </div>
+</div>

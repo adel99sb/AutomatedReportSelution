@@ -1,0 +1,116 @@
+﻿@page "/StudentsManager"
+
+<h3>StudentsManager</h3>
+<div class="student-mangement">
+    <div class="container">
+        <div class="add-new-student">
+
+            <div class="btn-action">
+                <a href="/AddStudent">
+                    <img src="../assets/Img/add.png" alt="">
+                    <span>
+                        اضافة طالب جديد
+                    </span>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="show-student-mangement">
+            <div class="student">
+                <h4>عرض بيانات الطلاب : </h4>
+            </div>
+            <div class="student-filter">
+                <div class="row g-2">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="studentSearch" placeholder="">
+                            <label for="studentName" class="text-center">بحث بالاسم والكنية ورقم الهاتف</label>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <select class="form-select" id="studentSection"
+                                    aria-label="Floating label select example">
+                                <option value="1">الاولى</option>
+                            </select>
+                            <label for="studentSection">الشعبة</label>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <select class="form-select" id="studentSection"
+                                    aria-label="Floating label select example">
+                                <option value="1">الاولى</option>
+                            </select>
+                            <label for="studentSection">الصف</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="show-data-exam table-responsive">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col">الاسم الاول</th>
+                            <th scope="col">الكنية</th>
+                            <th scope="col">الجنس</th>
+                            <th scope="col">العنوان</th>
+                            <th scope="col">تاريخ الميلاد</th>
+                            <th scope="col">رقم الهاتف</th>
+                            <th scope="col">اسم ولي الأمر</th>
+                            <th scope="col">رقم ولي الأمر</th>
+                            <th scope="col">القسط الإجمالي</th>
+                            <th scope="col">الشعبة</th>
+                            <th scope="col">العمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>adel</td>
+                            <td>adel</td>
+                            <td>adel</td>
+                            <td>adel</td>
+                            <td>adel</td>
+                            <td>adel</td>
+                            <td>adel</td>
+                            <td>adel</td>
+                            <td>adel</td>
+                            <td>adel</td>
+                            <td class="btn-action-list">
+                                <div class="btn-action">
+                                    <a href="/EditeStudent">
+                                        <img src="../assets/Img/edit.png" alt="">
+                                        <span>
+                                            تعديل
+                                        </span>
+                                    </a>
+                                </div>
+
+
+                                <div class="btn-action">
+                                    <a href="/PaymentManager">
+                                        <img src="../assets/Img/payment-gateway.png" alt="">
+                                        <span>
+                                            الدفعات
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="btn-action">
+                                    <a href="showSection.html">
+                                        <img src="../assets/Img/delete.png" alt="">
+                                        <span>
+                                            حذف
+                                        </span>
+                                    </a>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

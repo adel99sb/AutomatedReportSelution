@@ -1,0 +1,69 @@
+﻿@page "/TeacherManager"
+@layout IM_Layout
+
+<h3>TeacherManager</h3>
+<div class="teacher-mangement">
+    <div class="container">
+        <div class="add-new-teacher">
+            <div class="btn-action">
+                <a href="/AddTeacher">
+                    <img src="../assets/Img/add.png" alt="">
+                    <span>
+                        اضافة بيانات مدرس
+                    </span>
+                </a>
+            </div>
+
+        </div>
+        <div class="show-teacher-mangement">
+            <div class="hall-title">
+                <h4>عرض بيانات المدرسين : </h4>
+            </div>
+            <div class="show-data-hall table-responsive">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col">اسم المدرس</th>
+                            <th scope="col">رقم الهاتف</th>
+                            <th scope="col"> العمليات</th>
+                        </tr>
+
+
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                الاولى
+                            </td>
+                            <td>
+                                5646465465456
+                            </td>
+                            <td class="btn-action-list">
+                                <div class="btn-action">
+                                    <a href="/EditeTeacher">
+                                        <img src="../assets/Img/edit.png" alt="">
+                                        <span>
+                                            تعديل
+                                        </span>
+                                    </a>
+                                </div>
+
+
+                                <div class="btn-action">
+                                    <a href="showSection.html">
+                                        <img src="../assets/Img/delete.png" alt="">
+                                        <span>
+                                            حذف
+                                        </span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

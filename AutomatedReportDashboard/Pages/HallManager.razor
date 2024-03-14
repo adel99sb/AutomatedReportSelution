@@ -1,0 +1,65 @@
+﻿@page "/HallManager"
+@layout IM_Layout
+
+<h3>HallManager</h3>
+<div class="hall-mangement">
+    <div class="container">
+        <div class="add-new-hall">
+
+
+            <div class="btn-action">
+                <a href="/AddHall">
+                    <img src="../assets/Img/add.png" alt="">
+                    <span>
+                        اضافة قاعة جديدة
+                    </span>
+                </a>
+            </div>
+
+        </div>
+        <div class="show-hall-mangement">
+            <div class="hall-title">
+                <h4>عرض القاعات : </h4>
+            </div>
+            <div class="show-data-hall table-responsive">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col">اسم القاعة</th>
+                            <th scope="col">العمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                الاولى
+                            </td>
+                            <td class="btn-action-list">
+                                <div class="btn-action">
+                                    <a href="/EditeHall">
+                                        <img src="../assets/Img/edit.png" alt="">
+                                        <span>
+                                            تعديل
+                                        </span>
+                                    </a>
+                                </div>
+
+
+                                <div class="btn-action">
+                                    <a href="showSection.html">
+                                        <img src="../assets/Img/delete.png" alt="">
+                                        <span>
+                                            حذف
+                                        </span>
+                                    </a>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+}

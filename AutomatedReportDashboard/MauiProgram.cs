@@ -20,7 +20,7 @@ namespace AutomatedReportDashboard
 		builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-            builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddSingleton<DataService>();
 
             return builder.Build();
         }
