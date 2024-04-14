@@ -30,6 +30,7 @@ namespace AutomatedReportAPI.AppData.Models
         [Required]
         [Range(0,double.MaxValue)]
         public double Total_Payments { get; set; }
+        public Guid DivisionId { get; set; }
         public Division Division { get; set; }
     }
 }

@@ -1,10 +1,27 @@
 ﻿@page "/StudentsManager"
+@inject DataService Data
 
 <h3>StudentsManager</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
+@if (response.students.Count == 0)
+{
+    <div>
+        <h6>
+            No Data Here Yet !!
+        </h6>
+    </div>
+}
+@if (ShowMessage)
+{
+    <div>
+        <h6>
+            قم بحذف الارتباطات المتعلقة بهذا الطالب أولاً لتتمكن من حذفه
+        </h6>
+    </div>
+}
 <div class="student-mangement">
     <div class="container">
         <div class="add-new-student">
-
             <div class="btn-action">
                 <a href="/AddStudent">
                     <img src="../assets/Img/add.png" alt="">
@@ -13,41 +30,50 @@
                     </span>
                 </a>
             </div>
-
         </div>
-
         <div class="show-student-mangement">
             <div class="student">
                 <h4>عرض بيانات الطلاب : </h4>
             </div>
-            <div class="student-filter">
-                <div class="row g-2">
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="studentSearch" placeholder="">
-                            <label for="studentName" class="text-center">بحث بالاسم والكنية ورقم الهاتف</label>
+            @if (isDataLoaded)
+            {
+                <div class="student-filter">
+                    <div class="row g-2">
+                        <div class="col-md">
+                            <div class="form-floating">
+                                <input @oninput="SearchUpdate" type="text" class="form-control" id="studentSearch" placeholder="">
+                                <label for="studentName" class="text-center">بحث بالاسم والكنية ورقم الهاتف</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <select class="form-select" id="studentSection"
+                        <div class="col-md">
+                            <div class="form-floating">
+                                <select @onchange="UpdateDivision" class="form-select" id="studentSection"
                                     aria-label="Floating label select example">
-                                <option value="1">الاولى</option>
-                            </select>
-                            <label for="studentSection">الشعبة</label>
+                                    <option disabled selected>بحث بالشعبة</option>
+                                    <option value="@string.Empty">عرض الكل</option>
+                                    @foreach (var item in Divisions.divisions)
+                                    {
+                                        <option value="@item.Name">@item.Name</option>
+                                    }
+                                </select>
+                                <label for="studentSection">الشعبة</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <select class="form-select" id="studentSection"
+                        <div class="col-md">
+                            <div class="form-floating">
+                                <select @onchange="ChangeDivisions" class="form-select" id="studentSection"
                                     aria-label="Floating label select example">
-                                <option value="1">الاولى</option>
-                            </select>
-                            <label for="studentSection">الصف</label>
+                                    @foreach (var item in Certificates.certificates)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                                <label for="studentSection">الصف</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
             <hr />
             <div class="show-data-exam table-responsive">
                 <table class="table table-responsive">
@@ -67,50 +93,130 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>adel</td>
-                            <td>adel</td>
-                            <td>adel</td>
-                            <td>adel</td>
-                            <td>adel</td>
-                            <td>adel</td>
-                            <td>adel</td>
-                            <td>adel</td>
-                            <td>adel</td>
-                            <td>adel</td>
-                            <td class="btn-action-list">
-                                <div class="btn-action">
-                                    <a href="/EditeStudent">
-                                        <img src="../assets/Img/edit.png" alt="">
-                                        <span>
-                                            تعديل
-                                        </span>
-                                    </a>
-                                </div>
+                        @foreach (var item in FilterdStudents)
+                        {
+                            <tr>
+                                <td>@item.First_Name</td>
+                                <td>@item.Last_Name</td>
+                                <td>@item.Gender</td>
+                                <td>@item.Address</td>
+                                <td>@item.BirthDay.ToString("d")</td>
+                                <td>@item.Phone</td>
+                                <td>@item.Parent_Name</td>
+                                <td>@item.Parent_Phone</td>
+                                <td>@item.Total_Payments</td>
+                                <td>@item.Division</td>
+                                <td class="btn-action-list">
+                                    <div class="btn-action">
+                                        <a href="/EditeStudent"
+                                       onclick=@(() => SetStudentId(item.Id))>
+                                            <img src="../assets/Img/edit.png" alt="">
+                                            <span>
+                                                تعديل
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="btn-action">
+                                        <a href="/PaymentManager"
+                                        onclick=@(() => SetStudentId(item.Id))>
+                                            <img src="../assets/Img/payment-gateway.png" alt="">
+                                            <span>
+                                                الدفعات
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="btn-action">
+                                        <a href="/StudentManager"
+                                       onclick=@(() => DelelteStudent(item.Id))>
+                                            <img src="../assets/Img/delete.png" alt="">
+                                            <span>
+                                                حذف
+                                            </span>
+                                        </a>
+                                    </div>
+                                </td>
 
-
-                                <div class="btn-action">
-                                    <a href="/PaymentManager">
-                                        <img src="../assets/Img/payment-gateway.png" alt="">
-                                        <span>
-                                            الدفعات
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="btn-action">
-                                    <a href="showSection.html">
-                                        <img src="../assets/Img/delete.png" alt="">
-                                        <span>
-                                            حذف
-                                        </span>
-                                    </a>
-                                </div>
-                            </td>
-
-                        </tr>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+@code
+{
+    private GetAllStudentsWithDivisionResponse response = new();
+    private GetAllCertificatesResponse Certificates = new();
+    private GetAllDivisionsResponse Divisions = new();
+    private Guid? Cid;
+    private bool isDataLoaded = false;
+    private static bool ShowMessage;
+    private string searchKey;
+    private string division;
+    List<AutomatedReportCore.Responces.DTOs.StudentDto> FilterdStudents = new();
+    private async Task ChangeDivisions(ChangeEventArgs e)
+    {
+        Cid = Guid.Parse(e.Value.ToString());
+
+        var DivisionsData = await Data.GetAllDivisions(Cid);
+        if (DivisionsData.StatusCode == AutomatedReportCore.Enums.Requests_Status.NotFound)
+            Divisions.divisions = new();
+        else
+            Divisions = DivisionsData.Data.ToObj<GetAllDivisionsResponse>();        
+        StateHasChanged();
+    }
+    private async Task UpdateDivision(ChangeEventArgs e)
+    {
+        division = e.Value.ToString();
+        if (!string.IsNullOrEmpty(division))
+        {
+            FilterdStudents = response.students.Where(s => s.Division == division).ToList();
+        }
+        else
+            FilterdStudents = response.students.ToList();
+    }
+    private void SetStudentId(Guid id)
+    {
+        Helper.StudentId = id;
+    }
+    private async void DelelteStudent(Guid id)
+    {
+        var res = await Data.DeleteStudent(id);
+        if (res.StatusCode == AutomatedReportCore.Enums.Requests_Status.BadRequest)
+        {
+            ShowMessage = true;
+            StateHasChanged();
+        }
+    }
+    private async Task SearchUpdate(ChangeEventArgs e)
+    {
+        searchKey = e.Value.ToString();
+        if (!string.IsNullOrEmpty(searchKey))
+        {
+            FilterdStudents = response.students.Where(s => (s.First_Name + s.Last_Name + s.Phone)
+                    .Contains(searchKey.ToLower())
+                    || (s.First_Name + s.Last_Name + s.Phone)
+                    .Contains(searchKey.ToUpper())).ToList();
+        }
+        else
+            FilterdStudents = response.students.ToList();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        var resulte = await Data.GetAllStudentsWithDivision();
+        if (resulte.StatusCode == AutomatedReportCore.Enums.Requests_Status.Ok)
+        {
+            response = resulte.Data.ToObj<GetAllStudentsWithDivisionResponse>();
+        }
+        FilterdStudents = response.students.ToList();
+        ShowMessage = false;
+        var CertificatesData = await Data.GetAllCertificates();
+        Certificates = CertificatesData.Data.ToObj<GetAllCertificatesResponse>();
+        var DivisionsData = await Data.GetAllDivisions(Cid);
+        Divisions = DivisionsData.Data.ToObj<GetAllDivisionsResponse>();
+
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+}

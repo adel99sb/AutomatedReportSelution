@@ -5,6 +5,6 @@ namespace AutomatedReportCore.Requstes.AdminDashboard
     public class EditeTeacherRequste : AddTeacherRequste
     {
         [Required(ErrorMessage = "Teacher Id Filed Is Required")]
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
     }
 }

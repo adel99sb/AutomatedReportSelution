@@ -10,6 +10,7 @@ namespace AutomatedReportAPI.AppData.Models
         [StringLength(50)]
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public Guid StudentId { get; set; }
         public Student Student { get; set; }
     }
 }

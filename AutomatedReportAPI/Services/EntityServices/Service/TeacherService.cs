@@ -24,8 +24,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 await teacherRepository.Create(new Teacher()
                 {
-                    Full_Name = requste.Full_Name,
-                    Phone = requste.Phone
+                    Full_Name = requste.full_Name,
+                    Phone = requste.phone
                 });
 
                 response = new GeneralResponse(null);
@@ -68,14 +68,14 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var teacher = await teacherRepository.GetById(requste.Id);
+                var teacher = await teacherRepository.GetById(requste.id);
                 if (teacher is not null)
                 {
                     await teacherRepository.Update(new Teacher()
                     {
-                        Id = requste.Id,
-                        Full_Name = requste.Full_Name,
-                        Phone = requste.Phone
+                        Id = requste.id,
+                        Full_Name = requste.full_Name,
+                        Phone = requste.phone
                     });
 
                     response = new GeneralResponse(null);

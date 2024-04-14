@@ -1,7 +1,24 @@
 ﻿@page "/TeacherManager"
 @layout IM_Layout
-
+@inject DataService Data
+@if (response.teachers.Count == 0)
+{
+    <div>
+        <h6>
+            No Data Here Yet !!
+        </h6>
+    </div>
+}
+@if (ShowMessage)
+{
+    <div>
+        <h6>
+            قم بحذف الارتباطات المتعلقة بهذا المدرس أولاً لتتمكن من حذفه
+        </h6>
+    </div>
+}
 <h3>TeacherManager</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 <div class="teacher-mangement">
     <div class="container">
         <div class="add-new-teacher">
@@ -32,38 +49,71 @@
 
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                الاولى
-                            </td>
-                            <td>
-                                5646465465456
-                            </td>
-                            <td class="btn-action-list">
-                                <div class="btn-action">
-                                    <a href="/EditeTeacher">
-                                        <img src="../assets/Img/edit.png" alt="">
-                                        <span>
-                                            تعديل
-                                        </span>
-                                    </a>
-                                </div>
+                        @foreach (var item in response.teachers)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Full_Name
+                                </td>
+                                <td>
+                                    @item.Phone
+                                </td>
+                                <td class="btn-action-list">
+                                    <div class="btn-action">
+                                        <a href="/EditeTeacher"
+                                        onclick=@(() => SetTeacherId(item.Id))>
+                                            <img src="../assets/Img/edit.png" alt="">
+                                            <span>
+                                                تعديل
+                                            </span>
+                                        </a>
+                                    </div>
 
 
-                                <div class="btn-action">
-                                    <a href="showSection.html">
-                                        <img src="../assets/Img/delete.png" alt="">
-                                        <span>
-                                            حذف
-                                        </span>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                                    <div class="btn-action">
+                                        <a href="/TeacherManager"
+                                        onclick=@(() => DelelteTeacher(item.Id))>
+                                            <img src="../assets/Img/delete.png" alt="">
+                                            <span>
+                                                حذف
+                                            </span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
+@code
+{
+    private GetAllTeachersResponse response = new();
+    private GeneralResponse resulte;
+    private static bool ShowMessage;
+    private void SetTeacherId(Guid id)
+    {
+        Helper.TeacherId = id;
+    }
+    private async void DelelteTeacher(Guid id)
+    {
+        var res = await Data.DeleteTeacher(id);
+        if (res.StatusCode == AutomatedReportCore.Enums.Requests_Status.BadRequest)
+        {
+            ShowMessage = true;
+            StateHasChanged();
+        }
+    }
+    protected override async void OnInitialized()
+    {
+        var resulte = await Data.GetAllTeachers();
+        if (resulte.StatusCode == AutomatedReportCore.Enums.Requests_Status.Ok)
+        {
+            response = resulte.Data.ToObj<GetAllTeachersResponse>();
+        }
+        ShowMessage = false;
+        StateHasChanged();
+    }
+}

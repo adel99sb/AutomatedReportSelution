@@ -23,7 +23,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 await hallRepository.Create(new Hall()
                 {
-                    Name = requste.Name
+                    Name = requste.name
                 });
 
                 response = new GeneralResponse(null);
@@ -66,13 +66,13 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var hall = await hallRepository.GetById(requste.Id);
+                var hall = await hallRepository.GetById(requste.id);
                 if (hall is not null)
                 {
                     await hallRepository.Update(new Hall()
                     {
-                        Id = requste.Id,
-                        Name = requste.Name
+                        Id = requste.id,
+                        Name = requste.name
                     });
 
                     response = new GeneralResponse(null);

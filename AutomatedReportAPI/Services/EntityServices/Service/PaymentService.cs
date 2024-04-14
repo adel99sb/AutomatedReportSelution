@@ -6,6 +6,7 @@ using AutomatedReportCore.Requstes.AdminDashboard;
 using AutomatedReportCore.Responces;
 using AutomatedReportCore.Responces.AdminDashboard;
 using AutomatedReportCore.Responces.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
@@ -22,13 +23,13 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var Student = paymentRepository.GetAll()
-                    .Where(s => s.Student.Id == requste.StudentId).FirstOrDefault()?.Student;
+                //var Student = paymentRepository.GetAll().Include(s => s.Student)
+                //    .Where(s => s.Student.Id == requste.studentId).FirstOrDefault()?.Student;
                 await paymentRepository.Create(new Payment()
                 {                    
-                    Description = requste.Description,
-                    Student = Student,
-                    Value = requste.Value,
+                    Description = requste.description,
+                    StudentId = requste.studentId,
+                    Value = requste.value,
                 });
 
                 response = new GeneralResponse(null);
@@ -51,7 +52,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var Payments = paymentRepository.GetAll();
+                var Payments = paymentRepository.GetAll()
+                    .Where(s => s.StudentId == studentId);
                 if (Payments.Count() != 0)
                 {
                     foreach (var item in Payments)
@@ -63,6 +65,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                             Description = item.Description,
                             Value = item.Value
                         });
+                        Data.Sum += item.Value;
                     }
                     response = new GeneralResponse(Data);
                     response.StatusCode = Requests_Status.Ok;

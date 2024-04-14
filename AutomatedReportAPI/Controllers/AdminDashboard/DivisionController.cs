@@ -47,9 +47,18 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
             }
         }
         [HttpPut("EditeDivision")]
-        public Task<IActionResult> EditeDivision([Required, FromBody] EditeDivisionRequste requste)
+        public async Task<IActionResult> EditeDivision([Required, FromBody] EditeDivisionRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await divisionService.EditeDivision(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllDivisions")]
         public async Task<IActionResult> GetAllDivisions([FromQuery]Guid? certificateId)

@@ -1,32 +1,39 @@
 ﻿@page "/AddDivision"
 
+@inject DataService Data
+
 <h3>AddDivision</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 <div class="add-data-section">
     <div class="section-title">
         <h4>إضافة شعبة :</h4>
         <br />
     </div>
-
+    @if (isDataLoaded)
+{        
     <div class="row g-2">
         <div class="col-md">
             <div class="form-floating">
-                <input type="text" class="form-control" id="sectionName" placeholder="">
+                <input @bind=requste.name type="text" class="form-control" id="sectionName" placeholder="">
                 <label for="studentName" class="text-center">اسم الشعبة</label>
             </div>
         </div>
         <div class="col-md">
             <div class="form-floating">
-                <select class="form-select" id="cirtTypeforSectionData" aria-label="Floating label select example">
-                    <option value="1">تاسع</option>
-                    <option value="2">بكلوريا علمي</option>
-                    <option value="3">بكلوريا أدبي</option>
+                <select @bind=requste.certificateId class="form-select" id="cirtTypeforSectionData" aria-label="Floating label select example">
+                    @foreach (var item in Certificates.certificates)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
                 </select>
                 <label for="studentClass">الشهادة</label>
             </div>
         </div>
     </div>
+}
     <div class="btn-action">
-        <a href="showSection.html">
+        <a href="/DivisionManager"
+            onclick=@(() => SaveDivision())>
             <img src="../assets/Img/save.png" alt="">
             <span>
                 حفظ
@@ -34,3 +41,21 @@
         </a>
     </div>
 </div>
+@code
+{
+    private bool isDataLoaded = false;
+    private GetAllCertificatesResponse Certificates = new();
+    private AddDivisionRequste requste = new();
+    private async void SaveDivision()
+    {
+        var resulte = await Data.AddDivision(requste);
+    }
+    protected async override void OnInitialized()
+    {
+        var Cres = await Data.GetAllCertificates();
+        Certificates = Cres.Data.ToObj<GetAllCertificatesResponse>();
+
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+}

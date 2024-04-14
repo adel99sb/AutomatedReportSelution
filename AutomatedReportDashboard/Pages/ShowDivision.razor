@@ -2,6 +2,7 @@
 
 @inject DataService Data
 <h3>ShowDivision</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 @if (response.divisions.Count == 0)
 {
     <div>
@@ -10,8 +11,14 @@
         </h6>
     </div>
 }
-else
+@if (ShowMessage)
 {
+    <div>
+        <h6>
+            قم بحذف الارتباطات المتعلقة بهذه الشعبة أولاً لتتمكن من حذفها
+        </h6>
+    </div>
+}
     <div class="show-data-section table-responsive">
         <div class="data-section-title">
             <h3> بيانات الشعب :</h3>
@@ -34,12 +41,13 @@ else
                         </td>
                         <td>@item.StudentsNomber</td>
 
-                        <td class="action-btn">
+                        <td class="action-btn">                            
                             <a href="/EditeDivision" class="btn btn-warning"
-                      @* onclick=@SetDivisionId(@item.Id)*@>تعديل</a>
-                            <button type="button" class="btn btn-danger" @*onclick=@SetDivisionId(@item.Id)*@>حذف</button>
-                            @*<a href="" class="btn btn-secondary">الحصص</a>*@
-                            @*<a href="../exam/exam.html" class="btn btn-success">الاختبارات</a>*@
+                       onclick=@(() => SetDivisionId(item.Id))>تعديل</a>
+
+                            <button type="button" class="btn btn-danger" onclick=@(() => DelelteDivision(item.Id))>حذف</button>
+                            @*<a href="" class="btn btn-secondary">الحصص</a>
+                            <a href="../exam/exam.html" class="btn btn-success">الاختبارات</a>*@
 
                         </td>
                     </tr>
@@ -47,15 +55,24 @@ else
             </tbody>
         </table>        
     </div>
-}
 @code
 {
     private GetAllDivisionsWithStudentsNomberResponse response = new();
     private GeneralResponse resulte;
-    private EventCallback SetDivisionId(Guid Id)
+    private static bool ShowMessage;
+
+    private void SetDivisionId(Guid id)
     {
-        Console.WriteLine(Id);
-        return EventCallback.Empty;
+        Helper.DivisionId = id;
+    }
+    private async void DelelteDivision(Guid id)
+    {
+        var res = await Data.DeleteDivision(id);
+        if (res.StatusCode == AutomatedReportCore.Enums.Requests_Status.BadRequest)
+        {
+            ShowMessage = true;
+            StateHasChanged();
+        }
     }
     protected override async Task OnInitializedAsync()
     {
@@ -64,5 +81,7 @@ else
         {
             response = resulte.Data.ToObj<GetAllDivisionsWithStudentsNomberResponse>();
         }
+        ShowMessage = false;
+        StateHasChanged();
     }
 }

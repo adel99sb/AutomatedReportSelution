@@ -1,32 +1,42 @@
 ﻿@page "/EditeDivision"
 
+@inject DataService Data
+
 <h3>EditeDivision</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 <div class="add-data-section">
     <div class="section-title">
         <h4>تعديل شعبة :</h4>
         <br />
     </div>
+    @if (isDataLoaded)
+    {
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="sectionName" @bind="Name">
+                    <label for="studentName" class="text-center">اسم الشعبة</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <select @bind="Cid" class="form-select" id="studentClass" aria-label="Floating label select example">
+                        <option disabled selected>@response.division.CertificateName</option>
+                        @foreach (var item in Certificates.certificates)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
 
-    <div class="row g-2">
-        <div class="col-md">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="sectionName" placeholder="">
-                <label for="studentName" class="text-center">اسم الشعبة</label>
+                    </select>
+                    <label for="studentClass">الشهادة</label>
+                </div>
             </div>
         </div>
-        <div class="col-md">
-            <div class="form-floating">
-                <select class="form-select" id="cirtTypeforSectionData" aria-label="Floating label select example">
-                    <option value="1">تاسع</option>
-                    <option value="2">بكلوريا علمي</option>
-                    <option value="3">بكلوريا أدبي</option>
-                </select>
-                <label for="studentClass">الشهادة</label>
-            </div>
-        </div>
-    </div>
+
+    }
     <div class="btn-action">
-        <a href="showSection.html">
+        <a href="/DivisionManager"
+           onclick=@(() => Save())>
             <img src="../assets/Img/save.png" alt="">
             <span>
                 حفظ
@@ -34,3 +44,33 @@
         </a>
     </div>
 </div>
+@code
+{
+    private bool isDataLoaded = false;
+    private GetDivisioneByIdResponse response = new();
+    private GetAllCertificatesResponse Certificates = new();
+    private EditeDivisionRequste requste = new();
+    private string Name;
+    private Guid? Cid;
+    protected override async Task OnInitializedAsync()
+    {
+        var resulte = await Data.GetDivisionById(Helper.DivisionId);
+        response = resulte.Data.ToObj<GetDivisioneByIdResponse>();
+        
+        Name = response.division.Name;
+
+        var Cres = await Data.GetAllCertificates();
+        Certificates = Cres.Data.ToObj<GetAllCertificatesResponse>();
+
+        isDataLoaded = true;
+    }
+    private async void Save()
+    {        
+        requste.certificateId = Cid.HasValue ? Cid.Value
+            : Certificates.certificates.Find(x => x.Name == response.division.Name).Id;
+        requste.name = Name;
+        requste.id = response.division.Id;
+
+        var resulte = await Data.EditeDivision(requste);       
+    }
+}

@@ -29,13 +29,13 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var certificate = await certificateRepository.GetById(requste.CertificateId);
+                var certificate = await certificateRepository.GetById(requste.certificateId);
                 if (certificate is not null)
                 {
                     await divisionRepository.Create(new Division()
                     {
-                        Name = requste.Name,
-                        Certificate = certificate
+                        Name = requste.name,
+                        CertificateId = certificate.Id
                     });
 
                     response = new GeneralResponse(null);
@@ -72,7 +72,6 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             }
             catch (Exception ex)
             {
-
                 response = new GeneralResponse(null);
                 response.StatusCode = Requests_Status.BadRequest;
                 response.Message = ex.Message;
@@ -85,16 +84,16 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var division = await divisionRepository.GetById(requste.Id);
-                var certificate = await certificateRepository.GetById(requste.CertificateId);
+                var division = await divisionRepository.GetById(requste.id);
+                var certificate = await certificateRepository.GetById(requste.certificateId);
                 if (division is not null)
                 {
                     if (certificate is not null)
                     {
                         await divisionRepository.Update(new Division()
                         {
-                            Id = requste.Id,
-                            Name = requste.Name,
+                            Id = requste.id,
+                            Name = requste.name,
                             Certificate = certificate
                         });
 
@@ -179,7 +178,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var divisions = divisionRepository.GetAll()
                         .Where(c => c.Certificate.Id == certificateId);
-                var students = studentRepository.GetAll().ToList();
+                var students = studentRepository.GetAll().Include(d => d.Division).ToList();
                 if (divisions.Count() != 0)
                 {
                     int studentNomber;

@@ -3,6 +3,7 @@
 
 @inject DataService Data 
 <h3>DivisionManager</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 <div class="sectoin-mangement">
     <div class="container">
         <div class="add-new-section">
@@ -28,16 +29,19 @@
                     @if (response.certificates.Count > 0)
                     {
                         <div class="show-daily-task">
-                            <a class="" href="/ShowDivision" @onclick=SetCertificate0Id>
+                            <a class="" href="/ShowDivision"
+                           onclick=@(() => SetCertificateId(response.certificates.ElementAt(0).Id))>
                                 <img src="../assets/Img/school.png" />
                                 @response.certificates.ElementAt(0).Name
                             </a>
 
-                            <a class="" href="/ShowDivision" @onclick=SetCertificate1Id>
+                            <a class="" href="/ShowDivision"
+                           onclick=@(() => SetCertificateId(response.certificates.ElementAt(1).Id))>
                                 <img src="../assets/Img/tools.png" />
                                 @response.certificates.ElementAt(1).Name                                
                             </a>
-                            <a class="" href="/ShowDivision" @onclick=SetCertificate2Id>
+                            <a class="" href="/ShowDivision"
+                           onclick=@(() => SetCertificateId(response.certificates.ElementAt(2).Id))>
                                 <img src="../assets/Img/literary.png" />
                                 @response.certificates.ElementAt(2).Name
                             </a>
@@ -51,18 +55,10 @@
 @code
 {
     private GetAllCertificatesResponse response = new GetAllCertificatesResponse();
-    private async void SetCertificate0Id()
+    private async void SetCertificateId(Guid id)
     {
-        Helper.CertificateId = response.certificates.ElementAt(0).Id;
-    }
-    private async void SetCertificate1Id()
-    {
-        Helper.CertificateId = response.certificates.ElementAt(1).Id;
-    }
-    private async void SetCertificate2Id()
-    {
-        Helper.CertificateId = response.certificates.ElementAt(2).Id;
-    }
+        Helper.CertificateId = id;
+    }    
     protected override async Task OnInitializedAsync()
     {
         var result = await Data.GetAllCertificates();

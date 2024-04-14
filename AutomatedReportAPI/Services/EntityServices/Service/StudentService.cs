@@ -28,20 +28,20 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var divison = studentRepository.GetAll()
                     .Include(d => d.Division)
-                    .Where(d => d.Division.Id == requste.DivisionId)
+                    .Where(d => d.Division.Id == requste.divisionId)
                     .FirstOrDefault()?.Division;
                 await studentRepository.Create(new Student()
                 {
-                    First_Name = requste.First_Name,
-                    Last_Name = requste.Last_Name,
-                    Address = requste.Address,
-                    BirthDay = requste.BirthDay,
-                    Gender = requste.Gender,
-                    Parent_Name = requste.Parent_Name,
-                    Parent_Phone = requste.Parent_Phone,
-                    Phone = requste.Phone,
-                    Total_Payments = requste.Total_Payments,
-                    Division = divison
+                    First_Name = requste.first_Name,
+                    Last_Name = requste.last_Name,
+                    Address = requste.address,
+                    BirthDay = requste.birthDay,
+                    Gender = requste.gender,
+                    Parent_Name = requste.parent_Name,
+                    Parent_Phone = requste.parent_Phone,
+                    Phone = requste.phone,
+                    Total_Payments = requste.total_Payments,
+                    DivisionId = requste.divisionId
                 });
 
                 response = new GeneralResponse(null);
@@ -86,20 +86,20 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var divison = studentRepository.GetAll()
                     .Include(d => d.Division)
-                    .Where(d => d.Division.Id == requste.DivisionId)
+                    .Where(d => d.Division.Id == requste.divisionId)
                     .FirstOrDefault()?.Division;
                 await studentRepository.Update(new Student()
                 {
-                    Id = requste.Id,
-                    First_Name = requste.First_Name,
-                    Last_Name = requste.Last_Name,
-                    Address = requste.Address,
-                    BirthDay = requste.BirthDay,
-                    Gender = requste.Gender,
-                    Parent_Name = requste.Parent_Name,
-                    Parent_Phone = requste.Parent_Phone,
-                    Phone = requste.Phone,
-                    Total_Payments = requste.Total_Payments,
+                    Id = requste.id,
+                    First_Name = requste.first_Name,
+                    Last_Name = requste.last_Name,
+                    Address = requste.address,
+                    BirthDay = requste.birthDay,
+                    Gender = requste.gender,
+                    Parent_Name = requste.parent_Name,
+                    Parent_Phone = requste.parent_Phone,
+                    Phone = requste.phone,
+                    Total_Payments = requste.total_Payments,
                     Division = divison
                 });
 

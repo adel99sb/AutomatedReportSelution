@@ -8,6 +8,7 @@ namespace AutomatedReportAPI.AppData.Models
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
+        public Guid CertificateId { get; set; }
         public Certificate Certificate { get; set; }
     }
 }

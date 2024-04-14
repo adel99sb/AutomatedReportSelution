@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace AutomatedReportCore.Requstes.AdminDashboard
 {
     public class AddDivisionRequste
     {
         [Required(ErrorMessage = "Division Name Filed Is Required")]
-        public string Name { get; set; }
+        public string name { get; set; }
         [Required(ErrorMessage = "Certificate Id Filed Is Required")]
-        public Guid CertificateId { get; set; }
+        public Guid certificateId { get; set; }
     }
 }

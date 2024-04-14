@@ -1,6 +1,8 @@
 ﻿@page "/AddTeacher"
+@inject DataService Data;
 
 <h3>AddTeacher</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 <div class="add-data-teacher">
     <div class="section-title">
         <h4>إضافة مدرس جديد :</h4>
@@ -9,19 +11,20 @@
     <div class="row g-2">
         <div class="col-md">
             <div class="form-floating">
-                <input type="text" class="form-control" id="teacherName" placeholder="">
+                <input @bind=requste.full_Name type="text" class="form-control" id="teacherName" placeholder="">
                 <label for="studentName" class="text-center">اسم المدرس</label>
             </div>
         </div>
         <div class="col-md">
             <div class="form-floating">
-                <input type="text" class="form-control" id="teacherNumber" placeholder="">
+                <input @bind=requste.phone type="text" class="form-control" id="teacherNumber" placeholder="">
                 <label for="teacherNumber" class="text-center">رقم الهاتف</label>
             </div>
         </div>
     </div>
     <div class="btn-action">
-        <a href="">
+        <a href="/TeacherManager"
+        onclick=@(() => SaveTeacher())>
             <img src="../assets/Img/save.png" alt="">
             <span>
                 حفظ
@@ -30,3 +33,11 @@
     </div>
 
 </div>
+@code
+{
+    private AddTeacherRequste requste = new();
+    private async void SaveTeacher()
+    {
+        var resulte = await Data.AddTeacher(requste);
+    }
+}

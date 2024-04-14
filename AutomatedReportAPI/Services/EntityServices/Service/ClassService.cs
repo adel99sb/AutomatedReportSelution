@@ -24,9 +24,9 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 await classRepository.Create(new _Class()
                 {
-                    Name = requste.Name,
-                    From_Time = requste.From_Time,
-                    To_Time = requste.To_Time
+                    Name = requste.name,
+                    From_Time = requste.from_Time,
+                    To_Time = requste.to_Time
                 });
 
                 response = new GeneralResponse(null);
@@ -69,15 +69,15 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var _class = await classRepository.GetById(requste.Id);
+                var _class = await classRepository.GetById(requste.id);
                 if (_class is not null)
                 {
                     await classRepository.Update(new _Class()
                     {
-                        Id = requste.Id,
-                        Name = requste.Name,
-                        From_Time = requste.From_Time,
-                        To_Time = requste.To_Time                        
+                        Id = requste.id,
+                        Name = requste.name,
+                        From_Time = requste.from_Time,
+                        To_Time = requste.to_Time                        
                     });
 
                     response = new GeneralResponse(null);

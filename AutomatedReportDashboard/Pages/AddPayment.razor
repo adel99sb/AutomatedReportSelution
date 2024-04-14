@@ -1,6 +1,7 @@
 ﻿@page "/AddPayment"
-
+@inject DataService Data;
 <h3>AddPayment</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 <div class="add-data-payment">
     <div class="payment">
         <h4> اضافة دفعة :</h4>
@@ -9,24 +10,34 @@
     <div class="row g-2">
         <div class="col-md">
             <div class="form-floating">
-                <input type="text" class="form-control" id="payment" placeholder="">
+                <input @bind=requste.value type="text" class="form-control" id="payment" placeholder="">
                 <label for="studentName" class="text-center">قيمة الدفعة</label>
             </div>
         </div>
         <div class="col-md">
             <div class="form-floating">
-                <input type="text" class="form-control" id="paymentDesc" placeholder="">
+                <input @bind=requste.description type="text" class="form-control" id="paymentDesc" placeholder="">
                 <label for="studentName" class="text-center">الوصف</label>
             </div>
         </div>
-        <div class="col-md">
+        @*<div class="col-md">
             <div class="form-floating">
                 <input type="datetime-local" class="form-control" id="paymentDate" placeholder="">
                 <label for="studentName" class="text-center">التاريخ</label>
             </div>
-        </div>
+        </div>*@
     </div>
     <div class="btn-action">
-        <button type="button" class="btn btn-primary">حفظ</button>
+        <button type="button" class="btn btn-primary"
+        onclick=@(() => SavePayment())>حفظ</button>
     </div>
 </div>
+@code
+{
+    private AddPaymentRequste requste = new();
+    private async void SavePayment()
+    {
+        requste.studentId = Helper.StudentId;
+        var resulte = await Data.AddPayment(requste);
+    }
+}

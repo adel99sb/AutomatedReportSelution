@@ -8,6 +8,8 @@ namespace AutomatedReportAPI.AppData.Models
         [Required]
         [Range(0,5000)]
         public double Mark { get; set; }
+        public Guid TestId { get; set; }
+        public Guid StudentId { get; set; }
         public Test Test { get; set; }
         public Student Student { get; set; }
     }

@@ -1,104 +1,188 @@
 ﻿@page "/EditeStudent"
+@inject DataService Data
 
 <h3>EditeStudent</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 <div class="add-data-student">
     <div class="student-title">
         <h4>تعديل بيانات طالب :</h4>
         <br />
     </div>
-    <div class="row g-2">
-        <div class="col-md">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="studentName" placeholder="">
-                <label for="studentName" class="text-center">الاسم</label>
-            </div>
-        </div>
-        <div class="col-md">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="fatherName" placeholder="">
-                <label for="fatherName">الكنية</label>
-            </div>
-        </div>
-    </div>
-    <div class="row g-2">
-        <div class="col-md">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="genderStudent" placeholder="">
-                <label for="motherName">الجنس</label>
-            </div>
-        </div>
-        <div class="col-md">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="addressStudent" placeholder="">
-                <label for="motherName">العنوان</label>
-            </div>
-        </div>
-    </div>
-    <div class="row g-2">
-        <div class="col-md">
-            <div class="form-floating">
-                <input type="date" class="form-control" id="" placeholder="">
-                <label for="studentAge" class="text-center">تاريخ الميلاد</label>
-            </div>
-        </div>
+    @if (isDataLoaded)
+    {
         <div class="row g-2">
             <div class="col-md">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="" placeholder="">
-                    <label for="studentAge" class="text-center">اسم ولي الأمر</label>
+                    <input @bind=First_Name type="text" class="form-control" id="studentName" placeholder="">
+                    <label for="studentName" class="text-center">الاسم</label>
                 </div>
             </div>
             <div class="col-md">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="" placeholder="">
-                    <label for="studentAddress">رقم هاتف ولي الأمر</label>
+                    <input @bind=Last_Name type="text" class="form-control" id="fatherName" placeholder="">
+                    <label for="fatherName">الكنية</label>
                 </div>
             </div>
         </div>
         <div class="row g-2">
             <div class="col-md">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="studentPhone" placeholder="">
-                    <label for="studentAddress">رقم الهاتف</label>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="studnetPay" placeholder="">
-                    <label for="studentName" class="text-center">القسط الإجمالي</label>
-                </div>
-            </div>
-        </div>
-        <div class="row g-2">
-            <div class="col-md">
-                <div class="form-floating">
-                    <select class="form-select" id="studentSection" aria-label="Floating label select example">
-
-                        <option value="1">الاولى</option>
-
+                    @*<input  type="text" class="form-control" id="genderStudent" placeholder="">\*@
+                    <select @bind=Gender class="form-select" id="studentClass" aria-label="Floating label select example">
+                        <option value="أنثى">أنثى</option>
+                        <option value="ذكر">ذكر</option>
                     </select>
-                    <label for="studentSection">الشعبة</label>
+                    <label for="motherName">الجنس</label>
                 </div>
             </div>
             <div class="col-md">
                 <div class="form-floating">
-                    <select class="form-select" id="studentClass" aria-label="Floating label select example">
-
-                        <option value="1">تاسع</option>
-                        <option value="2">بكلوريا علمي</option>
-                        <option value="3">بكلوريا أدبي</option>
-                    </select>
-                    <label for="studentClass">الصف</label>
+                    <input @bind=Address type="text" class="form-control" id="addressStudent" placeholder="">
+                    <label for="motherName">العنوان</label>
                 </div>
             </div>
         </div>
-        <div class="btn-action">
-            <a href="showSection.html">
-                <img src="../assets/Img/save.png" alt="">
-                <span>
-                    حفظ
-                </span>
-            </a>
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input @bind=BirthDay type="date" class="form-control" id="" placeholder="">
+                    <label for="studentAge" class="text-center">تاريخ الميلاد</label>
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <input @bind=Parent_Name type="text" class="form-control" id="" placeholder="">
+                        <label for="studentAge" class="text-center">اسم ولي الأمر</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
+                        <input @bind=Parent_Phone type="text" class="form-control" id="" placeholder="">
+                        <label for="studentAddress">رقم هاتف ولي الأمر</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <input @bind=Phone type="text" class="form-control" id="studentPhone" placeholder="">
+                        <label for="studentAddress">رقم الهاتف</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
+                        <input @bind=Total_Payments type="text" class="form-control" id="studnetPay" placeholder="">
+                        <label for="studentName" class="text-center">القسط الإجمالي</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <select @bind=Did class="form-select" id="studentSection" aria-label="Floating label select example">
+
+                            <option selected>@response.student.Division</option>
+                            @foreach (var item in Divisions.divisions)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        <label for="studentSection">الشعبة</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
+                        <select @onchange="ChangeDivisions" class="form-select" id="studentClass" aria-label="Floating label select example">
+                            @foreach (var item in Certificates.certificates)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        <label for="studentClass">الصف</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-action">
+                <a href="/StudentsManager"
+               onclick=@(() => SaveStudent())>
+                    <img src="../assets/Img/save.png" alt="">
+                    <span>
+                        حفظ
+                    </span>
+                </a>
+            </div>
         </div>
-    </div>
+    }
 </div>
+@code
+{
+    private bool isDataLoaded = false;
+    private GetStudentByIdResponse response = new();
+    private GetAllCertificatesResponse Certificates = new();
+    private GetAllDivisionsResponse Divisions = new();
+    private EditeStudentRequste requste = new();
+    private Guid? Cid;
+    private Guid? Did;
+    private string Gender;
+    private string? Address;
+    private DateTime BirthDay;
+    private string Phone;
+    private string Parent_Name;
+    private string Parent_Phone;
+    private double Total_Payments;
+    private string First_Name;
+    private string Last_Name;
+    private async void SaveStudent()
+    {
+        requste.id = response.student.Id;
+        requste.gender = Gender;
+        requste.address = Address;
+        requste.birthDay = BirthDay;
+        requste.phone = Phone;
+        requste.parent_Name = Parent_Name;
+        requste.parent_Phone = Parent_Phone;
+        requste.total_Payments = Total_Payments;
+        requste.first_Name = First_Name;
+        requste.last_Name = Last_Name;
+        requste.divisionId = Did.HasValue ? Did.Value
+            : Divisions.divisions.Find(x => x.Name == response.student.Division).Id;
+            var resulte = await Data.EditeStudent(requste);
+    }
+    private async Task ChangeDivisions(ChangeEventArgs e)
+    {
+        Cid = Guid.Parse(e.Value.ToString());
+
+        var DivisionsData = await Data.GetAllDivisions(Cid);
+        if (DivisionsData.StatusCode == AutomatedReportCore.Enums.Requests_Status.NotFound)
+            Divisions.divisions = new();
+        else
+            Divisions = DivisionsData.Data.ToObj<GetAllDivisionsResponse>();
+
+        StateHasChanged();
+    }
+    protected async override void OnInitialized()
+    {
+        var resulte = await Data.GetStudentById(Helper.StudentId);
+        response = resulte.Data.ToObj<GetStudentByIdResponse>();
+
+        Gender = response.student.Gender;
+        Address = response.student.Address;
+        BirthDay = response.student.BirthDay;
+        Phone = response.student.Phone;
+        Parent_Name = response.student.Parent_Name;
+        Parent_Phone = response.student.Parent_Phone;
+        Total_Payments = response.student.Total_Payments;
+        First_Name = response.student.First_Name;
+        Last_Name = response.student.Last_Name;
+
+        var CertificatesData = await Data.GetAllCertificates();
+        Certificates = CertificatesData.Data.ToObj<GetAllCertificatesResponse>();
+        var DivisionsData = await Data.GetAllDivisions(Cid);
+        Divisions = DivisionsData.Data.ToObj<GetAllDivisionsResponse>();
+
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+}

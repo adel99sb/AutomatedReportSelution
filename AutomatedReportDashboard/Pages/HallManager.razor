@@ -1,12 +1,27 @@
 ﻿@page "/HallManager"
 @layout IM_Layout
-
+@inject DataService Data
 <h3>HallManager</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
+@if (response.halls.Count == 0)
+{
+<div>
+    <h6>
+        No Data Here Yet !!
+    </h6>
+</div>
+}
+@if (ShowMessage)
+{
+    <div>
+        <h6>
+            قم بحذف الارتباطات المتعلقة بهذه القاعة أولاً لتتمكن من حذفها
+        </h6>
+    </div>
+}
 <div class="hall-mangement">
     <div class="container">
         <div class="add-new-hall">
-
-
             <div class="btn-action">
                 <a href="/AddHall">
                     <img src="../assets/Img/add.png" alt="">
@@ -15,7 +30,6 @@
                     </span>
                 </a>
             </div>
-
         </div>
         <div class="show-hall-mangement">
             <div class="hall-title">
@@ -30,36 +44,66 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                الاولى
-                            </td>
-                            <td class="btn-action-list">
-                                <div class="btn-action">
-                                    <a href="/EditeHall">
-                                        <img src="../assets/Img/edit.png" alt="">
-                                        <span>
-                                            تعديل
-                                        </span>
-                                    </a>
-                                </div>
-
-
-                                <div class="btn-action">
-                                    <a href="showSection.html">
-                                        <img src="../assets/Img/delete.png" alt="">
-                                        <span>
-                                            حذف
-                                        </span>
-                                    </a>
-                                </div>
-                            </td>
-
-                        </tr>
+                        @foreach (var item in response.halls)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td class="btn-action-list">
+                                    <div class="btn-action">
+                                        <a href="/EditeHall"
+                                        @onclick=@(() => SetHallId(item.id))>
+                                            <img src="../assets/Img/edit.png" alt="">
+                                            <span>
+                                                تعديل
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="btn-action">
+                                        <a href="/HallManager"
+                                        onclick=@(() => DelelteHall(item.id))>
+                                            <img src="../assets/Img/delete.png" alt="">
+                                            <span>
+                                                حذف
+                                            </span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }                        
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+@code
+{
+    private GetAllHallsResponse response = new();
+    private GeneralResponse resulte;
+    private static bool ShowMessage;
+    private void SetHallId(Guid id)
+    {
+        Helper.HallId = id;
+    }
+    private async void DelelteHall(Guid id)
+    {
+        var res = await Data.DeleteHall(id);
+        if (res.StatusCode == AutomatedReportCore.Enums.Requests_Status.BadRequest)
+        {
+            ShowMessage = true;
+            StateHasChanged();
+        }
+    }
+    protected override async void OnInitialized()
+    {
+        var resulte = await Data.GetAllHalls();        
+        if (resulte.StatusCode == AutomatedReportCore.Enums.Requests_Status.Ok)
+        {
+            response = resulte.Data.ToObj<GetAllHallsResponse>();            
+        }
+        ShowMessage = false;
+        StateHasChanged();
+    }
 }

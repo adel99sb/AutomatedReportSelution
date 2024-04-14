@@ -5,6 +5,6 @@ namespace AutomatedReportCore.Requstes.AdminDashboard
     public class AddHallRequste
     {
         [Required(ErrorMessage = "Name Filed Is Required")]
-        public string Name { get; set; }
+        public string name { get; set; }
     }
 }

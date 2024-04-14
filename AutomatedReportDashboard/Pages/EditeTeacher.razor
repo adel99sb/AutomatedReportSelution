@@ -1,27 +1,33 @@
 ﻿@page "/EditeTeacher"
+@inject DataService Data;
 
 <h3>EditeTeacher</h3>
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 <div class="add-data-teacher">
     <div class="section-title">
         <h4>تعديل مدرس  :</h4>
         <br />
     </div>
-    <div class="row g-2">
-        <div class="col-md">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="teacherName" placeholder="">
-                <label for="studentName" class="text-center">اسم المدرس</label>
+    @if (isDataLoaded)
+    {
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input @bind=Full_Name type="text" class="form-control" id="teacherName" placeholder="">
+                    <label for="studentName" class="text-center">اسم المدرس</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <input @bind=Phone type="text" class="form-control" id="teacherNumber" placeholder="">
+                    <label for="teacherNumber" class="text-center">رقم الهاتف</label>
+                </div>
             </div>
         </div>
-        <div class="col-md">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="teacherNumber" placeholder="">
-                <label for="teacherNumber" class="text-center">رقم الهاتف</label>
-            </div>
-        </div>
-    </div>
+    }
     <div class="btn-action">
-        <a href="">
+        <a href="/TeacherManager"
+        onclick=@(() => Save())>
             <img src="../assets/Img/save.png" alt="">
             <span>
                 حفظ
@@ -30,4 +36,29 @@
     </div>
 
 </div>
+@code
+{
+    private bool isDataLoaded = false;
+    private GetTeacherByIdResponse response = new();
+    private EditeTeacherRequste requste = new();
+    private string Full_Name;
+    private string Phone;
+    protected override async void OnInitialized()
+    {
+        var resulte = await Data.GetTeacherById(Helper.TeacherId);
+        response = resulte.Data.ToObj<GetTeacherByIdResponse>();
 
+        Full_Name = response.teacher.Full_Name;
+        Phone = response.teacher.Phone;
+
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+    private async void Save()
+    {
+        requste.id = response.teacher.Id;
+        requste.full_Name = Full_Name;
+        requste.phone = Phone;
+        var resulte = await Data.EditeTeacher(requste);
+    }
+}

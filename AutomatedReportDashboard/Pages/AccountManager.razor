@@ -1,7 +1,7 @@
 ﻿@page "/AccountManager"
 
 <h3>AccountManager</h3>
-
+<a href="/Home" class="btn btn-warning">عودة الى الرئيسية</a>
 @inject DataService Data
 @inject NavigationManager mgr
 
@@ -42,7 +42,7 @@
 </div>
 
 @code {
-    private GetAllUsersResponse response = new GetAllUsersResponse();
+    private GetAllUsersResponse response = new();
     private GeneralResponse resulte;
     private string UserId;
     private string Password;

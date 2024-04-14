@@ -33,7 +33,9 @@ namespace AutomatedReportAPI.Infrastructure
 
         public async Task<TEntity> GetById(Guid id)
         {
-            return await _dbContext.Set<TEntity>().FindAsync(id);
+            var result = await _dbContext.Set<TEntity>().FindAsync(id);
+            _dbContext.Entry(result).State = EntityState.Detached;
+            return result;
         }
 
         public async Task Update(TEntity entity)
