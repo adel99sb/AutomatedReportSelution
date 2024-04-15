@@ -54,8 +54,8 @@ var app = builder.Build();
 //app.UseMiddleware<WhatsAppMiddleware>();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
@@ -74,7 +74,7 @@ if (app.Environment.IsDevelopment())
     //    // Write the HTML string to the response
     //    await context.Response.WriteAsync(htmlString);
     //});
-}
+//}
 
 app.UseHangfireDashboard();
 app.UseAuthorization();

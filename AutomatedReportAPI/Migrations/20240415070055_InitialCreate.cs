@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AutomatedReportAPI.Migrations
 {
-    public partial class InintialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -157,10 +157,11 @@ namespace AutomatedReportAPI.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DivisionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    _ClassId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClassId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HallId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     day = table.Column<int>(type: "int", nullable: false),
-                    HallId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    _ClassId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,6 +200,7 @@ namespace AutomatedReportAPI.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalMark = table.Column<double>(type: "float", nullable: false),
+                    IsDone = table.Column<bool>(type: "bit", nullable: false),
                     SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DivisionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -312,8 +314,8 @@ namespace AutomatedReportAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Enter_Time = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Outer_Time = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Enter_Time = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Outer_Time = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DailySessions_RecordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -339,9 +341,9 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"), "الشهادة الثانوية - أدبي" },
-                    { new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "الشهادة الثانوية - علمي" },
-                    { new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"), "الشهادة الإعدادية" }
+                    { new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "الشهادة الثانوية - علمي" },
+                    { new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"), "الشهادة الثانوية - أدبي" },
+                    { new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"), "الشهادة الإعدادية" }
                 });
 
             migrationBuilder.InsertData(
@@ -349,12 +351,12 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "From_Time", "Name", "To_Time" },
                 values: new object[,]
                 {
-                    { new Guid("100eaf83-d59b-4be2-bbf3-60d6f8424f23"), "03:00", "الحصة السادسة", "04:30" },
-                    { new Guid("54480f6f-9b8b-4e12-a921-6c27ecdfa8aa"), "08:30", "الحصة الأولى", "10:00" },
-                    { new Guid("547498e8-664d-49cf-9ad0-c3b21f03b297"), "02:30", "الحصة الخامسة", "03:00" },
-                    { new Guid("7e3a5dd4-df51-4982-9446-0345df038d44"), "01:00", "الحصة الرابعة", "02:30" },
-                    { new Guid("8a13e7e0-8ae8-4f58-881c-5d988acb1869"), "10:00", "الحصة الثانية", "11:30" },
-                    { new Guid("d1dcb2c0-7e64-45f1-b9ba-7d9673237215"), "11:30", "الحصة الثالثة", "01:00" }
+                    { new Guid("396f0f8f-8833-4619-81cf-8e1b313f9cae"), "08:30", "الحصة الأولى", "10:00" },
+                    { new Guid("42838ba5-85d3-467a-b341-d88b91dd6cdd"), "03:00", "الحصة السادسة", "04:30" },
+                    { new Guid("45306ef9-6f69-473b-ba08-512ccfac08f0"), "01:00", "الحصة الرابعة", "02:30" },
+                    { new Guid("c5a9dc2b-9d1f-408a-8072-174a75669a08"), "11:30", "الحصة الثالثة", "01:00" },
+                    { new Guid("e1871fb7-35d9-481c-aa77-b923f35c2f73"), "02:30", "الحصة الخامسة", "03:00" },
+                    { new Guid("ea29711f-c113-48d3-8bbc-489043b171b0"), "10:00", "الحصة الثانية", "11:30" }
                 });
 
             migrationBuilder.InsertData(
@@ -362,8 +364,8 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "Password", "Type" },
                 values: new object[,]
                 {
-                    { new Guid("90047aef-e518-4c7d-9097-c21e2335743f"), "AaBbCc@112233", "مدير" },
-                    { new Guid("a2aef319-f5b5-473b-8219-66a10f49b229"), "Aa@112233", "مشرف" }
+                    { new Guid("8bc9d900-e353-4cc1-ae90-37d31a0688ee"), "AaBbCc@112233", "مدير" },
+                    { new Guid("cd50e174-45dc-4634-a383-b63545bf5dd6"), "Aa@112233", "مشرف" }
                 });
 
             migrationBuilder.InsertData(
@@ -371,31 +373,31 @@ namespace AutomatedReportAPI.Migrations
                 columns: new[] { "Id", "CertificateId", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("04c0ef73-cef7-4b85-a5a8-0d5480c29488"), new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"), "لغة عربية" },
-                    { new Guid("18287ed1-6d11-4ecc-9d6e-6a23873f0e27"), new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"), "لغة انكليزية" },
-                    { new Guid("1e17efcb-d6c0-4dab-afc3-b02e761c7d55"), new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "ديانة" },
-                    { new Guid("26a68f1c-8192-42c4-acff-88eb5f876741"), new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "فيزياء" },
-                    { new Guid("2fc418cd-e827-468d-855d-67db6e805dfd"), new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"), "فيزياء و كيمياء" },
-                    { new Guid("425cf91c-887d-4f4e-9b90-0a490d77b3a6"), new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "رياضيات" },
-                    { new Guid("4859812d-9f19-4f69-9c3b-edb13bcf57b5"), new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"), "لغة انكليزية" },
-                    { new Guid("622de670-66c7-4637-888c-eabd2afa2d10"), new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "كيمياء" },
-                    { new Guid("725910ba-fcd6-44b0-8d59-da1e188a2cd3"), new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"), "لغة فرنسية" },
-                    { new Guid("7af3288b-35d2-49fb-8c1f-eab7bb77d75f"), new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "لغة فرنسية" },
-                    { new Guid("919165e1-49aa-41f6-adf2-5271a4b6b639"), new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "وطنية" },
-                    { new Guid("925432df-b41f-4aec-8b82-a17742b43a87"), new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "لغة عربية" },
-                    { new Guid("9636e080-8c92-4f03-84ac-0d45d11f5184"), new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"), "ديانة" },
-                    { new Guid("9e45f555-64fa-497c-90b3-bb6a89b1fcc9"), new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"), "لغة عربية" },
-                    { new Guid("a92d8aa1-c783-4a05-8066-7c0d40553e49"), new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"), "تاريخ" },
-                    { new Guid("a968c0cd-c8d0-4a80-b04f-4391cc54c331"), new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"), "فلسفة" },
-                    { new Guid("ab66d2cd-3029-4e26-b884-aae60d62208d"), new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"), "علوم" },
-                    { new Guid("b061b6a6-2fb8-4d24-bce4-07a5b9539850"), new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"), "ديانة" },
-                    { new Guid("bf242ba9-2b78-45c6-8292-df52829a616e"), new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"), "اجتماعيات" },
-                    { new Guid("c763d7dc-d47e-4bc2-b335-75c3b58b5f5e"), new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"), "وطنية" },
-                    { new Guid("de18a1b8-b55a-49a5-9dff-29274d33d5e0"), new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"), "رياضيات" },
-                    { new Guid("e42b56cd-36c9-43eb-8cd8-fae8d6c0f954"), new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "علم أحياء" },
-                    { new Guid("e6a7af08-985a-42d3-a361-931e055f8ba8"), new Guid("fc80176a-a242-41c8-a1c3-fbd5be3ea6a1"), "لغة فرنسية" },
-                    { new Guid("e809e402-4e3e-4a72-a108-8660f8f94e74"), new Guid("1b2863ac-355c-482e-ae38-cea49080ed26"), "جغرافيا" },
-                    { new Guid("e97949c3-1073-49e8-acc7-9ffc8e188410"), new Guid("36d07ab7-6bcf-4fc2-abf3-01c5d1a0ea57"), "لغة انكليزية" }
+                    { new Guid("06b2e20b-486c-4278-9365-7e3dec010df8"), new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"), "علوم" },
+                    { new Guid("37212af0-701f-49e6-b717-794715fe775d"), new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "لغة فرنسية" },
+                    { new Guid("3acfefd5-922c-4c95-af9a-0842879694d4"), new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "كيمياء" },
+                    { new Guid("3c5f6ace-aeb5-4c9b-895e-f2888f4be476"), new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "رياضيات" },
+                    { new Guid("4c3a90a1-e23d-483f-809d-ba51c7cde304"), new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"), "لغة فرنسية" },
+                    { new Guid("62603e78-650e-409a-975f-7c15a754e7c8"), new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"), "وطنية" },
+                    { new Guid("6b2c354f-feda-4d95-a9d6-d6d0e03c0ac8"), new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"), "ديانة" },
+                    { new Guid("71695aac-2012-45cf-b6e7-ff8d74704174"), new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "وطنية" },
+                    { new Guid("80e5e0b3-0e9f-490c-b5ea-5ce7fde1dcd5"), new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"), "جغرافيا" },
+                    { new Guid("8a3f51c2-873c-46e9-ba85-e2da81cbd4ac"), new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"), "لغة فرنسية" },
+                    { new Guid("8f5f32a8-65b0-46ae-86dd-8ba78cda2d46"), new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"), "رياضيات" },
+                    { new Guid("8f849ef6-eb1a-4865-b254-7326f55eb636"), new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"), "لغة عربية" },
+                    { new Guid("941cd29d-2cab-46c6-8133-974108e650e1"), new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"), "فيزياء و كيمياء" },
+                    { new Guid("a7723624-8f48-4122-8f34-5912c7b10fd3"), new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "ديانة" },
+                    { new Guid("b116b8bc-8ffa-48a1-96e1-8d95da20128a"), new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "لغة عربية" },
+                    { new Guid("b70f9ae3-bc20-494a-965b-3c49919ee4c0"), new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"), "لغة عربية" },
+                    { new Guid("bf5ad4ef-7ac1-42c6-9a06-0885e7cafcc3"), new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"), "اجتماعيات" },
+                    { new Guid("d20e4af3-1310-4040-b850-28022c18c686"), new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "علم أحياء" },
+                    { new Guid("d3459237-c8b4-4412-a9cd-c7fbffe52753"), new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"), "لغة انكليزية" },
+                    { new Guid("d4097c2f-337e-44ca-bf40-df55499213e2"), new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"), "ديانة" },
+                    { new Guid("dc5f6fd9-177e-4385-b824-61f34fec8e6a"), new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"), "تاريخ" },
+                    { new Guid("e53b5d58-8d62-4dd8-8561-28722099e7e6"), new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "لغة انكليزية" },
+                    { new Guid("efe0f785-45f2-4bbc-870a-4a236f2e9c04"), new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"), "فيزياء" },
+                    { new Guid("f12238f3-0955-40ad-af2c-82427aeef792"), new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"), "لغة انكليزية" },
+                    { new Guid("f993a8be-ba0e-48fb-b77b-481bb598f4b8"), new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"), "فلسفة" }
                 });
 
             migrationBuilder.CreateIndex(

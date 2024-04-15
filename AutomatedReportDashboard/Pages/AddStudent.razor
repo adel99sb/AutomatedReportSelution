@@ -146,7 +146,10 @@
         var CertificatesData = await Data.GetAllCertificates();
         Certificates = CertificatesData.Data.ToObj<GetAllCertificatesResponse>();
         var DivisionsData = await Data.GetAllDivisions(Cid);
-        Divisions = DivisionsData.Data.ToObj<GetAllDivisionsResponse>();
+        if (DivisionsData.StatusCode == AutomatedReportCore.Enums.Requests_Status.NotFound)
+            Divisions.divisions = new();
+        else
+            Divisions = DivisionsData.Data.ToObj<GetAllDivisionsResponse>();        
 
         isDataLoaded = true;
         StateHasChanged();

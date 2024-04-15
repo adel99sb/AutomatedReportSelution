@@ -48,42 +48,42 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("020a6539-370d-4495-88ff-9cc524d04a7f"),
+                            Id = new Guid("396f0f8f-8833-4619-81cf-8e1b313f9cae"),
                             From_Time = "08:30",
                             Name = "الحصة الأولى",
                             To_Time = "10:00"
                         },
                         new
                         {
-                            Id = new Guid("294bedf1-26b2-4205-b24f-11d9bb416e84"),
+                            Id = new Guid("ea29711f-c113-48d3-8bbc-489043b171b0"),
                             From_Time = "10:00",
                             Name = "الحصة الثانية",
                             To_Time = "11:30"
                         },
                         new
                         {
-                            Id = new Guid("ba19bef5-cd10-41ad-b8a2-f859933289ec"),
+                            Id = new Guid("c5a9dc2b-9d1f-408a-8072-174a75669a08"),
                             From_Time = "11:30",
                             Name = "الحصة الثالثة",
                             To_Time = "01:00"
                         },
                         new
                         {
-                            Id = new Guid("5625f3da-e0c8-4c22-b894-8081c3b786b5"),
+                            Id = new Guid("45306ef9-6f69-473b-ba08-512ccfac08f0"),
                             From_Time = "01:00",
                             Name = "الحصة الرابعة",
                             To_Time = "02:30"
                         },
                         new
                         {
-                            Id = new Guid("fc8108c2-551d-4722-8eaa-d19e0cdff23c"),
+                            Id = new Guid("e1871fb7-35d9-481c-aa77-b923f35c2f73"),
                             From_Time = "02:30",
                             Name = "الحصة الخامسة",
                             To_Time = "03:00"
                         },
                         new
                         {
-                            Id = new Guid("78eb997e-ea0f-4787-a933-d282d580dd64"),
+                            Id = new Guid("42838ba5-85d3-467a-b341-d88b91dd6cdd"),
                             From_Time = "03:00",
                             Name = "الحصة السادسة",
                             To_Time = "04:30"
@@ -156,17 +156,17 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1afbd8e7-a917-4c16-bc56-1b5bbb0df4dd"),
+                            Id = new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"),
                             Name = "الشهادة الإعدادية"
                         },
                         new
                         {
-                            Id = new Guid("f585bff8-97aa-4981-83cf-4bc84d0c284a"),
+                            Id = new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"),
                             Name = "الشهادة الثانوية - أدبي"
                         },
                         new
                         {
-                            Id = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "الشهادة الثانوية - علمي"
                         });
                 });
@@ -289,6 +289,9 @@ namespace AutomatedReportAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("DivisionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -396,152 +399,152 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("90646a00-3321-44e2-abfa-0aa03da43f37"),
-                            CertificateId = new Guid("1afbd8e7-a917-4c16-bc56-1b5bbb0df4dd"),
+                            Id = new Guid("8f5f32a8-65b0-46ae-86dd-8ba78cda2d46"),
+                            CertificateId = new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"),
                             Name = "رياضيات"
                         },
                         new
                         {
-                            Id = new Guid("e193ee40-0880-47d8-8019-e5e3fc988dcc"),
-                            CertificateId = new Guid("1afbd8e7-a917-4c16-bc56-1b5bbb0df4dd"),
+                            Id = new Guid("941cd29d-2cab-46c6-8133-974108e650e1"),
+                            CertificateId = new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"),
                             Name = "فيزياء و كيمياء"
                         },
                         new
                         {
-                            Id = new Guid("5d275a5f-1d18-4755-9aef-b3e17e898fa8"),
-                            CertificateId = new Guid("1afbd8e7-a917-4c16-bc56-1b5bbb0df4dd"),
+                            Id = new Guid("06b2e20b-486c-4278-9365-7e3dec010df8"),
+                            CertificateId = new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"),
                             Name = "علوم"
                         },
                         new
                         {
-                            Id = new Guid("a6c47bad-7e1d-4fe0-accc-8d7e74526670"),
-                            CertificateId = new Guid("1afbd8e7-a917-4c16-bc56-1b5bbb0df4dd"),
+                            Id = new Guid("d3459237-c8b4-4412-a9cd-c7fbffe52753"),
+                            CertificateId = new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"),
                             Name = "لغة انكليزية"
                         },
                         new
                         {
-                            Id = new Guid("3eee41cb-6a51-450e-831c-f160def8bad3"),
-                            CertificateId = new Guid("1afbd8e7-a917-4c16-bc56-1b5bbb0df4dd"),
+                            Id = new Guid("4c3a90a1-e23d-483f-809d-ba51c7cde304"),
+                            CertificateId = new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"),
                             Name = "لغة فرنسية"
                         },
                         new
                         {
-                            Id = new Guid("09b9b8fc-0a7d-4e9a-8948-a1dc01e95637"),
-                            CertificateId = new Guid("1afbd8e7-a917-4c16-bc56-1b5bbb0df4dd"),
+                            Id = new Guid("b70f9ae3-bc20-494a-965b-3c49919ee4c0"),
+                            CertificateId = new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"),
                             Name = "لغة عربية"
                         },
                         new
                         {
-                            Id = new Guid("43e373f1-fc70-4e06-ac65-8c0f5b4f9c93"),
-                            CertificateId = new Guid("1afbd8e7-a917-4c16-bc56-1b5bbb0df4dd"),
+                            Id = new Guid("bf5ad4ef-7ac1-42c6-9a06-0885e7cafcc3"),
+                            CertificateId = new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"),
                             Name = "اجتماعيات"
                         },
                         new
                         {
-                            Id = new Guid("d09c067d-ab4d-4d44-90f1-01e7e353253d"),
-                            CertificateId = new Guid("1afbd8e7-a917-4c16-bc56-1b5bbb0df4dd"),
+                            Id = new Guid("6b2c354f-feda-4d95-a9d6-d6d0e03c0ac8"),
+                            CertificateId = new Guid("d0d0ce2a-5dad-4719-a988-7cfc8872f3db"),
                             Name = "ديانة"
                         },
                         new
                         {
-                            Id = new Guid("d3f4a398-0153-4c24-9908-7414217eb0de"),
-                            CertificateId = new Guid("f585bff8-97aa-4981-83cf-4bc84d0c284a"),
+                            Id = new Guid("80e5e0b3-0e9f-490c-b5ea-5ce7fde1dcd5"),
+                            CertificateId = new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"),
                             Name = "جغرافيا"
                         },
                         new
                         {
-                            Id = new Guid("4e1eb7c4-096d-49d9-94ad-5e6fcb949917"),
-                            CertificateId = new Guid("f585bff8-97aa-4981-83cf-4bc84d0c284a"),
+                            Id = new Guid("8f849ef6-eb1a-4865-b254-7326f55eb636"),
+                            CertificateId = new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"),
                             Name = "لغة عربية"
                         },
                         new
                         {
-                            Id = new Guid("89d62677-3e42-45bd-ae3e-28441fa3d9b5"),
-                            CertificateId = new Guid("f585bff8-97aa-4981-83cf-4bc84d0c284a"),
+                            Id = new Guid("8a3f51c2-873c-46e9-ba85-e2da81cbd4ac"),
+                            CertificateId = new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"),
                             Name = "لغة فرنسية"
                         },
                         new
                         {
-                            Id = new Guid("50de49cd-c4ff-4ab8-a57e-79a1fcb62827"),
-                            CertificateId = new Guid("f585bff8-97aa-4981-83cf-4bc84d0c284a"),
+                            Id = new Guid("62603e78-650e-409a-975f-7c15a754e7c8"),
+                            CertificateId = new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"),
                             Name = "وطنية"
                         },
                         new
                         {
-                            Id = new Guid("258cd579-3a63-41ed-be73-d5b11f31f7c0"),
-                            CertificateId = new Guid("f585bff8-97aa-4981-83cf-4bc84d0c284a"),
+                            Id = new Guid("f993a8be-ba0e-48fb-b77b-481bb598f4b8"),
+                            CertificateId = new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"),
                             Name = "فلسفة"
                         },
                         new
                         {
-                            Id = new Guid("670cdbf8-3120-4c59-8dac-afcbc73b72f5"),
-                            CertificateId = new Guid("f585bff8-97aa-4981-83cf-4bc84d0c284a"),
+                            Id = new Guid("f12238f3-0955-40ad-af2c-82427aeef792"),
+                            CertificateId = new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"),
                             Name = "لغة انكليزية"
                         },
                         new
                         {
-                            Id = new Guid("3b97199e-4f77-4c55-a66c-5f0d03aa7b56"),
-                            CertificateId = new Guid("f585bff8-97aa-4981-83cf-4bc84d0c284a"),
+                            Id = new Guid("d4097c2f-337e-44ca-bf40-df55499213e2"),
+                            CertificateId = new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"),
                             Name = "ديانة"
                         },
                         new
                         {
-                            Id = new Guid("67d5ea2d-09bd-4a3b-99fe-e032d21a602d"),
-                            CertificateId = new Guid("f585bff8-97aa-4981-83cf-4bc84d0c284a"),
+                            Id = new Guid("dc5f6fd9-177e-4385-b824-61f34fec8e6a"),
+                            CertificateId = new Guid("50edb2ed-8a96-45b4-9420-528b5365c25a"),
                             Name = "تاريخ"
                         },
                         new
                         {
-                            Id = new Guid("4cd7dea9-8a73-47af-aaa1-aa8d4abb18ea"),
-                            CertificateId = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("efe0f785-45f2-4bbc-870a-4a236f2e9c04"),
+                            CertificateId = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "فيزياء"
                         },
                         new
                         {
-                            Id = new Guid("89746f7e-a63b-4a13-bbda-563b98f682c1"),
-                            CertificateId = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("b116b8bc-8ffa-48a1-96e1-8d95da20128a"),
+                            CertificateId = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "لغة عربية"
                         },
                         new
                         {
-                            Id = new Guid("5b1a3ca7-e53e-4a15-9631-d88c2b1c1cff"),
-                            CertificateId = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("37212af0-701f-49e6-b717-794715fe775d"),
+                            CertificateId = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "لغة فرنسية"
                         },
                         new
                         {
-                            Id = new Guid("d4581a7d-26b3-46d5-be62-13c4f14851c8"),
-                            CertificateId = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("71695aac-2012-45cf-b6e7-ff8d74704174"),
+                            CertificateId = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "وطنية"
                         },
                         new
                         {
-                            Id = new Guid("ac192fb0-8d16-41d1-92fe-bddee696e3a8"),
-                            CertificateId = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("3c5f6ace-aeb5-4c9b-895e-f2888f4be476"),
+                            CertificateId = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "رياضيات"
                         },
                         new
                         {
-                            Id = new Guid("334afdcb-b122-4681-8953-1566a765c3b9"),
-                            CertificateId = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("e53b5d58-8d62-4dd8-8561-28722099e7e6"),
+                            CertificateId = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "لغة انكليزية"
                         },
                         new
                         {
-                            Id = new Guid("a34127ce-9723-454e-bdcd-0a9728d37c51"),
-                            CertificateId = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("a7723624-8f48-4122-8f34-5912c7b10fd3"),
+                            CertificateId = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "ديانة"
                         },
                         new
                         {
-                            Id = new Guid("307a802b-1f4e-4595-95e3-a7feda4e0e70"),
-                            CertificateId = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("d20e4af3-1310-4040-b850-28022c18c686"),
+                            CertificateId = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "علم أحياء"
                         },
                         new
                         {
-                            Id = new Guid("8ed34e0e-2122-4583-86ae-34922f792ab0"),
-                            CertificateId = new Guid("a0e2acd6-c7bd-4433-a707-ada7863d05e0"),
+                            Id = new Guid("3acfefd5-922c-4c95-af9a-0842879694d4"),
+                            CertificateId = new Guid("255383c1-e9ba-4059-9b34-548ac276f7ae"),
                             Name = "كيمياء"
                         });
                 });
@@ -647,13 +650,13 @@ namespace AutomatedReportAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("10f3562f-1a07-4dab-a16b-8b64855df56d"),
+                            Id = new Guid("8bc9d900-e353-4cc1-ae90-37d31a0688ee"),
                             Password = "AaBbCc@112233",
                             Type = "مدير"
                         },
                         new
                         {
-                            Id = new Guid("c16c70bd-ab3e-430e-a0d1-b35ec0ff2953"),
+                            Id = new Guid("cd50e174-45dc-4634-a383-b63545bf5dd6"),
                             Password = "Aa@112233",
                             Type = "مشرف"
                         });

@@ -19,7 +19,7 @@ namespace AutomatedReportDashboard.Data
         }        
         public static bool IsManager()
         {
-            var ManagerId = new Guid("10f3562f-1a07-4dab-a16b-8b64855df56d");
+            var ManagerId = new Guid("8bc9d900-e353-4cc1-ae90-37d31a0688ee");
             if (UserId == ManagerId)
                 return true;
             return false;

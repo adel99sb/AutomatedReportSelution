@@ -13,7 +13,8 @@ namespace AutomatedReportDashboard.Data
         public DataService()
         {
             client = new HttpClient();
-            baseUrl = "http://localhost:5000/";
+            //baseUrl = "http://localhost:5000/";
+            baseUrl = "https://adel99.bsite.net/";
             options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         }
