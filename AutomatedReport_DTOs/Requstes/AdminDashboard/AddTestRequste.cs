@@ -10,7 +10,7 @@ namespace AutomatedReportCore.Requstes.AdminDashboard
         public DateTime DateTime { get; set; }
         [Required(ErrorMessage = "Total Mark Filed Is Required")]
         public double TotalMark { get; set; }
-        public bool IsDone { get; set; } = false;
+        //public bool IsDone { get; set; } = false;
         [Required(ErrorMessage = "Subject Id Filed Is Required")]
         public Guid SubjectId { get; set; }
         [Required(ErrorMessage = "Division Id Filed Is Required")]

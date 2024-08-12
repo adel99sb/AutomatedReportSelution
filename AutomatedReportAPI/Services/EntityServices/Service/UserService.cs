@@ -107,7 +107,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     response.Message = "Login Successfully";
                 }
                 else
-                {
+                 {
                     response = new GeneralResponse(null);
                     response.StatusCode = Requests_Status.NotFound;
                     response.Message = "Check The User Name Or Password Then Try Again!!";

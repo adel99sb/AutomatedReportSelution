@@ -1,5 +1,6 @@
 using AutomatedReportAPI.AppData.Context;
 using AutomatedReportAPI.Services;
+using AutomatedReportAPI.Services.WhatsAppSetting;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;

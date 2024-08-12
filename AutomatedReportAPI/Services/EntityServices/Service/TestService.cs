@@ -13,9 +13,15 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
     public class TestService : ITestService<GeneralResponse>
     {
         private readonly IUnitOfWork<Test> testRepository;
-        public TestService(IUnitOfWork<Test> testRepository)
+        private readonly IUnitOfWork<Division> divisionRepository;
+        private readonly IUnitOfWork<Subject> subjectRepository;
+        public TestService(IUnitOfWork<Test> testRepository,
+            IUnitOfWork<Division> divisionRepository,
+            IUnitOfWork<Subject> subjectRepository)
         {
             this.testRepository = testRepository;
+            this.divisionRepository = divisionRepository;
+            this.subjectRepository = subjectRepository;
         }
 
         public async Task<GeneralResponse> AddTest(AddTestRequste requste)
@@ -23,22 +29,16 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var Tests = testRepository.GetAll()
-                    .Include(d => d.Division)
-                    .Include(s => s.Subject)
-                    .ToList();
-                var division = Tests.Find(d => d.Division.Id == requste.DivisionId)?
-                    .Division;
-                var subject = Tests.Find(s => s.Subject.Id == requste.SubjectId)?
-                    .Subject;
+                var division = await divisionRepository.GetById(requste.DivisionId);
+                var subject = await subjectRepository.GetById(requste.SubjectId);
                 await testRepository.Create(new Test()
                 {
                     DateTime = requste.DateTime,
                     Description = requste.Description,
                     IsDone = false,
                     TotalMark = requste.TotalMark,
-                    Division = division,
-                    Subject = subject
+                    DivisionId = division.Id,
+                    SubjectId = subject.Id
                 });
 
                 response = new GeneralResponse(null);
@@ -81,14 +81,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var Tests = testRepository.GetAll()
-                    .Include(d => d.Division)
-                    .Include(s => s.Subject)
-                    .ToList();
-                var division = Tests.Find(d => d.Division.Id == requste.DivisionId)?
-                    .Division;
-                var subject = Tests.Find(s => s.Subject.Id == requste.SubjectId)?
-                    .Subject;
+                var division = await divisionRepository.GetById(requste.DivisionId);
+                var subject = await subjectRepository.GetById(requste.SubjectId);
                 await testRepository.Update(new Test()
                 {
                     Id = requste.Id,
@@ -96,8 +90,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     Description = requste.Description,
                     IsDone = false,
                     TotalMark = requste.TotalMark,
-                    Division = division,
-                    Subject = subject
+                    DivisionId = division.Id,
+                    SubjectId = subject.Id
                 });
 
                 response = new GeneralResponse(null);
@@ -204,7 +198,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 await testRepository.Update(new Test()
                 {
                     Id = id,
-                    IsDone = false,
+                    IsDone = true,
                 });
 
                 response = new GeneralResponse(null);

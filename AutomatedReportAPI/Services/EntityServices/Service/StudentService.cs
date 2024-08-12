@@ -14,11 +14,14 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
     {
         private readonly IUnitOfWork<Student> studentRepository;
         private readonly IUnitOfWork<Test_Mark> testMarkRepository;
+        private readonly IUnitOfWork<Division> divisionMarkRepository;
         public StudentService(IUnitOfWork<Student> studentRepository,
-            IUnitOfWork<Test_Mark> testMarkRepository)
+            IUnitOfWork<Test_Mark> testMarkRepository,
+            IUnitOfWork<Division> divisionMarkRepository)
         {
             this.studentRepository = studentRepository;
             this.testMarkRepository = testMarkRepository;
+            this.divisionMarkRepository = divisionMarkRepository;
         }
 
         public async Task<GeneralResponse> AddStudent(AddStudentRequste requste)
@@ -26,10 +29,9 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var divison = studentRepository.GetAll()
-                    .Include(d => d.Division)
-                    .Where(d => d.Division.Id == requste.divisionId)
-                    .FirstOrDefault()?.Division;
+                var divison = divisionMarkRepository.GetAll()                    
+                    .Where(d => d.Id == requste.divisionId)
+                    ?.FirstOrDefault();
                 await studentRepository.Create(new Student()
                 {
                     First_Name = requste.first_Name,

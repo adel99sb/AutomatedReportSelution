@@ -12,6 +12,11 @@ namespace AutomatedReportAPI.Services.WhatsAppSetting
         {
             // Set up Edge WebDriver
             EdgeDriver = new EdgeDriver();
+
+            // Set the page load timeout to 10 seconds (adjust as needed)
+            EdgeDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(90);
+
+            // Navigate to the desired URL
             EdgeDriver.Navigate().GoToUrl("https://web.whatsapp.com/");
             isReady = false;
             Console.WriteLine("Please scan the QR code and log in to WhatsApp Web.");

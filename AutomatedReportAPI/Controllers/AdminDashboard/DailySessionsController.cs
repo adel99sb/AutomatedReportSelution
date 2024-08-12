@@ -19,9 +19,18 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
         }
 
         [HttpPost("AddDailySessions")]
-        public Task<IActionResult> AddDailySessions([Required, FromBody] AddDailySessionsRequste requste)
+        public async Task<IActionResult> AddDailySessions([Required, FromBody] AddDailySessionsRequste requste)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Result = await dailySessionsService.AddDailySessions(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("GetAllDailySessions")]
         public async Task<IActionResult> GetAllDailySessions([Required, FromQuery] Guid divissionId)

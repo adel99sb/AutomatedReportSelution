@@ -13,9 +13,13 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
     public class DailySessionsService : IDailySessionsService<GeneralResponse>
     {
         private readonly IUnitOfWork<DailySessions_Record> dailySessions_RecordRepository;
-        public DailySessionsService(IUnitOfWork<DailySessions_Record> dailySessions_RecordRepository)
+        private readonly IUnitOfWork<Sessions_Record> Sessions_RecordRepository;
+        public DailySessionsService(
+            IUnitOfWork<DailySessions_Record> dailySessions_RecordRepository,
+            IUnitOfWork<Sessions_Record> sessions_RecordRepository)
         {
             this.dailySessions_RecordRepository = dailySessions_RecordRepository;
+            Sessions_RecordRepository = sessions_RecordRepository;
         }
 
         public async Task<GeneralResponse> AddDailySessions(AddDailySessionsRequste requste)
@@ -23,17 +27,16 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var DailySessions_Records = dailySessions_RecordRepository.GetAll()
-                    .Include(s => s.Sessions_Record)
+                var Sessions_Records = Sessions_RecordRepository.GetAll()
                     .ToList();
                 foreach (var item in requste.DailySessionList)
                 {
-                    var Sessions_Record = DailySessions_Records
-                        .Find(d => d.Id == item.Sessions_RecordId)?.Sessions_Record;
+                    var Sessions_Record = Sessions_Records
+                        .Find(sr => sr.Id == item.Sessions_RecordId);
                     await dailySessions_RecordRepository.Create(new DailySessions_Record()
                     {
                         Date = item.Date,
-                        Sessions_Record = Sessions_Record,
+                        Sessions_RecordId = Sessions_Record.Id,
                         Subject_Title = item.Subject_Title
                     });
                 }
@@ -61,7 +64,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     .Include(s => s.Sessions_Record)                    
                     .Include(h => h.Sessions_Record.Hall)
                     .Include(s => s.Sessions_Record.Subject)
-                    .Include(c => c.Sessions_Record._Class)
+                    .Include(c => c.Sessions_Record.Class)
                     .Where(s => s.Sessions_Record.Division.Id == divissionId)
                     .ToList();
                 foreach (var item in DailySessions)
@@ -69,7 +72,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     var Sessions_Record = DailySessions
                         .Find(c => c.Sessions_Record.Id == item.Sessions_Record.Id)
                         ?.Sessions_Record;
-                    var Class = Sessions_Record?._Class;
+                    var Class = Sessions_Record?.Class;
                     var Hall = Sessions_Record?.Hall;
                     var Subject = Sessions_Record?.Subject;
                     Data.dailySessions_Records.Add(new DailySessions_RecordDto()
@@ -115,7 +118,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     .Include(s => s.Sessions_Record)
                     .Include(h => h.Sessions_Record.Hall)
                     .Include(s => s.Sessions_Record.Subject)
-                    .Include(c => c.Sessions_Record._Class)
+                    .Include(c => c.Sessions_Record.Class)
                     .Where(s => s.Sessions_Record.Division.Id == requste.DivisionId
                              && s.Date == requste.Date)
                     .ToList();
@@ -124,7 +127,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     var Sessions_Record = DailySessions
                         .Find(c => c.Sessions_Record.Id == item.Sessions_Record.Id)
                         ?.Sessions_Record;
-                    var Class = Sessions_Record?._Class;
+                    var Class = Sessions_Record?.Class;
                     var Hall = Sessions_Record?.Hall;
                     var Subject = Sessions_Record?.Subject;
                     Data.dailySessions_Records.Add(new DailySessions_RecordDto()

@@ -123,10 +123,10 @@
     private GetAllDivisionsResponse Divisions = new();
     private AddStudentRequste requste = new();
     private Guid? Cid;
-    private Guid? Did;
+    private Guid Did;
     private async void SaveStudent()
     {
-        requste.divisionId = Did.Value;
+        requste.divisionId = Did;
         var resulte = await Data.AddStudent(requste);
     }
     private async Task ChangeDivisions(ChangeEventArgs e)

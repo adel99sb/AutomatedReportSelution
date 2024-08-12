@@ -13,9 +13,17 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
     public class Sessions_RecordService : ISessions_RecordService<GeneralResponse>
     {
         private readonly IUnitOfWork<Sessions_Record> sessions_RecordRepository;
-        public Sessions_RecordService(IUnitOfWork<Sessions_Record> sessions_RecordRepository)
+        private readonly IUnitOfWork<Division> divisionRepository;
+        private readonly IUnitOfWork<_Class> classRepository;
+        private readonly IUnitOfWork<Hall> hallRepository;
+        private readonly IUnitOfWork<Subject> subjectRepository;
+        public Sessions_RecordService(IUnitOfWork<Sessions_Record> sessions_RecordRepository, IUnitOfWork<Division> divisionRepository, IUnitOfWork<_Class> classRepository, IUnitOfWork<Hall> hallRepository, IUnitOfWork<Subject> subjectRepository)
         {
-           this.sessions_RecordRepository = sessions_RecordRepository;
+            this.sessions_RecordRepository = sessions_RecordRepository;
+            this.divisionRepository = divisionRepository;
+            this.classRepository = classRepository;
+            this.hallRepository = hallRepository;
+            this.subjectRepository = subjectRepository;
         }
 
         public async Task<GeneralResponse> AddSession(AddSessionRequste requste)
@@ -23,27 +31,27 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var Sessions = sessions_RecordRepository.GetAll()
-                    .Include(d => d.Division)
-                    .Include(h => h.Hall)
-                    .Include(s => s.Subject)
-                    .Include(c => c._Class)
-                    .ToList();
-                var divison = Sessions
-                    .Find(d => d.Division.Id == requste.DivisionId)?.Division;
-                var hall = Sessions
-                    .Find(h => h.Hall.Id == requste.HallId)?.Hall;
-                var subject = Sessions
-                    .Find(s => s.Subject.Id == requste.SubjectId)?.Subject;
-                var Class = Sessions
-                    .Find(c => c._Class.Id == requste._ClassId)?._Class;
+                //var Sessions = sessions_RecordRepository.GetAll()
+                //    .Include(d => d.Division)
+                //    .Include(h => h.Hall)
+                //    .Include(s => s.Subject)
+                //    .Include(c => c._Class)
+                //    .ToList();
+                var divison = divisionRepository.GetAll()
+                    .Where(d => d.Id == requste.DivisionId)?.FirstOrDefault();
+                var hall = hallRepository.GetAll()
+                    .Where(h => h.Id == requste.HallId)?.FirstOrDefault();
+                var subject = subjectRepository.GetAll()
+                    .Where(s => s.Id == requste.SubjectId)?.FirstOrDefault();
+                var Class = classRepository.GetAll()
+                    .Where(c => c.Id == requste._ClassId)?.FirstOrDefault();                
                 await sessions_RecordRepository.Create(new Sessions_Record()
                 {
                     day = requste.day,
-                    Division = divison,
-                    _Class = Class,
-                    Hall = hall,
-                    Subject = subject
+                    DivisionId = divison.Id,
+                    _ClassId = Class.Id,
+                    HallId = hall.Id,
+                    SubjectId = subject.Id
                 });
                 response = new GeneralResponse(null);
                 response.StatusCode = Requests_Status.Accepted;
@@ -88,7 +96,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     .Include(d => d.Division)
                     .Include(h => h.Hall)
                     .Include(s => s.Subject)
-                    .Include(c => c._Class)
+                    .Include(c => c.Class)
                     .ToList();
                 var divison = Sessions
                     .Find(d => d.Division.Id == requste.DivisionId)?.Division;
@@ -97,13 +105,13 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 var subject = Sessions
                     .Find(s => s.Subject.Id == requste.SubjectId)?.Subject;
                 var Class = Sessions
-                    .Find(c => c._Class.Id == requste._ClassId)?._Class;
+                    .Find(c => c.Class.Id == requste._ClassId)?.Class;
                 await sessions_RecordRepository.Update(new Sessions_Record()
                 {
                     Id = requste.Id,
                     day = requste.day,
                     Division = divison,
-                    _Class = Class,
+                    Class = Class,
                     Hall = hall,
                     Subject = subject
                 });
@@ -155,7 +163,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var Sessions = sessions_RecordRepository.GetAll()
                     .Where(s => s.Division.Id == divisionId)
-                    .Include(c => c._Class)
+                    .Include(c => c.Class)
                     .Include(s => s.Subject)
                     .Include(h => h.Hall)
                     .ToList(); // Load data into memory
@@ -165,7 +173,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     {
                         Id = item.Id,
                         Day = item.day,
-                        Class = item._Class.Name,
+                        Class = item.Class.Name,
                         Hall = item.Hall.Name,
                         Subject = item.Subject.Name
                     });
@@ -201,7 +209,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 var Sessions = sessions_RecordRepository.GetAll()
                     .Where(s => s.Division.Id == requste.DivisionId
                              && s.day == requste.Day)
-                    .Include(c => c._Class)
+                    .Include(c => c.Class)
                     .Include(s => s.Subject)
                     .Include(h => h.Hall)
                     .ToList(); // Load data into memory
@@ -211,7 +219,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     {
                         Id = item.Id,
                         Day = item.day,
-                        Class = item._Class.Name,
+                        Class = item.Class.Name,
                         Hall = item.Hall.Name,
                         Subject = item.Subject.Name
                     });
@@ -247,7 +255,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var filteredSessions = sessions_RecordRepository.GetAll()
                     .Where(s => s.Division.Id == divisionId)
-                    .Include(c => c._Class)
+                    .Include(c => c.Class)
                     .Include(s => s.Subject)
                     .Include(h => h.Hall)
                     .ToList(); // Load data into memory
@@ -262,9 +270,9 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                         Sessions.Add(new GroupedSessionDto()
                         {
                             Id = session.Id,
-                            Class = session._Class.Name,
-                            From_Time = session._Class.From_Time,
-                            To_Time = session._Class.To_Time,
+                            Class = session.Class.Name,
+                            From_Time = session.Class.From_Time,
+                            To_Time = session.Class.To_Time,
                             Subject = session.Subject.Name,
                             Hall = session.Hall.Name
                         });
