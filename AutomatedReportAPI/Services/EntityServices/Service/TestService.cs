@@ -194,12 +194,10 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
         {
             GeneralResponse response;
             try
-            {               
-                await testRepository.Update(new Test()
-                {
-                    Id = id,
-                    IsDone = true,
-                });
+            {            
+                var Test = await testRepository.GetById(id);
+                Test.IsDone = true;
+                await testRepository.Update(Test);                
 
                 response = new GeneralResponse(null);
                 response.StatusCode = Requests_Status.Accepted;
