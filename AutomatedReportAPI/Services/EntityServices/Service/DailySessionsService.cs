@@ -139,6 +139,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                         Hall = Hall.Name,
                         SubjectName = Subject.Name,
                         Day = Sessions_Record.day.ToString(),
+                        Sessions_RecordId = item.Sessions_RecordId
                     });
                 }
                 if (Data.dailySessions_Records.Count != 0)

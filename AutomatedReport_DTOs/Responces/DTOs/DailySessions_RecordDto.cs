@@ -7,6 +7,7 @@
         public string Hall { get; set; }
         public string Class { get; set; }
         public string Day { get; set; }
+        public Guid Sessions_RecordId{ get; set; }
         public string SubjectName { get; set; }
         public string Subject_Title { get; set; }
     }
