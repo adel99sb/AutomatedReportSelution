@@ -120,7 +120,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     .Include(s => s.Sessions_Record.Subject)
                     .Include(c => c.Sessions_Record.Class)
                     .Where(s => s.Sessions_Record.Division.Id == requste.DivisionId
-                             && s.Date.ToShortDateString() == requste.Date.ToShortDateString())
+                             && s.Date.Date == requste.Date.Date)
                     .ToList();
                 foreach (var item in DailySessions)
                 {
