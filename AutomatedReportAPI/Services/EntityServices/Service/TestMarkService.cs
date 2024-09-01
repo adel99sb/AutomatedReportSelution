@@ -23,21 +23,21 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             GeneralResponse response;
             try
             {
-                var testMarks = testMarkRepository.GetAll()
-                        .Include(s => s.Student)
-                        .Include(t => t.Test)
-                        .ToList();
+                //var testMarks = testMarkRepository.GetAll()
+                //        .Include(s => s.Student)
+                //        .Include(t => t.Test)
+                //        .ToList();
                 foreach (var item in requste.TestMarksList)
                 {
-                    var student = testMarks.Find(s => s.Student.Id == item.StudentId)?
-                        .Student;
-                    var test = testMarks.Find(t => t.Test.Id == item.TestId)?
-                        .Test;
+                    //var student = testMarks.Find(s => s.Student.Id == item.StudentId)?
+                    //    .Student;
+                    //var test = testMarks.Find(t => t.Test.Id == item.TestId)?
+                    //    .Test;
                     await testMarkRepository.Create(new Test_Mark()
                     {
                         Mark = item.Mark,
-                        Student = student,
-                        Test = test
+                        StudentId = item.StudentId,
+                        TestId = item.TestId
                     });                    
                 }
                 response = new GeneralResponse(null);
@@ -63,6 +63,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 var testMarks = testMarkRepository.GetAll()
                         .Include(s => s.Student)
                         .Include(t => t.Test)
+                        .ThenInclude(sb => sb.Subject)
                         .Where(t => t.Test.Id == testId)
                         .ToList();                
                 if(testMarks.Count != 0)

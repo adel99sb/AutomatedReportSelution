@@ -77,16 +77,17 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
         [HttpGet("GetAllStudentsByTestId")]
         public async Task<IActionResult> GetAllStudentsByTestId([Required,FromQuery] Guid testId)
         {
-            try
-            {
-                var Result = await studentService.GetAllStudentsByTestId(testId);
-                var Response = Result.StatusCode.ToActionResult(Result);
-                return Response;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //try
+            //{
+            //    var Result = await studentService.GetAllStudentsByTestId(testId);
+            //    var Response = Result.StatusCode.ToActionResult(Result);
+            //    return Response;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
+            throw new NotImplementedException();
         }
         [HttpGet("GetAllStudentsWithDivision")]
         public async Task<IActionResult> GetAllStudentsWithDivision()

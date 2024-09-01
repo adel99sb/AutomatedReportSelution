@@ -15,11 +15,17 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
         private readonly IUnitOfWork<Test> testRepository;
         private readonly IUnitOfWork<Division> divisionRepository;
         private readonly IUnitOfWork<Subject> subjectRepository;
+        private readonly IStudentService<GeneralResponse> studentService;
+        private readonly ITestMarkService<GeneralResponse> testMarkService;
         public TestService(IUnitOfWork<Test> testRepository,
             IUnitOfWork<Division> divisionRepository,
+            ITestMarkService<GeneralResponse> testMarkService,
+            IStudentService<GeneralResponse> studentService,
             IUnitOfWork<Subject> subjectRepository)
         {
             this.testRepository = testRepository;
+            this.testMarkService = testMarkService;
+            this.studentService = studentService;
             this.divisionRepository = divisionRepository;
             this.subjectRepository = subjectRepository;
         }
@@ -31,7 +37,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var division = await divisionRepository.GetById(requste.DivisionId);
                 var subject = await subjectRepository.GetById(requste.SubjectId);
-                await testRepository.Create(new Test()
+                var test = new Test()
                 {
                     DateTime = requste.DateTime,
                     Description = requste.Description,
@@ -39,11 +45,40 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     TotalMark = requste.TotalMark,
                     DivisionId = division.Id,
                     SubjectId = subject.Id
-                });
+                };
+                await testRepository.Create(test);
 
-                response = new GeneralResponse(null);
-                response.StatusCode = Requests_Status.Accepted;
-                response.Message = "Test Added Succesfully";
+                List <AutomatedReportCore.Requstes.DTOs.TestMarkDto> TestMarksList = new();
+                var result = await studentService.GetAllStudentsByDivisionId(test.DivisionId);
+                if (result.Data is GetAllStudentsByDivisionIdResponse studentList)
+                {
+                    foreach (var item in studentList.students)
+                    {
+                        TestMarksList.Add(new AutomatedReportCore.Requstes.DTOs.TestMarkDto
+                        {
+                            Mark = 0,
+                            TestId = test.Id,
+                            StudentId = item.Id
+                        });
+                    }
+                }
+                var res = await testMarkService.AddTestMarks(
+                    new AddTestMarkRequste()
+                    {
+                        TestMarksList = TestMarksList
+                    });
+                if (res.StatusCode == Requests_Status.Accepted)
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.Accepted;
+                    response.Message = "Test Added Succesfully";
+                }                
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.BadRequest;
+                    response.Message = "Some Thing Went Wrong";
+                }
             }
             catch (Exception ex)
             {
@@ -197,7 +232,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {            
                 var Test = await testRepository.GetById(id);
                 Test.IsDone = true;
-                await testRepository.Update(Test);                
+                await testRepository.Update(Test);                                                
 
                 response = new GeneralResponse(null);
                 response.StatusCode = Requests_Status.Accepted;

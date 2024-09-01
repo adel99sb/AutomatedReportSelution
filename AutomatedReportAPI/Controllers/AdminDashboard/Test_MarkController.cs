@@ -21,16 +21,17 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
         [HttpPost("AddTestMarks")]
         public async Task<IActionResult> AddTestMarks([Required,FromBody] AddTestMarkRequste requste)
         {
-            try
-            {
-                var Result = await testMarkService.AddTestMarks(requste);
-                var Response = Result.StatusCode.ToActionResult(Result);
-                return Response;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //try
+            //{
+            //    var Result = await testMarkService.AddTestMarks(requste);
+            //    var Response = Result.StatusCode.ToActionResult(Result);
+            //    return Response;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
+            throw new NotImplementedException();
         }
         [HttpGet("GetAllTestMarks")]
         public async Task<IActionResult> GetAllTestMarks([Required,FromQuery] Guid testId)
