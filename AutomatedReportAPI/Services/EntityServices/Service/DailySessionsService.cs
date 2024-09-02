@@ -31,14 +31,27 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     .ToList();
                 foreach (var item in requste.DailySessionList)
                 {
-                    var Sessions_Record = Sessions_Records
-                        .Find(sr => sr.Id == item.Sessions_RecordId);
-                    await dailySessions_RecordRepository.Create(new DailySessions_Record()
+                    if (!item.IsAlreadyExist)
                     {
-                        Date = item.Date,
-                        Sessions_RecordId = Sessions_Record.Id,
-                        Subject_Title = item.Subject_Title
-                    });
+                        var Sessions_Record = Sessions_Records
+                            .Find(sr => sr.Id == item.Sessions_RecordId);
+                        await dailySessions_RecordRepository.Create(new DailySessions_Record()
+                        {
+                            Date = item.Date,
+                            Sessions_RecordId = Sessions_Record.Id,
+                            Subject_Title = item.Subject_Title
+                        });
+                    }
+                    else
+                    {
+                        await dailySessions_RecordRepository.Update(new DailySessions_Record()
+                        {
+                            Date = item.Date,
+                            Id = item.DailySessionId.Value,
+                            Sessions_RecordId = item.Sessions_RecordId,
+                            Subject_Title = item.Subject_Title                           
+                        });
+                    }
                 }
                 response = new GeneralResponse(null);
                 response.StatusCode = Requests_Status.Accepted;

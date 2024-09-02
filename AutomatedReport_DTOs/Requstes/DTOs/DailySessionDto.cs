@@ -10,5 +10,7 @@ namespace AutomatedReportCore.Requstes.DTOs
         public Guid Sessions_RecordId { get; set; }
         [Required(ErrorMessage = "Subject Title Filed Is Required")]
         public string Subject_Title { get; set; }
+        public bool IsAlreadyExist { get; set; }
+        public Guid? DailySessionId { get; set; }
     }
 }
