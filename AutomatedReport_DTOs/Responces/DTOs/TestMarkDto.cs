@@ -6,5 +6,6 @@
         public double Mark { get; set; }
         public string Student_FirsName { get; set; }
         public string Student_LastName { get; set; }
+        public Guid StudentId { get; set; }
     }
 }

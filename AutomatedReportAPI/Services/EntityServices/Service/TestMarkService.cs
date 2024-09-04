@@ -79,7 +79,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                             Id = item.Id,
                             Mark = item.Mark,
                             Student_FirsName = student.First_Name,
-                            Student_LastName = student.Last_Name
+                            Student_LastName = student.Last_Name,
+                            StudentId = student.Id
                         });     
                     }
                     Data.Subject = test.Subject.Name;
