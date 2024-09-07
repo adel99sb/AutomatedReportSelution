@@ -122,6 +122,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     Id = requste.Id,
                     DateTime = requste.DateTime,
                     Description = requste.Description,
+                    IsDone = requste.IsDone,
                     TotalMark = requste.TotalMark,
                     DivisionId = division.Id,
                     SubjectId = subject.Id
