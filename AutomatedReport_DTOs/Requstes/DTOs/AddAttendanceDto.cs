@@ -2,10 +2,12 @@
 
 namespace AutomatedReportCore.Requstes.DTOs
 {
-    public class AttendanceDto
+    public class AddAttendanceDto
     {
-        public string? Enter_Time { get; set; }
-        public string? Outer_Time { get; set; }
+        [Required]
+        public Guid Id { get; set; }
+        [Required]
+        public bool IsAttend { get; set; }
         [Required(ErrorMessage = "Student Id Filed Is Required")]
         public Guid StudentId { get; set; }
         [Required(ErrorMessage = "Daily Sessions Record Id Filed Is Required")]

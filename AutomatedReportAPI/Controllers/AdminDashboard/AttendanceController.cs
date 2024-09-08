@@ -17,13 +17,28 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
         {
             this.attendanceService = attendanceService;
         }
-
-        [HttpPost("AddAttendance")]
-        public async Task<IActionResult> AddAttendance([Required,FromBody] AddAttendanceRequste requste)
+        
+        [HttpPost("EditeAttendance")]
+        public async Task<IActionResult> EditeAttendance([Required][FromBody] EditeAttendanceRequste requste)
         {
             try
             {
-                var Result = await attendanceService.AddAttendance(requste);
+                var Result = await attendanceService.EditeAttendance(requste);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetAttendanceByDate")]        
+        public async Task<IActionResult> GetAttendanceByDate([Required][FromQuery] DateTime date,[Required][FromQuery] Guid DivisionId)
+        {
+            try
+            {
+                var Result = await attendanceService.GetAttendanceByDate(date,DivisionId);
                 var Response = Result.StatusCode.ToActionResult(Result);
                 return Response;
             }

@@ -14,14 +14,36 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
     {
         private readonly IUnitOfWork<DailySessions_Record> dailySessions_RecordRepository;
         private readonly IUnitOfWork<Sessions_Record> Sessions_RecordRepository;
+        private readonly IUnitOfWork<Attendance> attendanceRepository;
+        private readonly IUnitOfWork<Student> studentRepository;
         public DailySessionsService(
             IUnitOfWork<DailySessions_Record> dailySessions_RecordRepository,
-            IUnitOfWork<Sessions_Record> sessions_RecordRepository)
+            IUnitOfWork<Sessions_Record> sessions_RecordRepository,
+            IUnitOfWork<Attendance> attendanceRepository,
+            IUnitOfWork<Student> studentRepository)
         {
             this.dailySessions_RecordRepository = dailySessions_RecordRepository;
             Sessions_RecordRepository = sessions_RecordRepository;
+            this.attendanceRepository = attendanceRepository;
+            this.studentRepository = studentRepository;
         }
-
+        private async Task AddDefualtAttendencToDailySession(Guid DailySessinId)
+        {
+            var DailySession = await dailySessions_RecordRepository.GetById(DailySessinId);
+            var SessionRecord = await Sessions_RecordRepository.GetById(DailySession.Sessions_RecordId);
+            var StudentsIdList = studentRepository.GetAll()
+                .Where(s => s.DivisionId == SessionRecord.DivisionId)
+                .Select(s => s.Id).ToList();
+            foreach (var id in StudentsIdList)
+            {
+                await attendanceRepository.Create(new Attendance()
+                {
+                    DailySessions_RecordId = DailySessinId,
+                    IsAttend = false,
+                    StudentId = id
+                });
+            }
+        }
         public async Task<GeneralResponse> AddDailySessions(AddDailySessionsRequste requste)
         {
             GeneralResponse response;
@@ -30,17 +52,19 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 var Sessions_Records = Sessions_RecordRepository.GetAll()
                     .ToList();
                 foreach (var item in requste.DailySessionList)
-                {
+                {                    
                     if (!item.IsAlreadyExist)
                     {
                         var Sessions_Record = Sessions_Records
                             .Find(sr => sr.Id == item.Sessions_RecordId);
-                        await dailySessions_RecordRepository.Create(new DailySessions_Record()
+                        var newDailySession = new DailySessions_Record()
                         {
                             Date = item.Date,
                             Sessions_RecordId = Sessions_Record.Id,
                             Subject_Title = item.Subject_Title
-                        });
+                        };
+                        await dailySessions_RecordRepository.Create(newDailySession);
+                        await AddDefualtAttendencToDailySession(newDailySession.Id);
                     }
                     else
                     {

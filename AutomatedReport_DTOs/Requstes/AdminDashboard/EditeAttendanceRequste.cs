@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AutomatedReportCore.Requstes.AdminDashboard
 {
-    public class AddAttendanceRequste
+    public class EditeAttendanceRequste
     {
         [Required(ErrorMessage = "Attendances List Filed Is Required")]
-        public List<AttendanceDto> AttendancesList { get; set; }
+        public List<AddAttendanceDto> AttendancesList { get; set; }
     }
 }
