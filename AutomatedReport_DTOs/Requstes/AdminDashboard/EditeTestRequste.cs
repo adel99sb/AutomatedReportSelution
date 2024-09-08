@@ -6,5 +6,6 @@ namespace AutomatedReportCore.Requstes.AdminDashboard
     {
         [Required(ErrorMessage = "Test Id Filed Is Required")]
         public Guid Id { get; set; }
+        public bool IsDone { get; set; }
     }
 }
