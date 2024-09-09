@@ -13,9 +13,12 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
     public class AttendanceService : IAttendanceService<GeneralResponse>
     {
         private readonly IUnitOfWork<Attendance> attendanceRepository;
-        public AttendanceService(IUnitOfWork<Attendance> attendanceRepository)
+        private readonly IUnitOfWork<DailySessions_Record> dailySessions_RecordRepository;
+        public AttendanceService(IUnitOfWork<Attendance> attendanceRepository,
+            IUnitOfWork<DailySessions_Record> dailySessions_RecordRepository)
         {
             this.attendanceRepository = attendanceRepository;
+            this.dailySessions_RecordRepository = dailySessions_RecordRepository;
         }
 
         public async Task<GeneralResponse> EditeAttendance(EditeAttendanceRequste requste)
@@ -48,40 +51,61 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 
         public async Task<GeneralResponse> GetAttendanceByDate(DateTime date, Guid DivisionId)
         {
-            GetAttendanceByDateResponse Data = new GetAttendanceByDateResponse();
             GeneralResponse response;
             try
             {
-                var Attendances = attendanceRepository.GetAll()
-                    .Include(s => s.Student)
-                    .Include(d => d.DailySessions_Record)
-                    .ThenInclude(s => s.Sessions_Record)
-                    .Include(c => c.DailySessions_Record.Sessions_Record.Class)
-                    .Include(c => c.DailySessions_Record.Sessions_Record.Hall)
-                    .Include(c => c.DailySessions_Record.Sessions_Record.Subject)
+                var query = attendanceRepository.GetAll()
+                    .Include(a => a.DailySessions_Record)
+                        .ThenInclude(ds => ds.Sessions_Record)
+                            .ThenInclude(s => s.Subject)
+                    .Include(a => a.DailySessions_Record)
+                        .ThenInclude(ds => ds.Sessions_Record)
+                            .ThenInclude(s => s.Hall)
+                    .Include(a => a.DailySessions_Record)
+                        .ThenInclude(ds => ds.Sessions_Record)
+                            .ThenInclude(s => s.Class)
+                    .Include(a => a.DailySessions_Record)
+                        .ThenInclude(ds => ds.Sessions_Record)
+                            .ThenInclude(s => s.Division)
+                    .Include(a => a.Student)
                     .Where(a => a.DailySessions_Record.Sessions_Record.DivisionId
-                            == DivisionId
-                            && a.DailySessions_Record.Date.Date == date.Date)
-                    .ToList();
-
-                foreach (var item in Attendances)
-                {
-                    Data.Time = item.DailySessions_Record.Sessions_Record.Class.Name;
-                    Data.Hall = item.DailySessions_Record.Sessions_Record.Hall.Name;
-                    Data.Subject = item.DailySessions_Record.Sessions_Record.Subject.Name;
-                    Data.SubjectTitle = item.DailySessions_Record.Subject_Title;                    
-                    Data.attendances.Add(new GetAttendanceDto()
+                    == DivisionId && a.DailySessions_Record.Date.Date == date.Date)
+                    .Select(a => new GetAttendanceDto
                     {
-                        Id = item.Id,
-                        FirstName = item.Student.First_Name,
-                        LastName = item.Student.Last_Name,
-                        IsAttend = item.IsAttend,
-                        StudentId = item.StudentId
-                    });
+                        Time = a.DailySessions_Record.Sessions_Record.Class.Name,
+                        Subject = a.DailySessions_Record.Sessions_Record.Subject.Name,
+                        SubjectTitle = a.DailySessions_Record.Subject_Title,
+                        Hall = a.DailySessions_Record.Sessions_Record.Hall.Name,
+                        Day = a.DailySessions_Record.Sessions_Record.day.ToString(),
+                        StudentAttendancs = new List<StudentAttendanc>
+                        {
+                            new StudentAttendanc
+                            {
+                                IsAttend = a.IsAttend,
+                                StudentId = a.Student.Id,
+                                FirstName = a.Student.First_Name,
+                                LastName = a.Student.Last_Name,
+                                Id = a.Id
+                            }
+                        }
+                    }).ToList();
+
+                var Data = new GetAttendanceByDateResponse
+                {
+                    attendances = query
+                };
+                if (Data.attendances.Count > 0)
+                {
+                    response = new GeneralResponse(Data);
+                    response.Message = "Get All Attendances Succesfully";
+                    response.StatusCode = Requests_Status.Ok;
                 }
-                response = new GeneralResponse(Data);
-                response.Message = "Get All Attendances Succesfully";
-                response.StatusCode = Requests_Status.Ok;
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.NotFound;
+                    response.Message = "No Attendances Found!!";
+                }
             }
             catch (Exception ex)
             {
