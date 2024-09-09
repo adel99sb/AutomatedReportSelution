@@ -31,9 +31,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     await attendanceRepository.Update(new Attendance()
                     {
                         Id = item.Id,
-                        DailySessions_RecordId = item.DailySessions_RecordId,
-                        IsAttend = item.IsAttend,
-                        StudentId = item.StudentId
+                        IsAttend = item.IsAttend
                     });
                 }
                 response = new GeneralResponse(null);
