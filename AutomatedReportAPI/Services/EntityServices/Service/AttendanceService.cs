@@ -28,11 +28,9 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 foreach (var item in requste.AttendancesList)
                 {
-                    await attendanceRepository.Update(new Attendance()
-                    {
-                        Id = item.Id,
-                        IsAttend = item.IsAttend
-                    });
+                    var newAttendance = await attendanceRepository.GetById(item.Id);
+                    newAttendance.IsAttend = item.IsAttend;
+                    await attendanceRepository.Update(newAttendance);
                 }
                 response = new GeneralResponse(null);
                 response.StatusCode = Requests_Status.Accepted;
