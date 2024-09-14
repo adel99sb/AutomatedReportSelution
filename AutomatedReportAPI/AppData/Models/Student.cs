@@ -23,13 +23,23 @@ namespace AutomatedReportAPI.AppData.Models
         public string Phone { get; set; }
         [Required]
         [StringLength(50)]
-        public string Parent_Name { get; set; }
+        public string Father_Name { get; set; }
         [Required]
         [StringLength(16)]
-        public string Parent_Phone { get; set; }
+        public string Father_Phone { get; set; }
         [Required]
-        [Range(0,double.MaxValue)]
+        [StringLength(50)]
+        public string Mother_Name { get; set; }
+        [Required]
+        [StringLength(16)]
+        public string Mother_Phone { get; set; }
+        [Required]
+        public bool DefaultParentPhonIsFather { get; set; }
+        [Required]
+        [Range(0, double.MaxValue)]
         public double Total_Payments { get; set; }
+        [Range(0, double.MaxValue)]
+        public double agreedMonthlyPayment { get; set; }
         public Guid DivisionId { get; set; }
         public Division Division { get; set; }
     }

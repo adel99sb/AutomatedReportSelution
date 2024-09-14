@@ -39,10 +39,14 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     Address = requste.address,
                     BirthDay = requste.birthDay,
                     Gender = requste.gender,
-                    Parent_Name = requste.parent_Name,
-                    Parent_Phone = requste.parent_Phone,
+                    Father_Name = requste.father_Name,
+                    Father_Phone = requste.father_Phone,
+                    Mother_Name = requste.mother_Name,
+                    Mother_Phone = requste.mother_Phone,
+                    DefaultParentPhonIsFather = requste.defaultParentPhonIsFather,
                     Phone = requste.phone,
                     Total_Payments = requste.total_Payments,
+                    agreedMonthlyPayment = requste.agreedMonthlyPayment,
                     DivisionId = requste.divisionId
                 });
 
@@ -98,10 +102,14 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     Address = requste.address,
                     BirthDay = requste.birthDay,
                     Gender = requste.gender,
-                    Parent_Name = requste.parent_Name,
-                    Parent_Phone = requste.parent_Phone,
+                    Father_Name = requste.father_Name,
+                    Father_Phone = requste.father_Phone,
+                    Mother_Name = requste.mother_Name,
+                    Mother_Phone = requste.mother_Phone,
+                    DefaultParentPhonIsFather = requste.defaultParentPhonIsFather,
                     Phone = requste.phone,
                     Total_Payments = requste.total_Payments,
+                    agreedMonthlyPayment = requste.agreedMonthlyPayment,
                     Division = divison
                 });
 
@@ -213,10 +221,14 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                         Address = item.Address,
                         BirthDay = item.BirthDay,
                         Gender = item.Gender,
-                        Parent_Name = item.Parent_Name,
-                        Parent_Phone = item.Parent_Phone,
+                        Father_Name = item.Father_Name,
+                        Father_Phone = item.Father_Phone,
+                        Mother_Name = item.Mother_Name,
+                        Mother_Phone = item.Mother_Phone,
+                        DefaultParentPhonIsFather = item.DefaultParentPhonIsFather,
                         Phone = item.Phone,
                         Total_Payments = item.Total_Payments,
+                        agreedMonthlyPayment = item.agreedMonthlyPayment,
                         Division = item.Division.Name
                     });
                 }
@@ -259,10 +271,14 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                         Address = Student.Address,
                         BirthDay = Student.BirthDay,
                         Gender = Student.Gender,
-                        Parent_Name = Student.Parent_Name,
-                        Parent_Phone = Student.Parent_Phone,
+                        Father_Name = Student.Father_Name,
+                        Father_Phone = Student.Father_Phone,
+                        Mother_Name = Student.Mother_Name,
+                        Mother_Phone = Student.Mother_Phone,
+                        DefaultParentPhonIsFather = Student.DefaultParentPhonIsFather,
                         Phone = Student.Phone,
                         Total_Payments = Student.Total_Payments,
+                        agreedMonthlyPayment = Student.agreedMonthlyPayment,
                         Division = Student.Division.Name
                     };                
                 if (Student is not null)
