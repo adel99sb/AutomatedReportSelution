@@ -211,17 +211,20 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var Students = studentRepository.GetAll()
                     .Include(d => d.Division);
-                var studentMarks = testMarkRepository.GetAll().ToList();
+                var studentMarks = testMarkRepository.GetAll()
+                    .Include(t => t.Test)
+                    .Where(m => m.Test.IsDone)
+                    .ToList();
                 foreach (var item in Students)
                 {
                     var thisStudentMarks = studentMarks
-                        .Where(m => m.StudentId == item.Id)
-                        .Select(s => s.Mark)
+                        .Where(m => m.StudentId == item.Id)                       
                         .ToList();
                     var count = studentMarks.Count();
                     double sum = 0;
-                    foreach (var mark in thisStudentMarks)
+                    foreach (var m in thisStudentMarks)
                     {
+                        var mark = (m.Mark * 100) / m.Test.TotalMark;
                         sum += mark;
                     }
                     if (count == 0)
@@ -277,15 +280,16 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var Student = studentRepository.GetAll()
                     .Include(d => d.Division)
-                    .Where(s => s.Id == id).FirstOrDefault();
+                    .Where(s => s.Id == id).FirstOrDefault();                
                 var studentMarks = testMarkRepository.GetAll()
-                        .Where(m => m.StudentId == Student.Id)
-                        .Select(s => s.Mark)
-                        .ToList();
+                    .Include(t => t.Test)
+                    .Where(m => m.Test.IsDone && m.StudentId == Student.Id)
+                    .ToList();
                 var count = studentMarks.Count();
                 double sum = 0;
-                foreach (var mark in studentMarks)
+                foreach (var m in studentMarks)
                 {
+                    var mark = (m.Mark * 100) / m.Test.TotalMark;
                     sum += mark;
                 }
                 Data.student =  new StudentDto()
