@@ -174,7 +174,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             try
             {                
                 var students = _studentService.GetAll()
-                    .Where(s => s.BirthDay.Date == DateTime.Now.Date)
+                    .Where(s => s.BirthDay.Date.Month == DateTime.Now.Date.Month
+                                && s.BirthDay.Date.Day == DateTime.Now.Day)
                     .Select(s => new BirthdayDto()
                     {
                         Name = $"{s.First_Name} {s.Last_Name}",
