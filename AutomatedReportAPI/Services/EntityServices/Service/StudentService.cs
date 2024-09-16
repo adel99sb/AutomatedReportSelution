@@ -211,8 +211,23 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var Students = studentRepository.GetAll()
                     .Include(d => d.Division);
+                var studentMarks = testMarkRepository.GetAll().ToList();
                 foreach (var item in Students)
                 {
+                    var thisStudentMarks = studentMarks
+                        .Where(m => m.StudentId == item.Id)
+                        .Select(s => s.Mark)
+                        .ToList();
+                    var count = studentMarks.Count();
+                    double sum = 0;
+                    foreach (var mark in thisStudentMarks)
+                    {
+                        sum += mark;
+                    }
+                    if (count == 0)
+                    {
+                        count = 1;
+                    }
                     Data.students.Add(new StudentDto()
                     {
                         Id = item.Id,
@@ -229,7 +244,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                         Phone = item.Phone,
                         Total_Payments = item.Total_Payments,
                         agreedMonthlyPayment = item.agreedMonthlyPayment,
-                        Division = item.Division.Name
+                        Division = item.Division.Name,
                     });
                 }
                 if (Data.students.Count != 0)
@@ -263,7 +278,17 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 var Student = studentRepository.GetAll()
                     .Include(d => d.Division)
                     .Where(s => s.Id == id).FirstOrDefault();
-               Data.student =  new StudentDto()
+                var studentMarks = testMarkRepository.GetAll()
+                        .Where(m => m.StudentId == Student.Id)
+                        .Select(s => s.Mark)
+                        .ToList();
+                var count = studentMarks.Count();
+                double sum = 0;
+                foreach (var mark in studentMarks)
+                {
+                    sum += mark;
+                }
+                Data.student =  new StudentDto()
                     {
                         Id = Student.Id,
                         First_Name = Student.First_Name,
@@ -279,8 +304,12 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                         Phone = Student.Phone,
                         Total_Payments = Student.Total_Payments,
                         agreedMonthlyPayment = Student.agreedMonthlyPayment,
-                        Division = Student.Division.Name
-                    };                
+                        Division = Student.Division.Name,
+                    };
+                if (count != 0)
+                {
+                    Data.student.Avg = sum / count;
+                }
                 if (Student is not null)
                 {
                     response = new GeneralResponse(Data);

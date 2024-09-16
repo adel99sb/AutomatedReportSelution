@@ -13,6 +13,7 @@
         public bool DefaultParentPhonIsFather { get; set; }
         public double Total_Payments { get; set; }
         public double agreedMonthlyPayment { get; set; }
+        public double Avg { get; set; }
         public string Division { get; set; }
     }
 }
