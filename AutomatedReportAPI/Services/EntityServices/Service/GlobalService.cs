@@ -6,6 +6,8 @@ using AutomatedReportCore.Responces;
 using AutomatedReportCore.Responces.AdminDashboard;
 using AutomatedReportCore.Responces.DTOs;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
+using System.Xml.Linq;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
@@ -15,17 +17,20 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
         private readonly IUnitOfWork<Hall> _hallService;
         private readonly IUnitOfWork<Division> _divisionService;
         private readonly IUnitOfWork<Teacher> _teacherService;
+        private readonly IUnitOfWork<GratitudeStudent> _gratitudeStudentService;
         public GlobalService(
             IUnitOfWork<Student> studentService,
             IUnitOfWork<Hall> hallService,
             IUnitOfWork<Division> divisionService,
-            IUnitOfWork<Teacher> teacherService
+            IUnitOfWork<Teacher> teacherService,
+            IUnitOfWork<GratitudeStudent> gratitudeStudent
             )
         {
             _studentService = studentService;
             _hallService = hallService;
             _divisionService = divisionService;
             _teacherService = teacherService;
+            _gratitudeStudentService = gratitudeStudent;
         }
 
         public async Task<GeneralResponse> GetAllPhoneNumbers()
@@ -39,12 +44,18 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     .Select(t => t.Phone);
                 var students = _studentService.GetAll()
                     .Select(s => s.Phone);
+                var gratitudeStudent = _gratitudeStudentService.GetAll()
+                    .Select(s => s.Phone);
                 var studentsFathers = _studentService.GetAll()                    
                     .Select(p => p.Father_Phone);
                 var studentsMothers = _studentService.GetAll()
                     .Select(p => p.Mother_Phone);
 
                 foreach (var item in teachers)
+                {
+                    phonNumbers.Add(item);
+                }
+                foreach (var item in gratitudeStudent)
                 {
                     phonNumbers.Add(item);
                 }
@@ -138,6 +149,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 
                 var Halls = _hallService.GetAll().Count();
 
+                var GratitudeStudent = _gratitudeStudentService.GetAll().Count();
+
                 Data = new GetAllStatisticsResponse()
                 {
                     MailNumber = MailNumber,
@@ -150,7 +163,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     scientificCertificateDivisionNumber = scientificCertificateDivisionNumber,
                     DivisonNumber = Divisons,
                     HallNumber = Halls,
-                    TeacherNumber = Teachers
+                    TeacherNumber = Teachers,
+                    GratitudeStudentNumber = GratitudeStudent
                 };
                 response = new GeneralResponse(Data);
                 response.StatusCode = Requests_Status.Ok;
@@ -172,16 +186,33 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             var Data = new GetTodayBirthDayNumbersResponse();
             GeneralResponse response;
             try
-            {                
+            {
+                var BirthDayList = new List<BirthdayDto>();
                 var students = _studentService.GetAll()
                     .Where(s => s.BirthDay.Date.Month == DateTime.Now.Date.Month
-                                && s.BirthDay.Date.Day == DateTime.Now.Day)
-                    .Select(s => new BirthdayDto()
+                                && s.BirthDay.Date.Day == DateTime.Now.Day);
+                var gratitudeStudent = _gratitudeStudentService.GetAll()
+                    .Where(s => s.BirthDay.Date.Month == DateTime.Now.Date.Month
+                                && s.BirthDay.Date.Day == DateTime.Now.Day);
+                foreach (var s in students)
+                {
+                    BirthDayList.Add(new BirthdayDto()
                     {
                         Name = $"{s.First_Name} {s.Last_Name}",
                         Phone = s.Phone
-                    });                               
-                
+                    });
+                }
+
+                foreach (var gs in gratitudeStudent)
+                {
+                    BirthDayList.Add(new BirthdayDto()
+                    {
+                        Name = $"{gs.First_Name} {gs.Last_Name}",
+                        Phone = gs.Phone
+                    });
+                }
+
+                Data.Birthdays = BirthDayList;
                 response = new GeneralResponse(Data);
                 response.StatusCode = Requests_Status.Ok;
                 response.Message = "Get Today BirthDays Numbers Succesfully";

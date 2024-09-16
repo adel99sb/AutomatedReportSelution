@@ -13,5 +13,6 @@
         public int basicCertificateDivisionNumber { get; set; }
         public int scientificCertificateDivisionNumber { get; set; }
         public int literaryCertificateDivisionNumber { get; set; }
+        public int GratitudeStudentNumber { get; set; }
     }
 }

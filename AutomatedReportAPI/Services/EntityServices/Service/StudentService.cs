@@ -213,7 +213,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             try
             {
                 var Students = studentRepository.GetAll()
-                    .Include(d => d.Division);
+                    .Include(d => d.Division).ToList();
 
                 foreach (var item in Students)
                 {
@@ -337,7 +337,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
 
                 var student = await studentRepository.GetById(id);
                 var avg = await CalculateAvg(id);
-                var result =  GratitudeStudentRepository.Create(new GratitudeStudent()
+                await GratitudeStudentRepository.Create(new GratitudeStudent()
                 {
                     Address = student.Address,
                     agreedMonthlyPayment = student.agreedMonthlyPayment,
@@ -354,19 +354,12 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     Total_Payments = student.Total_Payments,
                     Avg = avg
                 });
-                if (result.IsCompletedSuccessfully)
-                {
-                    await studentRepository.Delete(id);
-                    response = new GeneralResponse(null);
-                    response.StatusCode = Requests_Status.Accepted;
-                    response.Message = "Student Move to Gratitude Succesfully";
-                }
-                else
-                {
-                    response = new GeneralResponse(null);
-                    response.StatusCode = Requests_Status.BadRequest;
-                    response.Message = "Some thing went wrong !!";
-                }                
+
+                await studentRepository.Delete(id);
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.Accepted;
+                response.Message = "Student Move to Gratitude Succesfully";        
             }
             catch (Exception ex)
             {
