@@ -81,8 +81,8 @@ namespace AutomatedReportAPI.Services
                 .AddScoped(typeof(ITestMarkService<GeneralResponse>), typeof(TestMarkService))
                 .AddScoped(typeof(ITestMarkService<IActionResult>), typeof(Test_MarkController))
             
-                .AddScoped(typeof(IStatisticsService<GeneralResponse>), typeof(StatisticsService))
-                .AddScoped(typeof(IStatisticsService<IActionResult>), typeof(StatisticsController));
+                .AddScoped(typeof(IGlobalService<GeneralResponse>), typeof(GlobalService))
+                .AddScoped(typeof(IGlobalService<IActionResult>), typeof(GlobalController));
         }
     }
 }

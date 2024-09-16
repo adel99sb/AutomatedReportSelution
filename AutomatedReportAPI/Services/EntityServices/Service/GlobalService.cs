@@ -4,17 +4,18 @@ using AutomatedReportAPI.Services.EntityServices.Contracts;
 using AutomatedReportCore.Enums;
 using AutomatedReportCore.Responces;
 using AutomatedReportCore.Responces.AdminDashboard;
+using AutomatedReportCore.Responces.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutomatedReportAPI.Services.EntityServices.Service
 {
-    public class StatisticsService : IStatisticsService<GeneralResponse>
+    public class GlobalService : IGlobalService<GeneralResponse>
     {
         private readonly IUnitOfWork<Student> _studentService;
         private readonly IUnitOfWork<Hall> _hallService;
         private readonly IUnitOfWork<Division> _divisionService;
         private readonly IUnitOfWork<Teacher> _teacherService;
-        public StatisticsService(
+        public GlobalService(
             IUnitOfWork<Student> studentService,
             IUnitOfWork<Hall> hallService,
             IUnitOfWork<Division> divisionService,
@@ -26,9 +27,60 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             _divisionService = divisionService;
             _teacherService = teacherService;
         }
-        public async Task<GeneralResponse> GetAll()
+
+        public async Task<GeneralResponse> GetAllPhoneNumbers()
         {
-            var Data = new GetAllStatisticsReResponse();
+            var Data = new GetAllPhoneNumbersResponse();
+            GeneralResponse response;
+            try
+            {
+                var phonNumbers = new List<string>();
+                var teachers = _teacherService.GetAll()
+                    .Select(t => t.Phone);
+                var students = _studentService.GetAll()
+                    .Select(s => s.Phone);
+                var studentsFathers = _studentService.GetAll()                    
+                    .Select(p => p.Father_Phone);
+                var studentsMothers = _studentService.GetAll()
+                    .Select(p => p.Mother_Phone);
+
+                foreach (var item in teachers)
+                {
+                    phonNumbers.Add(item);
+                }
+                foreach (var item in students)
+                {
+                    phonNumbers.Add(item);
+                }
+                foreach (var item in studentsFathers)
+                {
+                    phonNumbers.Add(item);
+                }
+                foreach (var item in studentsMothers)
+                {
+                    phonNumbers.Add(item);
+                }
+
+                Data.PhoneNumbers.AddRange(phonNumbers);
+
+                response = new GeneralResponse(Data);
+                response.StatusCode = Requests_Status.Ok;
+                response.Message = "Get All Phone Numbers Succesfully";
+
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<GeneralResponse> GetAllStatistics()
+        {
+            var Data = new GetAllStatisticsResponse();
             GeneralResponse response;
             try
             {
@@ -61,7 +113,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                                 == "الشهادة الثانوية - أدبي")
                     .Count();
 
-                var Divisons = _divisionService.GetAll()                    
+                var Divisons = _divisionService.GetAll()
                     .Count();
 
                 var basicCertificateDivisionNumber = _divisionService.GetAll()
@@ -83,10 +135,10 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     .Count();
 
                 var Teachers = _teacherService.GetAll().Count();
-                
+
                 var Halls = _hallService.GetAll().Count();
 
-                Data = new GetAllStatisticsReResponse()
+                Data = new GetAllStatisticsResponse()
                 {
                     MailNumber = MailNumber,
                     FemailNumber = FemailNumber,
@@ -103,6 +155,35 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                 response = new GeneralResponse(Data);
                 response.StatusCode = Requests_Status.Ok;
                 response.Message = "Get Statistics Succesfully";
+
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<GeneralResponse> GetTodayBirthDayNumbers()
+        {
+            var Data = new GetTodayBirthDayNumbersResponse();
+            GeneralResponse response;
+            try
+            {                
+                var students = _studentService.GetAll()
+                    .Where(s => s.BirthDay.Date == DateTime.Now.Date)
+                    .Select(s => new BirthdayDto()
+                    {
+                        Name = $"{s.First_Name} {s.Last_Name}",
+                        Phone = s.Phone
+                    });                               
+                
+                response = new GeneralResponse(Data);
+                response.StatusCode = Requests_Status.Ok;
+                response.Message = "Get Today BirthDays Numbers Succesfully";
 
             }
             catch (Exception ex)

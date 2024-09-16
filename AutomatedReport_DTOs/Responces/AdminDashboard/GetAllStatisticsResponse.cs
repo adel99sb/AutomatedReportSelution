@@ -1,6 +1,6 @@
 ﻿namespace AutomatedReportCore.Responces.AdminDashboard
 {
-    public class GetAllStatisticsReResponse
+    public class GetAllStatisticsResponse
     {
         public int MailNumber { get; set; }
         public int FemailNumber { get; set; }
