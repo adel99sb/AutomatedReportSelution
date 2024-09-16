@@ -23,6 +23,7 @@ namespace AutomatedReportAPI.AppData.Context
         public DbSet<Test> Tests { get; set; }
         public DbSet<Test_Mark> Test_Marks { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<GratitudeStudent> GratitudeStudents { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -15,13 +15,16 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
         private readonly IUnitOfWork<Student> studentRepository;
         private readonly IUnitOfWork<Test_Mark> testMarkRepository;
         private readonly IUnitOfWork<Division> divisionMarkRepository;
+        private readonly IUnitOfWork<GratitudeStudent> GratitudeStudentRepository;
         public StudentService(IUnitOfWork<Student> studentRepository,
             IUnitOfWork<Test_Mark> testMarkRepository,
-            IUnitOfWork<Division> divisionMarkRepository)
+            IUnitOfWork<Division> divisionMarkRepository,
+            IUnitOfWork<GratitudeStudent> gratitudeStudentRepository)
         {
             this.studentRepository = studentRepository;
             this.testMarkRepository = testMarkRepository;
             this.divisionMarkRepository = divisionMarkRepository;
+            GratitudeStudentRepository = gratitudeStudentRepository;
         }
 
         public async Task<GeneralResponse> AddStudent(AddStudentRequste requste)
@@ -211,26 +214,10 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var Students = studentRepository.GetAll()
                     .Include(d => d.Division);
-                var studentMarks = testMarkRepository.GetAll()
-                    .Include(t => t.Test)
-                    .Where(m => m.Test.IsDone)
-                    .ToList();
+
                 foreach (var item in Students)
                 {
-                    var thisStudentMarks = studentMarks
-                        .Where(m => m.StudentId == item.Id)                       
-                        .ToList();
-                    var count = studentMarks.Count();
-                    double sum = 0;
-                    foreach (var m in thisStudentMarks)
-                    {
-                        var mark = (m.Mark * 100) / m.Test.TotalMark;
-                        sum += mark;
-                    }
-                    if (count == 0)
-                    {
-                        count = 1;
-                    }
+                    var avg = await CalculateAvg(item.Id);
                     Data.students.Add(new StudentDto()
                     {
                         Id = item.Id,
@@ -248,6 +235,7 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                         Total_Payments = item.Total_Payments,
                         agreedMonthlyPayment = item.agreedMonthlyPayment,
                         Division = item.Division.Name,
+                        Avg = avg
                     });
                 }
                 if (Data.students.Count != 0)
@@ -271,7 +259,23 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             }
             return response;
         }
-
+        private async Task<double> CalculateAvg(Guid id)
+        {
+            double Avg;
+            var studentMarks = testMarkRepository.GetAll()
+                    .Include(t => t.Test)
+                    .Where(m => m.Test.IsDone && m.StudentId == id)
+                    .ToList();
+            var count = studentMarks.Count();
+            double sum = 0;
+            foreach (var m in studentMarks)
+            {
+                var mark = (m.Mark * 100) / m.Test.TotalMark;
+                sum += mark;
+            }
+            Avg = count == 0 ? 0 : sum / count;
+            return Avg;
+        }
         public async Task<GeneralResponse> GetStudentById(Guid id)
         {
             var Data = new GetStudentByIdResponse();
@@ -280,18 +284,8 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
             {
                 var Student = studentRepository.GetAll()
                     .Include(d => d.Division)
-                    .Where(s => s.Id == id).FirstOrDefault();                
-                var studentMarks = testMarkRepository.GetAll()
-                    .Include(t => t.Test)
-                    .Where(m => m.Test.IsDone && m.StudentId == Student.Id)
-                    .ToList();
-                var count = studentMarks.Count();
-                double sum = 0;
-                foreach (var m in studentMarks)
-                {
-                    var mark = (m.Mark * 100) / m.Test.TotalMark;
-                    sum += mark;
-                }
+                    .Where(s => s.Id == id).FirstOrDefault();
+                var avg = await CalculateAvg(Student.Id);
                 Data.student =  new StudentDto()
                     {
                         Id = Student.Id,
@@ -309,11 +303,9 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                         Total_Payments = Student.Total_Payments,
                         agreedMonthlyPayment = Student.agreedMonthlyPayment,
                         Division = Student.Division.Name,
+                        Avg = avg
                     };
-                if (count != 0)
-                {
-                    Data.student.Avg = sum / count;
-                }
+                
                 if (Student is not null)
                 {
                     response = new GeneralResponse(Data);
@@ -326,6 +318,55 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     response.StatusCode = Requests_Status.NotFound;
                     response.Message = "No Students Found !!";
                 }
+            }
+            catch (Exception ex)
+            {
+
+                response = new GeneralResponse(null);
+                response.StatusCode = Requests_Status.BadRequest;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<GeneralResponse> MoveStudentToGratitude(Guid id)
+        {
+            GeneralResponse response;
+            try
+            {
+
+                var student = await studentRepository.GetById(id);
+                var avg = await CalculateAvg(id);
+                var result =  GratitudeStudentRepository.Create(new GratitudeStudent()
+                {
+                    Address = student.Address,
+                    agreedMonthlyPayment = student.agreedMonthlyPayment,
+                    BirthDay = student.BirthDay,
+                    DefaultParentPhonIsFather = student.DefaultParentPhonIsFather,
+                    Father_Name = student.Father_Name,
+                    Father_Phone = student.Father_Phone,
+                    First_Name = student.First_Name,
+                    Gender = student.Gender,
+                    Last_Name = student.Last_Name,
+                    Mother_Name = student.Mother_Name,
+                    Mother_Phone = student.Mother_Phone,
+                    Phone = student.Mother_Phone,
+                    Total_Payments = student.Total_Payments,
+                    Avg = avg
+                });
+                if (result.IsCompletedSuccessfully)
+                {
+                    await studentRepository.Delete(id);
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.Accepted;
+                    response.Message = "Student Move to Gratitude Succesfully";
+                }
+                else
+                {
+                    response = new GeneralResponse(null);
+                    response.StatusCode = Requests_Status.BadRequest;
+                    response.Message = "Some thing went wrong !!";
+                }                
             }
             catch (Exception ex)
             {

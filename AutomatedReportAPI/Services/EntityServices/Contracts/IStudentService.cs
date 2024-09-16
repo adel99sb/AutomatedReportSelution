@@ -11,5 +11,6 @@ namespace AutomatedReportAPI.Services.EntityServices.Contracts
         Task<T> AddStudent(AddStudentRequste requste);
         Task<T> EditeStudent(EditeStudentRequste requste);
         Task<T> GetStudentById(Guid id);
+        Task<T> MoveStudentToGratitude(Guid id);
     }
 }

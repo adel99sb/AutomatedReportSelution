@@ -117,5 +117,19 @@ namespace AutomatedReportAPI.Controllers.AdminDashboard
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("MoveStudentToGratitude")]
+        public async Task<IActionResult> MoveStudentToGratitude(Guid id)
+        {
+            try
+            {
+                var Result = await studentService.MoveStudentToGratitude(id);
+                var Response = Result.StatusCode.ToActionResult(Result);
+                return Response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -98,22 +98,23 @@ namespace AutomatedReportAPI.Services.EntityServices.Service
                     .Include(s => s.Subject)
                     .Include(c => c.Class)
                     .ToList();
-                var divison = Sessions
-                    .Find(d => d.Division.Id == requste.DivisionId)?.Division;
-                var hall = Sessions
-                    .Find(h => h.Hall.Id == requste.HallId)?.Hall;
-                var subject = Sessions
-                    .Find(s => s.Subject.Id == requste.SubjectId)?.Subject;
-                var Class = Sessions
-                    .Find(c => c.Class.Id == requste._ClassId)?.Class;
+                
+                var divison = divisionRepository.GetAll()
+                    .Where(d => d.Id == requste.DivisionId)?.FirstOrDefault();
+                var hall = hallRepository.GetAll()
+                    .Where(h => h.Id == requste.HallId)?.FirstOrDefault();
+                var subject = subjectRepository.GetAll()
+                    .Where(s => s.Id == requste.SubjectId)?.FirstOrDefault();
+                var Class = classRepository.GetAll()
+                    .Where(c => c.Id == requste._ClassId)?.FirstOrDefault();
                 await sessions_RecordRepository.Update(new Sessions_Record()
                 {
                     Id = requste.Id,
                     day = requste.day,
-                    Division = divison,
-                    Class = Class,
-                    Hall = hall,
-                    Subject = subject
+                    DivisionId = divison.Id,
+                    _ClassId = Class.Id,
+                    HallId = hall.Id,
+                    SubjectId = subject.Id
                 });
                 response = new GeneralResponse(null);
                 response.StatusCode = Requests_Status.Accepted;

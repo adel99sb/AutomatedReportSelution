@@ -29,7 +29,8 @@ namespace AutomatedReportAPI.Services
             .AddScoped(typeof(IUnitOfWork<Hall>), typeof(UnitOfWork<Hall>))
             .AddScoped(typeof(IUnitOfWork<User>), typeof(UnitOfWork<User>))
             .AddScoped(typeof(IUnitOfWork<DailySessions_Record>), typeof(UnitOfWork<DailySessions_Record>))
-            .AddScoped(typeof(IUnitOfWork<Certificate>), typeof(UnitOfWork<Certificate>));
+            .AddScoped(typeof(IUnitOfWork<Certificate>), typeof(UnitOfWork<Certificate>))
+            .AddScoped(typeof(IUnitOfWork<GratitudeStudent>), typeof(UnitOfWork<GratitudeStudent>));
         }
         public static IServiceCollection AddBackgourndJob(this IServiceCollection services)
         {
