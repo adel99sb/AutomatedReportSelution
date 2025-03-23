@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /AutomatedReportAPI/appsettings.json
 /AutomatedReportAPI/appsettings.Development.json
+/AutomatedReportAPI/Properties/launchSettings.json
